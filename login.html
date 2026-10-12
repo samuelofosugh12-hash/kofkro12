@@ -1,0 +1,1346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Kofkro LMIS — Sign in</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+:root {
+    --forest: #1c2b24;
+    --forest-dark: #14211a;
+    --mint: #a3d1b5;
+    --mint-hover: #b9e0c8;
+    --deep: #2f6b4f;
+    --ink: #13201a;
+    --muted: #5f7066;
+    --line: #d5e1d8;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: "Outfit", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink);
+    background:
+        radial-gradient(1200px 620px at 15% -10%, #2d4a3a 0%, rgba(45, 74, 58, 0) 60%),
+        var(--forest-dark);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+
+/* =========================
+   PAGE + CARD
+========================= */
+
+.page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.card {
+    position: relative;
+    width: min(1080px, 100%);
+    height: min(690px, calc(100vh - 48px));
+    min-height: 640px;
+    overflow: hidden;
+    border-radius: 30px;
+    background: linear-gradient(155deg, #eef0ec 0%, #e2eee5 58%, #cfe6d7 100%);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .38);
+}
+
+
+/* =========================
+   PANELS (they slide past each other)
+========================= */
+
+.form-panel,
+.photo-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transition: left .8s cubic-bezier(.65, .05, .2, 1);
+}
+
+.form-panel {
+    left: 0;
+    width: 44%;
+    padding: 26px 34px 22px;
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-panel {
+    left: 44%;
+    width: 56%;
+    padding: 14px;
+}
+
+.card.no-anim .view {
+    transition: none !important;
+}
+
+
+/* =========================
+   FORM SIDE
+========================= */
+
+.brand-pill {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: 1px solid rgba(19, 32, 26, .25);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    background: rgba(255, 255, 255, .35);
+    transition: background .2s;
+}
+
+.brand-pill:hover {
+    background: rgba(255, 255, 255, .7);
+}
+
+.brand-pill b {
+    color: var(--deep);
+    font-weight: 700;
+}
+
+.forms {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+}
+
+.view {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    transition:
+        opacity .45s ease,
+        transform .45s ease,
+        visibility 0s linear .45s;
+}
+
+.view.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition-delay: .3s, .3s, 0s;
+}
+
+/* Sign in leaves upward, Sign up arrives from below (and back again) */
+#view-login:not(.active) {
+    transform: translateY(-26px);
+}
+
+#view-register:not(.active) {
+    transform: translateY(26px);
+}
+
+.view-main {
+    width: min(100%, 340px);
+    margin: auto;
+    padding: 14px 0;
+}
+
+.view h1 {
+    margin: 0 0 6px;
+    font-size: 29px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: -.4px;
+}
+
+.view .sub {
+    margin: 0 0 22px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.field {
+    margin-bottom: 11px;
+}
+
+.field label,
+.label-row label {
+    display: block;
+    margin: 0 0 4px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-right: 16px;
+}
+
+.label-row a {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--deep);
+}
+
+.label-row a:hover {
+    text-decoration: underline;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+select {
+    width: 100%;
+    height: 46px;
+    padding: 0 18px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    box-shadow: 0 2px 8px rgba(28, 43, 36, .05);
+}
+
+select {
+    appearance: none;
+    cursor: pointer;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235f7066' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+}
+
+input::placeholder {
+    color: #9aa8a0;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--deep);
+    box-shadow: 0 0 0 4px rgba(47, 107, 79, .14);
+}
+
+.password-wrap {
+    position: relative;
+}
+
+.password-wrap input {
+    padding-right: 66px;
+}
+
+.password-wrap button {
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    height: 34px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--deep);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.password-wrap button:hover {
+    background: rgba(47, 107, 79, .1);
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 14px 8px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.remember input {
+    accent-color: var(--deep);
+    width: 16px;
+    height: 16px;
+}
+
+.submit {
+    width: 100%;
+    height: 50px;
+    margin-top: 6px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--mint);
+    color: var(--forest);
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(47, 107, 79, .22);
+    transition: background .2s, transform .2s, box-shadow .2s;
+}
+
+.submit:hover {
+    background: var(--mint-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(47, 107, 79, .28);
+}
+
+.submit:disabled {
+    opacity: .65;
+    cursor: wait;
+    transform: none;
+}
+
+.message {
+    margin: 12px 0 0;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 13px;
+    background: #fff1f0;
+    color: #b42318;
+    border: 1px solid #f3c3c0;
+}
+
+.message.ok {
+    background: #effaf4;
+    color: #16734a;
+    border-color: #b9e4cd;
+}
+
+.message[hidden] {
+    display: none;
+}
+
+.view-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.view-foot a {
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.view-foot a:hover {
+    color: var(--deep);
+}
+
+.view-foot .switch {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.view-foot .switch:hover {
+    color: var(--deep);
+}
+
+
+/* =========================
+   PHOTO SIDE - slideshow that moves upward
+========================= */
+
+.photo {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 22px;
+    background: #1c2b24;
+    color: #fff;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    transform: translateY(100%);
+    transition: transform 1s cubic-bezier(.65, .05, .2, 1);
+}
+
+.slide.active {
+    transform: translateY(0);
+}
+
+.slide.leaving {
+    transform: translateY(-100%);
+}
+
+.slide.no-t {
+    transition: none;
+}
+
+.slide-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        var(--img),
+        linear-gradient(135deg, var(--c1, #2d4a3a), var(--c2, #1c2b24));
+    background-size: cover;
+    background-position: center;
+}
+
+.slide-shade {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(14, 26, 20, .5) 0%, rgba(14, 26, 20, 0) 22%),
+        linear-gradient(0deg, rgba(14, 26, 20, .92) 0%, rgba(14, 26, 20, .5) 48%, rgba(14, 26, 20, .08) 100%);
+}
+
+.chip {
+    position: absolute;
+    z-index: 5;
+    top: 24px;
+    left: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 16px;
+    border-radius: 14px;
+    background: var(--mint);
+    color: var(--forest);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+}
+
+.chip::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--deep);
+}
+
+/* Text rises into place after the photo arrives */
+.slide-copy {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 62px 34px 28px;
+}
+
+.slide-copy > *,
+.slide-card {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+
+.slide.active .slide-copy > *,
+.slide.active .slide-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide.active .slide-card              { transition-delay: .5s; }
+.slide.active .slide-copy > :nth-child(1) { transition-delay: .55s; }
+.slide.active .slide-copy > :nth-child(2) { transition-delay: .65s; }
+.slide.active .slide-copy > :nth-child(3) { transition-delay: .75s; }
+.slide.active .slide-copy > :nth-child(4) { transition-delay: .85s; }
+
+.slide-eyebrow {
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--mint);
+}
+
+.slide h2 {
+    margin: 0 0 10px;
+    max-width: 460px;
+    font-size: clamp(25px, 2.7vw, 34px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -.5px;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, .3);
+}
+
+.slide p {
+    margin: 0;
+    max-width: 450px;
+    font-size: 14.5px;
+    color: rgba(255, 255, 255, .88);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.tag {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .14);
+    border: 1px solid rgba(255, 255, 255, .26);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Floating glass card (like the reference) */
+.slide-card {
+    position: absolute;
+    top: 80px;
+    right: 62px;
+    width: 190px;
+    padding: 13px 15px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .15);
+    border: 1px solid rgba(255, 255, 255, .26);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.slide-card .ico {
+    font-size: 20px;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.slide-card strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.slide-card span {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, .8);
+}
+
+/* Vertical progress dashes on the right edge */
+.vdots {
+    position: absolute;
+    z-index: 6;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.vdot {
+    position: relative;
+    width: 20px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transition: height .4s ease;
+}
+
+.vdot::before,
+.vdot::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 3px;
+}
+
+.vdot::before {
+    background: rgba(255, 255, 255, .42);
+}
+
+.vdot::after {
+    background: #ffffff;
+    transform: scaleY(0);
+    transform-origin: top;
+}
+
+.vdot.done::after {
+    transform: scaleY(1);
+}
+
+.vdot.active {
+    height: 56px;
+}
+
+.vdot.active::after {
+    animation: vfill var(--dur, 5.5s) linear forwards;
+}
+
+@keyframes vfill {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+}
+
+
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .form-panel {
+        padding-left: 26px;
+        padding-right: 26px;
+    }
+
+    .slide-card {
+        display: none;
+    }
+}
+
+
+@media (max-width: 860px) {
+
+    .page {
+        padding: 14px;
+    }
+
+    .card {
+        height: auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-panel,
+    .photo-panel {
+        position: relative;
+        left: 0;
+        width: 100%;
+        transition: none;
+    }
+
+    .photo-panel {
+        order: -1;
+        height: 210px;
+        padding: 10px 10px 0;
+    }
+
+    .chip,
+    .slide-card,
+    .slide p,
+    .tags,
+    .slide-eyebrow,
+    .vdots {
+        display: none;
+    }
+
+    .slide-copy {
+        padding: 0 18px 18px;
+    }
+
+    .slide h2 {
+        margin: 0;
+        font-size: 21px;
+    }
+
+    .form-panel {
+        padding: 20px 22px 18px;
+    }
+
+    .view {
+        overflow: visible;
+    }
+
+    .view-main {
+        width: min(100%, 400px);
+    }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .form-panel,
+    .photo-panel,
+    .view,
+    .slide,
+    .slide-copy > *,
+    .slide-card {
+        transition: none !important;
+    }
+
+    .vdot::after {
+        animation: none !important;
+    }
+}
+
+  </style>
+</head>
+
+<body>
+
+<main class="page">
+
+  <div class="card no-anim" id="card">
+
+    <!-- ========== FORM SIDE ========== -->
+
+    <section class="form-panel">
+
+      <a href="index.html" class="brand-pill" title="Back to Kofkro LMIS">
+        Kofkro<b>LMIS</b>
+      </a>
+
+      <div class="forms">
+
+        <!-- LOGIN -->
+
+        <div class="view active" id="view-login">
+
+          <div class="view-main">
+
+            <h1>Welcome back</h1>
+            <p class="sub">Sign in to your Kofkro LMIS account.</p>
+
+            <form id="loginForm" novalidate>
+
+              <div class="field">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+              </div>
+
+              <div class="field">
+                <div class="label-row">
+                  <label for="password">Password</label>
+                  <a href="#" id="forgot">Forgot password?</a>
+                </div>
+                <div class="password-wrap">
+                  <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required minlength="8">
+                  <button type="button" id="togglePassword">Show</button>
+                </div>
+              </div>
+
+              <label class="remember">
+                <input type="checkbox" id="remember">
+                <span>Keep me signed in</span>
+              </label>
+
+              <button class="submit" type="submit">Sign in</button>
+
+              <p id="message" class="message" role="alert" hidden></p>
+
+            </form>
+
+          </div>
+
+          <div class="view-foot">
+            <span>New here? <button type="button" class="switch" data-mode="register">Create an account</button></span>
+            <a href="terms.html">Terms &amp; Conditions</a>
+          </div>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <div class="view" id="view-register" inert>
+
+          <div class="view-main">
+
+            <h1>Create an account</h1>
+            <p class="sub">Sign up free and start finding opportunities.</p>
+
+            <form id="registerForm" novalidate>
+
+              <div class="field">
+                <label for="r-name">Full name</label>
+                <input id="r-name" type="text" autocomplete="name" placeholder="Your full name" required>
+              </div>
+
+              <div class="field">
+                <label for="r-email">Email</label>
+                <input id="r-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+              </div>
+
+              <div class="field">
+                <label for="r-role">I am a</label>
+                <select id="r-role">
+                  <option value="candidate">Job seeker / candidate</option>
+                  <option value="employer">Employer / organisation</option>
+                  <option value="training_provider">Training provider</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="r-password">Password</label>
+                <div class="password-wrap">
+                  <input id="r-password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required minlength="8">
+                  <button type="button" id="r-toggle">Show</button>
+                </div>
+              </div>
+
+              <button class="submit" type="submit">Create account</button>
+
+              <p id="r-message" class="message" role="alert" hidden></p>
+
+            </form>
+
+          </div>
+
+          <div class="view-foot">
+            <span>Have an account? <button type="button" class="switch" data-mode="login">Sign in</button></span>
+            <a href="terms.html">Terms &amp; Conditions</a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========== PHOTO SIDE ========== -->
+
+    <aside class="photo-panel">
+
+      <!-- Slideshow that moves upward. The photos are the same ones used on the home page. -->
+
+      <div class="photo" id="photo">
+
+        <div class="chip">About Kofkro LMIS</div>
+
+        <div class="slide" style="--img:url('made\ .webp'); --c1:#0b3d6e; --c2:#1c8fa6;">
+          <div class="slide-bg"></div>
+          <div class="slide-shade"></div>
+          <div class="slide-card">
+            <div class="ico"></div>
+            <strong>Made for Kofkro</strong>
+            <span>Local people, local opportunities</span>
+          </div>
+          <div class="slide-copy">
+            <div class="slide-eyebrow">About Kofkro LMIS</div>
+            <h2>One platform for work, skills and people.</h2>
+            <p>Kofkro LMIS connects job seekers, young people, employers and training providers in one simple platform built for the Kofkro community.</p>
+            <div class="tags"><span class="tag">Job seekers</span><span class="tag">Employers</span><span class="tag">Training providers</span></div>
+          </div>
+        </div>
+
+        <div class="slide" style="--img:url('find.png'); --c1:#2d5a27; --c2:#8ab94a;">
+          <div class="slide-bg"></div>
+          <div class="slide-shade"></div>
+          <div class="slide-card">
+            <div class="ico"></div>
+            <strong>Find opportunities</strong>
+            <span>Search work in your community</span>
+          </div>
+          <div class="slide-copy">
+            <div class="slide-eyebrow">Find opportunities</div>
+            <h2>Jobs, internships and apprenticeships near you.</h2>
+            <p>Browse opportunities posted by local employers, from farming and trades to healthcare, teaching and technology, and apply in a few clicks.</p>
+            <div class="tags"><span class="tag">Jobs</span><span class="tag">Internships</span><span class="tag">Apprenticeships</span></div>
+          </div>
+        </div>
+
+        <div class="slide" style="--img:url('bu.jpg'); --c1:#0b2a5c; --c2:#6a4fe0;">
+          <div class="slide-bg"></div>
+          <div class="slide-shade"></div>
+          <div class="slide-card">
+            <div class="ico"></div>
+            <strong>Develop your skills</strong>
+            <span>Learn, train and move forward</span>
+          </div>
+          <div class="slide-copy">
+            <div class="slide-eyebrow">Develop your skills</div>
+            <h2>Grow your skills. Grow your career.</h2>
+            <p>Build a stronger professional profile and discover training from local providers to help you move into the work you want.</p>
+            <div class="tags"><span class="tag">Your profile</span><span class="tag">Training</span><span class="tag">Career growth</span></div>
+          </div>
+        </div>
+
+        <div class="slide" style="--img:url('cn.jpg'); --c1:#2b2f36; --c2:#d9622b;">
+          <div class="slide-bg"></div>
+          <div class="slide-shade"></div>
+          <div class="slide-card">
+            <div class="ico"></div>
+            <strong>Connect with talent</strong>
+            <span>Reach people ready to work</span>
+          </div>
+          <div class="slide-copy">
+            <div class="slide-eyebrow">For employers</div>
+            <h2>Hire the talent your business needs.</h2>
+            <p>Post vacancies, reach people who are ready to work and build your team with skilled workers from the local community.</p>
+            <div class="tags"><span class="tag">Post vacancies</span><span class="tag">Reach local talent</span><span class="tag">Build your team</span></div>
+          </div>
+        </div>
+
+        <div class="slide" style="--img:url('start.jpg'); --c1:#7a3e12; --c2:#e0a030;">
+          <div class="slide-bg"></div>
+          <div class="slide-shade"></div>
+          <div class="slide-card">
+            <div class="ico"></div>
+            <strong>Start your journey</strong>
+            <span>Create your free account</span>
+          </div>
+          <div class="slide-copy">
+            <div class="slide-eyebrow">For young people</div>
+            <h2>Your next opportunity is closer than you think.</h2>
+            <p>Starting out? Create your profile, explore what is available around you and take the first step towards your future.</p>
+            <div class="tags"><span class="tag">First job</span><span class="tag">Learn a trade</span><span class="tag">Start today</span></div>
+          </div>
+        </div>
+
+        <div class="vdots" id="vdots"></div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+</main>
+
+
+<script>
+
+const card = document.getElementById('card');
+
+const views = {
+  login: document.getElementById('view-login'),
+  register: document.getElementById('view-register')
+};
+
+const titles = {
+  login: 'Kofkro LMIS — Sign in',
+  register: 'Kofkro LMIS — Create an account'
+};
+
+
+/* ---------- Switch between Sign in and Sign up ---------- */
+
+function setMode(mode) {
+
+  card.classList.toggle('register', mode === 'register');
+
+  Object.keys(views).forEach(function (key) {
+
+    const on = key === mode;
+
+    views[key].classList.toggle('active', on);
+
+    if (on) {
+      views[key].removeAttribute('inert');
+    } else {
+      views[key].setAttribute('inert', '');
+    }
+
+  });
+
+  document.title = titles[mode];
+
+  history.replaceState(null, '', mode === 'register' ? '#register' : '#login');
+
+}
+
+document.querySelectorAll('[data-mode]').forEach(function (btn) {
+
+  btn.addEventListener('click', function () {
+
+    hideMessage(loginMessage);
+    hideMessage(registerMessage);
+    setMode(btn.dataset.mode);
+
+  });
+
+});
+
+window.addEventListener('hashchange', function () {
+  setMode(location.hash === '#register' ? 'register' : 'login');
+});
+
+
+/* ---------- Shared helpers ---------- */
+
+const loginMessage = document.getElementById('message');
+const registerMessage = document.getElementById('r-message');
+
+function showMessage(el, text, ok) {
+  el.hidden = false;
+  el.textContent = text;
+  el.className = 'message' + (ok ? ' ok' : '');
+}
+
+function hideMessage(el) {
+  el.hidden = true;
+}
+
+function getUsers() {
+  try {
+    return JSON.parse(localStorage.getItem('kofkro-users') || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+
+function wireToggle(buttonId, inputId) {
+
+  const btn = document.getElementById(buttonId);
+  const input = document.getElementById(inputId);
+
+  btn.addEventListener('click', function () {
+
+    const visible = input.type === 'text';
+
+    input.type = visible ? 'password' : 'text';
+    btn.textContent = visible ? 'Show' : 'Hide';
+
+  });
+
+}
+
+wireToggle('togglePassword', 'password');
+wireToggle('r-toggle', 'r-password');
+
+
+/* ---------- Forgot password ---------- */
+
+document.getElementById('forgot').addEventListener('click', function (e) {
+
+  e.preventDefault();
+
+  const emailInput = document.getElementById('email');
+  const email = emailInput.value.trim().toLowerCase();
+
+  if (!email) {
+    showMessage(loginMessage, 'Enter your email address first.');
+    emailInput.focus();
+    return;
+  }
+
+  const user = getUsers().find(function (u) {
+    return u.email && u.email.toLowerCase() === email;
+  });
+
+  if (!user) {
+    showMessage(loginMessage, 'No account was found with that email.');
+    return;
+  }
+
+  // Since this is a localStorage-only system,
+  // we cannot actually send an email.
+  showMessage(
+    loginMessage,
+    'Your account was found. Please contact the administrator to reset your password.',
+    true
+  );
+
+});
+
+
+/* ---------- Sign in ---------- */
+
+const loginForm = document.getElementById('loginForm');
+
+loginForm.addEventListener('submit', function (e) {
+
+  e.preventDefault();
+
+  hideMessage(loginMessage);
+
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const pass = document.getElementById('password').value;
+  const remember = document.getElementById('remember').checked;
+
+  if (!email || !pass) {
+    showMessage(loginMessage, 'Please enter your email and password.');
+    return;
+  }
+
+  const button = loginForm.querySelector('.submit');
+
+  button.disabled = true;
+  button.textContent = 'Signing in…';
+
+  try {
+
+    const user = getUsers().find(function (u) {
+      return u.email &&
+             u.email.toLowerCase() === email &&
+             u.password === pass;
+    });
+
+    if (!user) {
+      throw new Error('Incorrect email or password.');
+    }
+
+    localStorage.setItem('kofkro-current-user', JSON.stringify({
+      id: user.id || Date.now(),
+      name: user.name || '',
+      email: user.email,
+      role: user.role || 'candidate'
+    }));
+
+    if (remember) {
+      localStorage.setItem('kofkro-remember', 'true');
+    } else {
+      localStorage.removeItem('kofkro-remember');
+    }
+
+    showMessage(loginMessage, 'Signed in successfully. Redirecting…', true);
+
+    setTimeout(function () {
+      window.location.href = 'home.html';
+    }, 400);
+
+  } catch (error) {
+
+    showMessage(loginMessage, error.message || 'Sign-in failed.');
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = 'Sign in';
+
+  }
+
+});
+
+
+/* ---------- Create account ---------- */
+
+const registerForm = document.getElementById('registerForm');
+
+registerForm.addEventListener('submit', function (e) {
+
+  e.preventDefault();
+
+  hideMessage(registerMessage);
+
+  const name = document.getElementById('r-name').value.trim();
+  const email = document.getElementById('r-email').value.trim().toLowerCase();
+  const role = document.getElementById('r-role').value;
+  const pass = document.getElementById('r-password').value;
+
+  if (name.length < 2) {
+    showMessage(registerMessage, 'Please enter your full name.');
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showMessage(registerMessage, 'Please enter a valid email address.');
+    return;
+  }
+
+  if (pass.length < 8) {
+    showMessage(registerMessage, 'Your password must be at least 8 characters.');
+    return;
+  }
+
+  const users = getUsers();
+
+  const exists = users.some(function (u) {
+    return u.email && u.email.toLowerCase() === email;
+  });
+
+  if (exists) {
+    showMessage(registerMessage, 'An account with that email already exists. Try signing in.');
+    return;
+  }
+
+  const newUser = {
+    id: Date.now(),
+    name: name,
+    email: email,
+    password: pass,
+    role: role,
+    createdAt: new Date().toISOString()
+  };
+
+  users.push(newUser);
+
+  localStorage.setItem('kofkro-users', JSON.stringify(users));
+
+  // Sign the new user in straight away
+  localStorage.setItem('kofkro-current-user', JSON.stringify({
+    id: newUser.id,
+    name: newUser.name,
+    email: newUser.email,
+    role: newUser.role
+  }));
+
+  const button = registerForm.querySelector('.submit');
+
+  button.disabled = true;
+  button.textContent = 'Creating account…';
+
+  showMessage(registerMessage, 'Account created. Redirecting…', true);
+
+  setTimeout(function () {
+    window.location.href = 'home.html';
+  }, 500);
+
+});
+
+
+/* ---------- Photo slideshow (moves upward) ---------- */
+
+(function () {
+
+  const INTERVAL = 5500;   // ms per slide
+  const SPEED = 1050;      // matches the CSS transition
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotBox = document.getElementById('vdots');
+
+  let cur = 0;
+  let timer = null;
+  let busy = false;
+
+  const dots = slides.map(function (slide, i) {
+
+    const d = document.createElement('button');
+    d.type = 'button';
+    d.className = 'vdot';
+    d.style.setProperty('--dur', INTERVAL + 'ms');
+    d.setAttribute('aria-label', 'Show slide ' + (i + 1));
+    d.addEventListener('click', function () { go(i); });
+
+    dotBox.appendChild(d);
+    return d;
+
+  });
+
+  function paintDots() {
+
+    dots.forEach(function (d, i) {
+      d.classList.remove('active');
+      d.classList.toggle('done', i < cur);
+    });
+
+    void dots[cur].offsetWidth;   // restart the fill animation
+    dots[cur].classList.add('active');
+
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    timer = setTimeout(function () { go(cur + 1); }, INTERVAL);
+  }
+
+  function go(n) {
+
+    n = (n + slides.length) % slides.length;
+
+    if (busy || n === cur) return;
+
+    busy = true;
+
+    const oldSlide = slides[cur];
+    const newSlide = slides[n];
+
+    oldSlide.classList.remove('active');
+    oldSlide.classList.add('leaving');
+    newSlide.classList.add('active');
+
+    cur = n;
+    paintDots();
+    schedule();
+
+    setTimeout(function () {
+
+      // park the old slide back below, without a visible animation
+      oldSlide.classList.add('no-t');
+      oldSlide.classList.remove('leaving');
+      void oldSlide.offsetWidth;
+      oldSlide.classList.remove('no-t');
+
+      busy = false;
+
+    }, SPEED);
+
+  }
+
+  // first slide is already in place
+  slides[0].classList.add('no-t', 'active');
+  void slides[0].offsetWidth;
+  slides[0].classList.remove('no-t');
+
+  paintDots();
+  schedule();
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      clearTimeout(timer);
+    } else {
+      schedule();
+    }
+  });
+
+})();
+
+
+/* ---------- Start on the right side (no animation on first load) ---------- */
+
+setMode(location.hash === '#register' ? 'register' : 'login');
+
+requestAnimationFrame(function () {
+  requestAnimationFrame(function () {
+    card.classList.remove('no-anim');
+  });
+});
+
+</script>
+
+</body>
+</html>

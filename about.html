@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>| Kofkro LMIS</title>
+
+    <style>
+
+:root {
+    --forest: #1c2b24;
+    --forest-dark: #14211a;
+    --mint: #a3d1b5;
+    --mint-hover: #b9e0c8;
+    --deep: #2f6b4f;
+    --ink: #13201a;
+    --muted: #5f7066;
+    --line: #dce6de;
+    --tint: #eaf2ec;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--ink);
+    background: #ffffff;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+/* =========================
+   HEADER (transparent on the banner, dark green after scrolling)
+========================= */
+
+.marketing-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 78px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+
+.marketing-header.scrolled {
+    background: var(--forest);
+    border-bottom-color: rgba(255, 255, 255, .08);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 800;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.brand-mark {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mint);
+    color: var(--forest);
+    border-radius: 8px;
+    font-weight: 900;
+}
+
+.brand-text span {
+    color: var(--mint);
+}
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 14px;
+}
+
+.top-nav a:not(.login-btn):not(.signup-btn) {
+    color: rgba(255, 255, 255, .92);
+    transition: color .2s;
+}
+
+.top-nav a:not(.login-btn):not(.signup-btn):hover,
+.top-nav a.current {
+    color: var(--mint);
+}
+
+.login-btn {
+    border: 1px solid rgba(255, 255, 255, .7);
+    color: #ffffff;
+    padding: 11px 23px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background .2s;
+}
+
+.login-btn:hover {
+    background: rgba(255, 255, 255, .1);
+}
+
+.signup-btn {
+    background: var(--mint);
+    color: var(--forest);
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 700;
+    box-shadow: 0 7px 18px rgba(163, 209, 181, .22);
+    transition: transform .2s, background .2s;
+}
+
+.signup-btn:hover {
+    background: var(--mint-hover);
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   BANNER
+========================= */
+
+.page-banner {
+    position: relative;
+    height: 64vh;
+    min-height: 480px;
+    overflow: hidden;
+    color: #ffffff;
+    background: var(--forest-dark);
+}
+
+.banner-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        var(--img),
+        linear-gradient(135deg, #2d4a3a, #1c2b24 70%);
+    background-size: cover;
+    background-position: center;
+}
+
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(14, 26, 20, .6) 0%, rgba(14, 26, 20, 0) 170px),
+        linear-gradient(0deg, rgba(14, 26, 20, .85) 0%, rgba(14, 26, 20, .3) 60%, rgba(14, 26, 20, .4) 100%),
+        linear-gradient(90deg, rgba(14, 26, 20, .55) 0%, rgba(14, 26, 20, 0) 70%);
+}
+
+.banner-content {
+    position: absolute;
+    left: 7%;
+    right: 7%;
+    bottom: 70px;
+    max-width: 760px;
+}
+
+.eyebrow,
+.section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--deep);
+    margin-bottom: 14px;
+}
+
+.banner-content .eyebrow {
+    color: var(--mint);
+}
+
+.banner-content h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -1.4px;
+    margin-bottom: 20px;
+    text-shadow: 0 3px 24px rgba(0, 0, 0, .35);
+}
+
+.banner-content p {
+    font-size: 19px;
+    max-width: 600px;
+    color: rgba(255, 255, 255, .88);
+    margin-bottom: 28px;
+}
+
+.btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.primary-btn,
+.ghost-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 27px;
+    border-radius: 28px;
+    font-weight: 700;
+    transition: transform .2s, box-shadow .2s, background .2s;
+}
+
+.primary-btn {
+    background: var(--mint);
+    color: var(--forest);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .22);
+}
+
+.primary-btn:hover {
+    background: var(--mint-hover);
+    transform: translateY(-2px);
+}
+
+.ghost-btn {
+    border: 1px solid rgba(255, 255, 255, .6);
+    color: #ffffff;
+}
+
+.ghost-btn:hover {
+    background: rgba(255, 255, 255, .12);
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   SHARED SECTION STYLES
+========================= */
+
+section {
+    position: relative;
+}
+
+h2 {
+    font-size: clamp(32px, 3.8vw, 46px);
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+}
+
+.lead {
+    font-size: 18px;
+    color: var(--muted);
+}
+
+.center {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   WHO WE ARE
+========================= */
+
+.who {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding: 110px 8%;
+}
+
+.who p {
+    color: var(--muted);
+    font-size: 17px;
+    margin-bottom: 18px;
+}
+
+.checks {
+    list-style: none;
+    margin-top: 26px;
+    display: grid;
+    gap: 12px;
+}
+
+.checks li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-weight: 600;
+}
+
+.checks li::before {
+    content: "✓";
+    flex: none;
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--mint);
+    color: var(--forest);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.who-image {
+    position: relative;
+    height: 460px;
+    overflow: hidden;
+    border-radius: 30px;
+    background: linear-gradient(140deg, #cfe5d6, #efead6);
+    box-shadow: 0 25px 60px rgba(28, 43, 36, .16);
+}
+
+.who-image .photo {
+    position: absolute;
+    inset: 0;
+    background-image: var(--img);
+    background-size: cover;
+    background-position: center;
+}
+
+.who-badge {
+    position: absolute;
+    left: 22px;
+    bottom: 22px;
+    right: 22px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: rgba(20, 33, 26, .72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.who-badge strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 2px;
+    color: var(--mint);
+}
+
+
+/* =========================
+   MISSION / VISION / APPROACH
+========================= */
+
+.pillars {
+    background: var(--tint);
+    padding: 100px 8%;
+}
+
+.pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 55px;
+}
+
+.pillar {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 36px;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.pillar:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 45px rgba(28, 43, 36, .12);
+}
+
+.pillar .num {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--deep);
+    margin-bottom: 18px;
+}
+
+.pillar .ico {
+    font-size: 34px;
+    margin-bottom: 16px;
+}
+
+.pillar h3 {
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+.pillar p {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+
+/* =========================
+   WHO IT IS FOR
+========================= */
+
+.audience {
+    padding: 110px 8%;
+}
+
+.audience-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-top: 55px;
+}
+
+.aud {
+    padding: 30px 26px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+    transition: transform .2s, box-shadow .2s, background .2s, color .2s;
+}
+
+.aud:hover {
+    transform: translateY(-6px);
+    background: var(--forest);
+    color: #ffffff;
+    box-shadow: 0 18px 45px rgba(28, 43, 36, .2);
+}
+
+.aud .ico {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 18px;
+    border-radius: 14px;
+    background: var(--tint);
+    font-size: 26px;
+}
+
+.aud h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.aud p {
+    font-size: 14.5px;
+    color: var(--muted);
+    transition: color .2s;
+}
+
+.aud:hover p {
+    color: rgba(255, 255, 255, .78);
+}
+
+
+/* =========================
+   HOW IT WORKS
+========================= */
+
+.how {
+    background: var(--forest);
+    color: #ffffff;
+    padding: 105px 8%;
+}
+
+.how .section-label {
+    color: var(--mint);
+}
+
+.how .lead {
+    color: rgba(255, 255, 255, .72);
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 58px;
+    counter-reset: step;
+}
+
+.step {
+    position: relative;
+    padding: 34px 30px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .12);
+}
+
+.step::before {
+    counter-increment: step;
+    content: "0" counter(step);
+    display: block;
+    margin-bottom: 18px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--mint);
+}
+
+.step h3 {
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, .75);
+}
+
+
+/* =========================
+   TRADES / PROFESSIONS
+========================= */
+
+.trades {
+    padding: 110px 8%;
+}
+
+.trade-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 55px;
+}
+
+.trade {
+    position: relative;
+    height: 230px;
+    overflow: hidden;
+    border-radius: 20px;
+    background-image:
+        var(--img),
+        linear-gradient(135deg, var(--c1, #2d4a3a), var(--c2, #1c2b24));
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    transition: transform .25s, box-shadow .25s;
+}
+
+.trade:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(28, 43, 36, .25);
+}
+
+.trade::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(14, 26, 20, .85) 0%, rgba(14, 26, 20, 0) 62%);
+}
+
+.trade span {
+    position: absolute;
+    z-index: 2;
+    left: 18px;
+    bottom: 16px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+
+/* =========================
+   FINAL CTA
+========================= */
+
+.final-cta {
+    text-align: center;
+    padding: 100px 25px;
+    color: #ffffff;
+    background: linear-gradient(120deg, var(--forest-dark), #2d4a3a);
+}
+
+.final-cta .section-label {
+    color: var(--mint);
+}
+
+.final-cta h2 {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.final-cta p {
+    font-size: 18px;
+    opacity: .9;
+    margin-bottom: 30px;
+}
+
+.final-cta .btn-row {
+    justify-content: center;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 55px 8%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 30px;
+    background: var(--forest-dark);
+}
+
+.footer-brand p {
+    margin-top: 12px;
+    color: #9db0a4;
+    font-size: 13px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    font-size: 13px;
+    color: #cfdad2;
+}
+
+.footer-links a:hover {
+    color: var(--mint);
+}
+
+.copyright {
+    text-align: right;
+    color: #8ba093;
+    font-size: 12px;
+}
+
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+    .audience-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .trade-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .marketing-header {
+        padding: 0 5%;
+    }
+
+    .top-nav a:not(.login-btn):not(.signup-btn) {
+        display: none;
+    }
+
+    .who {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        padding: 80px 6%;
+    }
+
+    .who-image {
+        height: 340px;
+    }
+
+    .pillars,
+    .audience,
+    .how,
+    .trades {
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+
+    .pillar-grid,
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+    footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-brand .brand {
+        justify-content: center;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+    }
+
+    .copyright {
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .marketing-header {
+        height: 70px;
+    }
+
+    .brand-text {
+        font-size: 17px;
+    }
+
+    .login-btn {
+        padding: 8px 15px;
+    }
+
+    .signup-btn {
+        padding: 9px 15px;
+    }
+
+    .page-banner {
+        min-height: 520px;
+    }
+
+    .banner-content {
+        bottom: 50px;
+    }
+
+    .banner-content p {
+        font-size: 16px;
+    }
+
+    .btn-row .primary-btn,
+    .btn-row .ghost-btn {
+        width: 100%;
+    }
+
+    .audience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trade-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .trade {
+        height: 180px;
+    }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+<header class="marketing-header">
+
+    <a href="index.html" class="brand">
+        <span class="brand-mark">K</span>
+        <span class="brand-text">Kofkro<span>LMIS</span></span>
+    </a>
+
+    <nav class="top-nav">
+
+        <a href="index.html#opportunities">Opportunities</a>
+        <a href="index.html#employers">Employers</a>
+        <a href="index.html#youth">Youth</a>
+        <a href="about.html" class="current">About</a>
+
+        <a href="login.html#login" class="login-btn">Log in</a>
+        <a href="login.html#register" class="signup-btn">Sign up</a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <!-- BANNER -->
+
+    <section class="page-banner">
+
+        <div class="banner-bg" style="--img:url('yg.jpg')"></div>
+        <div class="banner-overlay"></div>
+
+        <div class="banner-content">
+
+            <div class="eyebrow"></div>
+
+            <h1>
+                Connecting people,
+                <br>
+                skills and opportunities.
+            </h1>
+
+            <p>
+                Kofkro LMIS is the Labour Market Information System for
+                the Kofkro community: a simple place to find work, grow
+                your skills and connect with employers.
+            </p>
+
+            <div class="btn-row">
+                <a href="login.html#register" class="primary-btn">Join Kofkro LMIS</a>
+                <a href="#who" class="ghost-btn">Learn more</a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHO WE ARE -->
+
+    <section class="who" id="who">
+
+        <div class="reveal">
+
+            <div class="section-label">Who we are</div>
+
+            <h2>A labour market platform built for our community.</h2>
+
+            <p>
+                Kofkro LMIS (Labour Market Information System) brings job
+                seekers, young people, employers and training providers
+                together in one place.
+            </p>
+
+            <p>
+                Finding the right job, or the right worker, often comes
+                down to knowing what is available close to home. We make
+                that information easy to see and easy to act on.
+            </p>
+
+            <ul class="checks">
+                <li>One simple platform for work, skills and people</li>
+                <li>Built around the Kofkro community</li>
+                <li>Create your account for free</li>
+            </ul>
+
+        </div>
+
+        <div class="who-image reveal">
+
+            <div class="photo" style="--img:url('teacher.jpg')"></div>
+
+            <div class="who-badge">
+                <strong>Made for Kofkro</strong>
+                Local people, local opportunities.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MISSION / VISION / APPROACH -->
+
+    <section class="pillars">
+
+        <div class="center">
+            <div class="section-label">What drives us</div>
+            <h2>Our mission, vision and approach.</h2>
+            <p class="lead">
+                Everything on the platform is designed to help people
+                and businesses in Kofkro reach each other.
+            </p>
+        </div>
+
+        <div class="pillar-grid">
+
+            <div class="pillar reveal">
+                <div class="num">01</div>
+                <div class="ico"></div>
+                <h3>Our mission</h3>
+                <p>
+                    To make it easier for people in Kofkro to find work,
+                    build their skills and connect with employers.
+                </p>
+            </div>
+
+            <div class="pillar reveal">
+                <div class="num">02</div>
+                <div class="ico"></div>
+                <h3>Our vision</h3>
+                <p>
+                    A community where everyone can see, and reach, the
+                    opportunities that are available around them.
+                </p>
+            </div>
+
+            <div class="pillar reveal">
+                <div class="num">03</div>
+                <div class="ico"></div>
+                <h3>Our approach</h3>
+                <p>
+                    Simple, local and open to everyone, from first-time
+                    job seekers to established employers.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- WHO IT IS FOR -->
+
+    <section class="audience" id="audience">
+
+        <div class="center">
+            <div class="section-label">Who it is for</div>
+            <h2>One platform, four ways to take part.</h2>
+            <p class="lead">
+                Choose the role that fits you when you create your account.
+            </p>
+        </div>
+
+        <div class="audience-grid">
+
+            <div class="aud reveal">
+                <div class="ico"></div>
+                <h3>Job seekers</h3>
+                <p>Build your profile, search for jobs and apply for the ones that suit you.</p>
+            </div>
+
+            <div class="aud reveal">
+                <div class="ico"></div>
+                <h3>Young people</h3>
+                <p>Find a first job, an internship or an apprenticeship and start your career.</p>
+            </div>
+
+            <div class="aud reveal">
+                <div class="ico"></div>
+                <h3>Employers</h3>
+                <p>Post vacancies and reach people in the community who are ready to work.</p>
+            </div>
+
+            <div class="aud reveal">
+                <div class="ico">🎓</div>
+                <h3>Training providers</h3>
+                <p>Share your training so people can build the skills employers are looking for.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="how" id="how">
+
+        <div class="center">
+            <div class="section-label">How it works</div>
+            <h2>Getting started takes three steps.</h2>
+            <p class="lead">
+                No complicated process. Create an account and you are on your way.
+            </p>
+        </div>
+
+        <div class="steps">
+
+            <div class="step reveal">
+                <h3>Create your account</h3>
+                <p>Sign up for free and tell us whether you are a job seeker, an employer or a training provider.</p>
+            </div>
+
+            <div class="step reveal">
+                <h3>Build your presence</h3>
+                <p>Set up your profile or organisation so the right people can find you.</p>
+            </div>
+
+            <div class="step reveal">
+                <h3>Connect and grow</h3>
+                <p>Apply for opportunities, post vacancies or share training, and keep moving forward.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRADES -->
+
+    <section class="trades" id="trades">
+
+        <div class="center">
+            <div class="section-label">Every kind of work</div>
+            <h2>Opportunities across many professions.</h2>
+            <p class="lead">
+                From healthcare and farming to trades, teaching and
+                technology, there is a place for every skill.
+            </p>
+        </div>
+
+        <div class="trade-grid">
+
+            <div class="trade reveal" style="--img:url('nurse1.jpg'); --c1:#0b3d6e; --c2:#1c8fa6;"><span>Nursing &amp; Health</span></div>
+            <div class="trade reveal" style="--img:url('farm.jpg'); --c1:#2d5a27; --c2:#8ab94a;"><span>Farming</span></div>
+            <div class="trade reveal" style="--img:url('teacher.jpg'); --c1:#7a3e12; --c2:#e0a030;"><span>Teaching</span></div>
+            <div class="trade reveal" style="--img:url('electronic.jpg'); --c1:#1b2a49; --c2:#e6b422;"><span>Electrical</span></div>
+            <div class="trade reveal" style="--img:url('tal.jpg'); --c1:#6b1d4a; --c2:#d0577f;"><span>Tailoring &amp; Fashion</span></div>
+            <div class="trade reveal" style="--img:url('mac.jpg'); --c1:#2b2f36; --c2:#d9622b;"><span>Mechanics</span></div>
+            <div class="trade reveal" style="--img:url('carp.jpg'); --c1:#4a2f1a; --c2:#b9803f;"><span>Carpentry</span></div>
+            <div class="trade reveal" style="--img:url('software.jpg'); --c1:#0b2a5c; --c2:#6a4fe0;"><span>Software &amp; Tech</span></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINAL CTA -->
+
+    <section class="final-cta">
+
+        <div class="section-label">Get started today</div>
+
+        <h2>Ready to take your next step?</h2>
+
+        <p>Join Kofkro LMIS and connect with jobs, skills and people.</p>
+
+        <div class="btn-row">
+            <a href="login.html#register" class="primary-btn">Sign up for free</a>
+            <a href="login.html#login" class="ghost-btn">Log in</a>
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-brand">
+
+        <a href="index.html" class="brand">
+            <span class="brand-mark">K</span>
+            <span class="brand-text">Kofkro<span>LMIS</span></span>
+        </a>
+
+        <p>Connecting people, skills and opportunities.</p>
+
+    </div>
+
+    <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="index.html#opportunities">Opportunities</a>
+        <a href="index.html#employers">Employers</a>
+        <a href="login.html#login">Login</a>
+    </div>
+
+    <div class="copyright">
+        © 2026 Kofkro LMIS. All rights reserved.
+    </div>
+
+</footer>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* Header turns dark green once you scroll */
+
+    const header = document.querySelector(".marketing-header");
+
+    function updateHeader() {
+        header.classList.toggle("scrolled", window.scrollY > 40);
+    }
+
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    updateHeader();
+
+
+    /* Gentle reveal as sections scroll into view */
+
+    const observer = new IntersectionObserver(function (entries) {
+
+        entries.forEach(function (entry) {
+
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+            }
+
+        });
+
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(function (el) {
+        observer.observe(el);
+    });
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Terms &amp; Conditions | Kofkro LMIS</title>
+
+    <style>
+
+:root {
+    --forest: #1c2b24;
+    --forest-dark: #14211a;
+    --mint: #a3d1b5;
+    --mint-hover: #b9e0c8;
+    --deep: #2f6b4f;
+    --ink: #13201a;
+    --muted: #5f7066;
+    --line: #dce6de;
+    --tint: #eaf2ec;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--ink);
+    background: #ffffff;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.marketing-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 78px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--forest);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .12);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 800;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.brand-mark {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mint);
+    color: var(--forest);
+    border-radius: 8px;
+    font-weight: 900;
+}
+
+.brand-text span {
+    color: var(--mint);
+}
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 14px;
+}
+
+.top-nav a:not(.login-btn):not(.signup-btn) {
+    color: rgba(255, 255, 255, .92);
+    transition: color .2s;
+}
+
+.top-nav a:not(.login-btn):not(.signup-btn):hover {
+    color: var(--mint);
+}
+
+.login-btn {
+    border: 1px solid rgba(255, 255, 255, .7);
+    color: #ffffff;
+    padding: 11px 23px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background .2s;
+}
+
+.login-btn:hover {
+    background: rgba(255, 255, 255, .1);
+}
+
+.signup-btn {
+    background: var(--mint);
+    color: var(--forest);
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 700;
+    box-shadow: 0 7px 18px rgba(163, 209, 181, .22);
+    transition: transform .2s, background .2s;
+}
+
+.signup-btn:hover {
+    background: var(--mint-hover);
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   TITLE BANNER
+========================= */
+
+.doc-banner {
+    padding: 150px 8% 70px;
+    color: #ffffff;
+    background:
+        radial-gradient(900px 420px at 85% 0%, #3f6b53 0%, rgba(63, 107, 83, 0) 65%),
+        linear-gradient(135deg, var(--forest-dark), #2d4a3a);
+}
+
+.eyebrow {
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--mint);
+}
+
+.doc-banner h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(36px, 4.6vw, 58px);
+    line-height: 1.07;
+    letter-spacing: -1.2px;
+    margin-bottom: 16px;
+}
+
+.doc-banner p {
+    max-width: 640px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, .85);
+}
+
+.updated {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 7px 15px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, .28);
+    background: rgba(255, 255, 255, .1);
+    font-size: 13px;
+}
+
+
+/* =========================
+   DOCUMENT LAYOUT
+========================= */
+
+.doc {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 70px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 80px 6% 100px;
+    align-items: start;
+}
+
+/* Table of contents */
+.toc {
+    position: sticky;
+    top: 104px;
+    padding: 22px 20px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--tint);
+}
+
+.toc h2 {
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--deep);
+}
+
+.toc ol {
+    list-style: none;
+    display: grid;
+    gap: 2px;
+}
+
+.toc a {
+    display: block;
+    padding: 7px 10px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: var(--muted);
+    transition: background .2s, color .2s;
+}
+
+.toc a:hover {
+    background: #ffffff;
+    color: var(--ink);
+}
+
+.toc a.active {
+    background: var(--forest);
+    color: #ffffff;
+}
+
+/* Text */
+.terms-body section {
+    padding-bottom: 34px;
+    margin-bottom: 34px;
+    border-bottom: 1px solid var(--line);
+}
+
+.terms-body section:last-of-type {
+    border-bottom: 0;
+}
+
+.terms-body h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-size: 26px;
+    letter-spacing: -.5px;
+}
+
+.terms-body h2 .n {
+    flex: none;
+    min-width: 34px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 26px;
+    color: var(--deep);
+}
+
+.terms-body p {
+    margin-bottom: 14px;
+    color: #3d4d43;
+    font-size: 16px;
+}
+
+.terms-body ul {
+    margin: 4px 0 14px 4px;
+    list-style: none;
+    display: grid;
+    gap: 9px;
+}
+
+.terms-body li {
+    position: relative;
+    padding-left: 24px;
+    color: #3d4d43;
+    font-size: 16px;
+}
+
+.terms-body li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 10px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 0 3px rgba(163, 209, 181, .3);
+}
+
+.note {
+    margin: 18px 0 4px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    border-left: 4px solid var(--deep);
+    background: var(--tint);
+    font-size: 15px;
+    color: var(--ink);
+}
+
+.accept {
+    margin-top: 10px;
+    padding: 30px 32px;
+    border-radius: 22px;
+    background: var(--forest);
+    color: #ffffff;
+}
+
+.accept h3 {
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+
+.accept p {
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, .8);
+}
+
+.btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.primary-btn,
+.ghost-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 26px;
+    border-radius: 28px;
+    font-weight: 700;
+    transition: transform .2s, background .2s;
+}
+
+.primary-btn {
+    background: var(--mint);
+    color: var(--forest);
+}
+
+.primary-btn:hover {
+    background: var(--mint-hover);
+    transform: translateY(-2px);
+}
+
+.ghost-btn {
+    border: 1px solid rgba(255, 255, 255, .55);
+    color: #ffffff;
+}
+
+.ghost-btn:hover {
+    background: rgba(255, 255, 255, .12);
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 55px 8%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: 30px;
+    background: var(--forest-dark);
+}
+
+.footer-brand p {
+    margin-top: 12px;
+    color: #9db0a4;
+    font-size: 13px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    font-size: 13px;
+    color: #cfdad2;
+}
+
+.footer-links a:hover {
+    color: var(--mint);
+}
+
+.copyright {
+    text-align: right;
+    color: #8ba093;
+    font-size: 12px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 960px) {
+
+    .marketing-header {
+        padding: 0 5%;
+    }
+
+    .top-nav a:not(.login-btn):not(.signup-btn) {
+        display: none;
+    }
+
+    .doc-banner {
+        padding: 130px 6% 55px;
+    }
+
+    .doc {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 50px 6% 80px;
+    }
+
+    .toc {
+        position: static;
+    }
+
+    .toc ol {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-brand .brand {
+        justify-content: center;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+    }
+
+    .copyright {
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .marketing-header {
+        height: 70px;
+    }
+
+    .brand-text {
+        font-size: 17px;
+    }
+
+    .login-btn {
+        padding: 8px 15px;
+    }
+
+    .signup-btn {
+        padding: 9px 15px;
+    }
+
+    .toc ol {
+        grid-template-columns: 1fr;
+    }
+
+    .terms-body h2 {
+        font-size: 22px;
+    }
+
+    .accept {
+        padding: 24px 22px;
+    }
+
+    .btn-row .primary-btn,
+    .btn-row .ghost-btn {
+        width: 100%;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+<header class="marketing-header">
+
+    <a href="index.html" class="brand">
+        <span class="brand-mark">K</span>
+        <span class="brand-text">Kofkro<span>LMIS</span></span>
+    </a>
+
+    <nav class="top-nav">
+
+        <a href="index.html#opportunities">Opportunities</a>
+        <a href="index.html#employers">Employers</a>
+        <a href="index.html#youth">Youth</a>
+        <a href="about.html">About</a>
+
+        <a href="login.html#login" class="login-btn">Log in</a>
+        <a href="login.html#register" class="signup-btn">Sign up</a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="doc-banner">
+
+        <div class="eyebrow">Legal</div>
+
+        <h1>Terms &amp; Conditions</h1>
+
+        <p>
+            Please read these terms carefully. They explain the rules for
+            using the Kofkro Labour Market Information System (Kofkro LMIS).
+        </p>
+
+        <span class="updated">Last updated: 12 October 2026</span>
+
+    </section>
+
+
+    <div class="doc">
+
+        <!-- TABLE OF CONTENTS -->
+
+        <aside class="toc">
+
+            <h2>On this page</h2>
+
+            <ol id="tocList">
+                <li><a href="#t1">About these terms</a></li>
+                <li><a href="#t2">Who can use Kofkro LMIS</a></li>
+                <li><a href="#t3">Your account</a></li>
+                <li><a href="#t4">Job seekers</a></li>
+                <li><a href="#t5">Employers</a></li>
+                <li><a href="#t6">Training providers</a></li>
+                <li><a href="#t7">Acceptable use</a></li>
+                <li><a href="#t8">Content you share</a></li>
+                <li><a href="#t9">Your information</a></li>
+                <li><a href="#t10">No guarantees</a></li>
+                <li><a href="#t11">Suspension and ending</a></li>
+                <li><a href="#t12">Changes to these terms</a></li>
+                <li><a href="#t13">Contact us</a></li>
+            </ol>
+
+        </aside>
+
+
+        <!-- TERMS -->
+
+        <div class="terms-body">
+
+            <section id="t1">
+                <h2><span class="n">1</span> About these terms</h2>
+                <p>
+                    Kofkro LMIS is a platform that connects job seekers, young
+                    people, employers and training providers in the Kofkro
+                    community. By creating an account or using the platform,
+                    you agree to these Terms &amp; Conditions.
+                </p>
+                <p>
+                    If you do not agree with any part of these terms, please do
+                    not create an account or use the platform.
+                </p>
+            </section>
+
+            <section id="t2">
+                <h2><span class="n">2</span> Who can use Kofkro LMIS</h2>
+                <p>
+                    Kofkro LMIS is open to individuals, businesses and
+                    organisations who want to find work, offer work or share
+                    training in the community.
+                </p>
+                <ul>
+                    <li>You must give true information when you sign up.</li>
+                    <li>If you are under 18, please use the platform with the knowledge of a parent or guardian.</li>
+                    <li>If you register for an organisation, you confirm that you are allowed to act on its behalf.</li>
+                </ul>
+            </section>
+
+            <section id="t3">
+                <h2><span class="n">3</span> Your account</h2>
+                <p>
+                    When you create an account you choose a role: job seeker,
+                    employer or training provider. You are responsible for
+                    everything that happens under your account.
+                </p>
+                <ul>
+                    <li>Keep your email address and details up to date.</li>
+                    <li>Choose a strong password of at least 8 characters and keep it private.</li>
+                    <li>Do not share your account or use someone else's account.</li>
+                    <li>Tell us straight away if you think someone else is using your account.</li>
+                </ul>
+            </section>
+
+            <section id="t4">
+                <h2><span class="n">4</span> Job seekers</h2>
+                <p>If you use Kofkro LMIS to look for work, you agree to:</p>
+                <ul>
+                    <li>Give accurate information about your skills, experience and qualifications.</li>
+                    <li>Apply only for opportunities you are genuinely interested in.</li>
+                    <li>Treat employers and other users with respect.</li>
+                </ul>
+            </section>
+
+            <section id="t5">
+                <h2><span class="n">5</span> Employers and organisations</h2>
+                <p>If you post vacancies or opportunities, you agree to:</p>
+                <ul>
+                    <li>Only advertise real opportunities that you are able to offer.</li>
+                    <li>Describe each role honestly, including what the work involves and who to contact.</li>
+                    <li>Treat applicants fairly and not discriminate unlawfully.</li>
+                    <li>Never ask applicants to pay money to be considered for, or to receive, a job.</li>
+                    <li>Follow the labour and employment laws that apply to you.</li>
+                </ul>
+            </section>
+
+            <section id="t6">
+                <h2><span class="n">6</span> Training providers</h2>
+                <p>If you share courses or training, you agree to:</p>
+                <ul>
+                    <li>Give accurate details about what you offer, including costs and requirements.</li>
+                    <li>Deliver the training in the way you describe it.</li>
+                    <li>Not make promises about jobs or results that you cannot keep.</li>
+                </ul>
+            </section>
+
+            <section id="t7">
+                <h2><span class="n">7</span> Acceptable use</h2>
+                <p>You must not use Kofkro LMIS to:</p>
+                <ul>
+                    <li>Post false, misleading or fraudulent information.</li>
+                    <li>Pretend to be another person, business or organisation.</li>
+                    <li>Harass, threaten or discriminate against anyone.</li>
+                    <li>Share unlawful, offensive or harmful content.</li>
+                    <li>Collect other users' details for purposes unrelated to work or training.</li>
+                    <li>Try to damage, interrupt or gain unauthorised access to the platform.</li>
+                </ul>
+            </section>
+
+            <section id="t8">
+                <h2><span class="n">8</span> Content you share</h2>
+                <p>
+                    You keep ownership of the information you add to Kofkro LMIS,
+                    such as your profile, vacancies and training details. By
+                    adding it, you allow us to display it on the platform so that
+                    it can be seen by the people it is meant for.
+                </p>
+                <p>
+                    You are responsible for what you post. We may remove content
+                    that breaks these terms or that we believe could cause harm.
+                </p>
+            </section>
+
+            <section id="t9">
+                <h2><span class="n">9</span> Your information</h2>
+                <p>
+                    To run the platform we collect the details you give us, such
+                    as your name, email address, role and any profile, vacancy or
+                    training information you add. We use this information to
+                    operate your account, to connect job seekers with
+                    opportunities, and to keep the platform working properly.
+                </p>
+                <ul>
+                    <li>Only share information you are comfortable having on your profile or listing.</li>
+                    <li>Do not post sensitive personal details about other people without their permission.</li>
+                    <li>We handle personal information in line with the data protection laws that apply in Ghana.</li>
+                </ul>
+            </section>
+
+            <section id="t10">
+                <h2><span class="n">10</span> No guarantees</h2>
+                <p>
+                    Kofkro LMIS helps people find each other, but we do not
+                    guarantee that you will find a job, a worker or a training
+                    place. We also cannot check every listing or profile.
+                </p>
+                <div class="note">
+                    <strong>Stay safe:</strong> check who you are dealing with
+                    before you share personal documents, and never pay money to
+                    secure a job.
+                </div>
+            </section>
+
+            <section id="t11">
+                <h2><span class="n">11</span> Suspension and ending</h2>
+                <p>
+                    We may suspend or close an account if these terms are broken,
+                    if information is false, or if the account is used in a way
+                    that could harm others or the platform. You can stop using
+                    Kofkro LMIS at any time.
+                </p>
+            </section>
+
+            <section id="t12">
+                <h2><span class="n">12</span> Changes to these terms</h2>
+                <p>
+                    We may update these terms from time to time as the platform
+                    grows. The date at the top of this page shows when they were
+                    last changed. If you keep using Kofkro LMIS after a change,
+                    you agree to the updated terms.
+                </p>
+            </section>
+
+            <section id="t13">
+                <h2><span class="n">13</span> Contact us</h2>
+                <p>
+                    If you have a question about these terms, or you want to
+                    report a problem with a listing or an account, please contact
+                    the Kofkro LMIS administrator.
+                </p>
+            </section>
+
+
+            <div class="accept">
+
+                <h3>Ready to get started?</h3>
+
+                <p>By creating an account you agree to these Terms &amp; Conditions.</p>
+
+                <div class="btn-row">
+                    <a href="login.html#register" class="primary-btn">Create an account</a>
+                    <a href="login.html#login" class="ghost-btn">Log in</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-brand">
+
+        <a href="index.html" class="brand">
+            <span class="brand-mark">K</span>
+            <span class="brand-text">Kofkro<span>LMIS</span></span>
+        </a>
+
+        <p>Connecting people, skills and opportunities.</p>
+
+    </div>
+
+    <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="terms.html">Terms</a>
+        <a href="index.html#opportunities">Opportunities</a>
+        <a href="login.html#login">Login</a>
+    </div>
+
+    <div class="copyright">
+        © 2026 Kofkro LMIS. All rights reserved.
+    </div>
+
+</footer>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* Highlight the section you are reading in the contents list */
+
+    const links = Array.from(document.querySelectorAll("#tocList a"));
+    const sections = links.map(function (a) {
+        return document.querySelector(a.getAttribute("href"));
+    });
+
+    function setActive() {
+
+        let current = 0;
+
+        sections.forEach(function (sec, i) {
+            if (sec.getBoundingClientRect().top <= 140) {
+                current = i;
+            }
+        });
+
+        links.forEach(function (a, i) {
+            a.classList.toggle("active", i === current);
+        });
+
+    }
+
+    window.addEventListener("scroll", setActive, { passive: true });
+    setActive();
+
+});
+
+</script>
+
+</body>
+</html>
