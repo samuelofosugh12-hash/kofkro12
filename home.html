@@ -6,14 +6,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kofkro LMIS | Home</title>
+<title>Home | Kofkro LMIS</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 /* =====================================================
    THEME + RESET
 ===================================================== */
@@ -1275,606 +1274,288 @@ a {
   }
 }
 
+
+
+/* =====================================================
+   MULTI-PAGE ADDITIONS
+===================================================== */
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  display: block;
+  padding: 18px 20px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--mint);
+  box-shadow: 0 14px 30px rgba(28, 43, 36, .1);
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: var(--deep);
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+.heading-link {
+  color: var(--deep);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.heading-link:hover {
+  text-decoration: underline;
+}
+
+.empty a {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 9px 22px;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--forest);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.empty a:hover {
+  background: var(--mint-hover);
+}
+
+@media (max-width: 550px) {
+
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+}
+
 </style>
 
 </head>
 
+<body data-page="home">
 
+<!-- The header, side menus and footer are added by the script at the bottom of this file.
+     Only this page's own content lives here. -->
 
-<body>
+<section id="content">
 
+  <section class="welcome-card">
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
+    <div>
 
-<header class="main-header">
+      <p class="welcome-small" id="welcomeSmall">WELCOME TO KOFKRO LMIS</p>
 
-  <div class="header-inner">
+      <h1>
+        Find opportunities.
+        Build your future.
+      </h1>
 
-    <a href="index.html" class="brand">
-      <span class="brand-mark">K</span>
-      <span>Kofkro <span class="l">LMIS</span></span>
-    </a>
-
-    <div class="header-search">
-
-      <span class="search-icon">⌕</span>
-
-      <input
-        id="q"
-        type="search"
-        placeholder="Search jobs, companies or locations"
-      >
+      <p>
+        Discover jobs, internships and apprenticeships available in
+        Kofkro and surrounding communities.
+      </p>
 
     </div>
 
-    <nav class="main-nav">
+    <a href="jobs.html" class="welcome-button">Explore jobs</a>
 
-      <a href="#jobs" class="nav-link active">
-        <span class="nav-icon">⌂</span>
-        <span>Home</span>
-      </a>
+  </section>
 
-      <a href="#jobs" class="nav-link">
-        <span class="nav-icon">▣</span>
-        <span>Jobs</span>
-      </a>
 
-      <a href="#post" class="nav-link employer-only">
-        <span class="nav-icon">＋</span>
-        <span>Post Job</span>
-      </a>
+  <div class="stat-row">
 
-      <a href="#profile" class="header-avatar" id="headerAvatar" title="Your profile">
-        <img id="headerImg" alt="" hidden>
-        <span id="headerLetter">U</span>
-      </a>
+    <a href="jobs.html" class="stat-card">
+      <strong id="statJobs">0</strong>
+      <span>Open jobs</span>
+    </a>
 
-      <button type="button" id="logout" class="logout-btn">
-        Sign out
-      </button>
+    <a href="saved.html" class="stat-card">
+      <strong id="statSaved">0</strong>
+      <span>Saved jobs</span>
+    </a>
 
-    </nav>
+    <a href="applications.html" class="stat-card">
+      <strong id="statApps">0</strong>
+      <span id="statAppsLabel">My applications</span>
+    </a>
 
   </div>
 
-</header>
 
+  <section class="jobs-section" id="jobs">
 
-
-<!-- =====================================================
-     PAGE
-===================================================== -->
-
-<main class="page-container">
-
-
-  <!-- LEFT -->
-
-  <aside class="left-sidebar">
-
-    <section class="profile-card" id="profile">
-
-      <div class="profile-cover"></div>
-
-      <div class="profile-avatar" id="avatarBox" title="Change profile photo">
-
-        <img id="avatarImg" alt="Your profile photo" hidden>
-
-        <span id="avatarLetter">U</span>
-
-        <button type="button" class="avatar-edit" id="avatarEdit" aria-label="Change profile photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 8h3l2-3h6l2 3h3v11H4z"/>
-            <circle cx="12" cy="13" r="3.5"/>
-          </svg>
-        </button>
-
-      </div>
-
-      <input type="file" id="photoInput" accept="image/*" hidden>
-
-      <div class="profile-content">
-
-        <h2 id="profileName">Loading...</h2>
-
-        <p id="profileEmail" class="profile-email">Loading...</p>
-
-        <p id="profileRole" class="profile-role">Candidate</p>
-
-        <button type="button" class="link-btn" id="removePhoto" hidden>Remove photo</button>
-
-        <button type="button" id="updateProfile" class="profile-button">
-          Update profile
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <section class="side-menu-card">
-
-      <h3>My LMIS</h3>
-
-      <a href="#jobs" id="findLink" class="on"><span>▣</span> Find jobs</a>
-      <a href="#post" class="employer-only"><span>＋</span> Post a job</a>
-      <a href="#jobs" id="savedLink"><span>★</span> Saved jobs <b class="badge" id="savedBadge">0</b></a>
-      <a href="#jobs" id="appsLink"><span>◉</span> <span id="appsLabel">My applications</span> <b class="badge" id="appsBadge">0</b></a>
-
-    </section>
-
-
-    <section class="side-menu-card">
-
-      <h3>Account</h3>
-
-      <a href="#">Settings</a>
-      <a href="about.html">About Kofkro LMIS</a>
-      <a href="terms.html">Terms &amp; Conditions</a>
-
-    </section>
-
-  </aside>
-
-
-
-  <!-- CENTER -->
-
-  <section class="main-feed">
-
-
-    <section class="welcome-card">
+    <div class="jobs-heading">
 
       <div>
-
-        <p class="welcome-small" id="welcomeSmall">
-          WELCOME TO KOFKRO LMIS
-        </p>
-
-        <h1>
-          Find opportunities.
-          Build your future.
-        </h1>
-
-        <p>
-          Discover jobs, internships and apprenticeships available in
-          Kofkro and surrounding communities.
-        </p>
-
+        <h2>Latest jobs</h2>
+        <p id="count">Loading jobs...</p>
       </div>
 
-      <a href="#jobs" class="welcome-button">
-        Explore jobs
-      </a>
+      <a href="jobs.html" class="heading-link">View all jobs →</a>
 
-    </section>
+    </div>
+
+    <div id="jobs-list">
+
+      <div class="loading-box">
+        <div class="loading-spinner"></div>
+        <p>Loading jobs...</p>
+      </div>
+
+    </div>
+
+  </section>
 
 
+  <!-- POST JOB (employers and training providers only) -->
 
-    <section class="jobs-section" id="jobs">
+  <section class="post-job-card employer-only" id="post">
 
-      <div class="jobs-heading">
+    <div class="post-heading">
 
-        <div>
+      <h2>Post a job</h2>
 
-          <h2 id="jobsTitle">Job opportunities</h2>
+      <p>Have an opportunity? Share it with people in Kofkro.</p>
 
-          <p id="count">Loading jobs...</p>
+    </div>
 
-        </div>
+    <form id="pf">
 
-        <select id="ft">
-          <option value="">All job types</option>
+      <div class="form-group">
+        <label for="f-title">Job title</label>
+        <input id="f-title" type="text" placeholder="e.g. Sales Assistant" maxlength="80" required>
+      </div>
+
+      <div class="form-group">
+        <label for="f-co">Company / Organisation</label>
+        <input id="f-co" type="text" placeholder="e.g. Kofkro Market Traders" maxlength="60" required>
+      </div>
+
+      <div class="form-group">
+        <label for="f-loc">Location</label>
+        <input id="f-loc" type="text" placeholder="e.g. Kofkro" maxlength="60" required>
+      </div>
+
+      <div class="form-group">
+        <label for="f-type">Job type</label>
+        <select id="f-type" required>
+          <option value="">Select job type</option>
           <option value="Full-time">Full-time</option>
           <option value="Part-time">Part-time</option>
           <option value="Internship">Internship</option>
           <option value="Apprenticeship">Apprenticeship</option>
         </select>
+      </div>
+
+      <div class="form-group">
+        <label for="f-pay">Pay / Stipend <span>(optional)</span></label>
+        <input id="f-pay" type="text" placeholder="e.g. GHS 1,500 per month" maxlength="40">
+      </div>
+
+      <div class="form-group">
+        <label for="f-mail">Application email</label>
+        <input id="f-mail" type="email" placeholder="applications@example.com" maxlength="160" required>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="f-desc">Job description</label>
+        <textarea id="f-desc" rows="6" maxlength="800" placeholder="Describe the job, responsibilities and requirements..." required></textarea>
+      </div>
+
+      <div class="form-actions">
+
+        <button type="submit" class="post-button">Post job</button>
+
+        <p id="ok" class="success-message" style="display:none;">
+          ✓ Job posted successfully.
+        </p>
 
       </div>
 
-      <div id="jobs-list">
-
-        <div class="loading-box">
-          <div class="loading-spinner"></div>
-          <p>Loading jobs...</p>
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- POST JOB -->
-
-    <section class="post-job-card employer-only" id="post">
-
-      <div class="post-heading">
-
-        <h2>Post a job</h2>
-
-        <p>Have an opportunity? Share it with people in Kofkro.</p>
-
-      </div>
-
-      <form id="pf">
-
-        <div class="form-group">
-          <label for="f-title">Job title</label>
-          <input id="f-title" type="text" placeholder="e.g. Sales Assistant" maxlength="80" required>
-        </div>
-
-        <div class="form-group">
-          <label for="f-co">Company / Organisation</label>
-          <input id="f-co" type="text" placeholder="e.g. Kofkro Market Traders" maxlength="60" required>
-        </div>
-
-        <div class="form-group">
-          <label for="f-loc">Location</label>
-          <input id="f-loc" type="text" placeholder="e.g. Kofkro" maxlength="60" required>
-        </div>
-
-        <div class="form-group">
-          <label for="f-type">Job type</label>
-          <select id="f-type" required>
-            <option value="">Select job type</option>
-            <option value="Full-time">Full-time</option>
-            <option value="Part-time">Part-time</option>
-            <option value="Internship">Internship</option>
-            <option value="Apprenticeship">Apprenticeship</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="f-pay">Pay / Stipend <span>(optional)</span></label>
-          <input id="f-pay" type="text" placeholder="e.g. GHS 1,500 per month" maxlength="40">
-        </div>
-
-        <div class="form-group">
-          <label for="f-mail">Application email</label>
-          <input id="f-mail" type="email" placeholder="applications@example.com" maxlength="160" required>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="f-desc">Job description</label>
-          <textarea id="f-desc" rows="6" maxlength="800" placeholder="Describe the job, responsibilities and requirements..." required></textarea>
-        </div>
-
-        <div class="form-actions">
-
-          <button type="submit" class="post-button">Post job</button>
-
-          <p id="ok" class="success-message" style="display:none;">
-            ✓ Job posted successfully.
-          </p>
-
-        </div>
-
-      </form>
-
-    </section>
-
+    </form>
 
   </section>
 
-
-
-  <!-- RIGHT -->
-
-  <aside class="right-sidebar">
-
-
-    <section class="right-card">
-
-      <h3>Latest opportunities</h3>
-
-      <div id="recentJobs">
-        <p class="muted">Loading...</p>
-      </div>
-
-      <a href="#jobs" class="view-all">View all jobs →</a>
-
-    </section>
-
-
-    <section class="right-card">
-
-      <h3>Why use Kofkro LMIS?</h3>
-
-      <div class="benefit">
-        <div class="benefit-icon">✓</div>
-        <div>
-          <strong>Find local opportunities</strong>
-          <p>Discover jobs and training opportunities close to you.</p>
-        </div>
-      </div>
-
-      <div class="benefit">
-        <div class="benefit-icon">✓</div>
-        <div>
-          <strong>Build your career</strong>
-          <p>Connect your skills with employers and opportunities.</p>
-        </div>
-      </div>
-
-      <div class="benefit">
-        <div class="benefit-icon">✓</div>
-        <div>
-          <strong>Support local businesses</strong>
-          <p>Employers can reach people looking for work.</p>
-        </div>
-      </div>
-
-    </section>
-
-
-    <section class="right-card account-card">
-
-      <h3>Your account</h3>
-
-      <p>You are signed in as:</p>
-
-      <strong id="accountName">Loading...</strong>
-
-      <span id="accountEmail">Loading...</span>
-
-      <button type="button" id="logoutSide" class="secondary-button">
-        Sign out
-      </button>
-
-    </section>
-
-
-  </aside>
-
-</main>
-
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="site-footer">
-
-  <div class="footer-inner">
-
-    <div>
-
-      <strong>Kofkro <span>LMIS</span></strong>
-
-      <p>Connecting people to jobs, skills and opportunities.</p>
-
-    </div>
-
-    <div class="footer-links">
-
-      <a href="about.html">About</a>
-      <a href="#jobs">Jobs</a>
-      <a href="#post" class="employer-only">Employers</a>
-      <a href="terms.html">Terms</a>
-      <a href="#">Help</a>
-
-    </div>
-
-  </div>
-
-</footer>
-
-
-
-<!-- PHOTO CROPPER -->
-
-<dialog id="photoDialog" class="photo-dialog" aria-label="Adjust your profile photo">
-
-  <h3>Adjust your photo</h3>
-
-  <p class="hint">Drag the picture to move it. Use the slider to zoom.</p>
-
-  <div class="crop-stage">
-    <canvas id="cropCanvas" width="280" height="280"></canvas>
-  </div>
-
-  <div class="zoom-row">
-    <span>－</span>
-    <input type="range" id="cropZoom" min="1" max="3" step="0.01" value="1" aria-label="Zoom">
-    <span>＋</span>
-  </div>
-
-  <p class="crop-error" id="cropError" hidden></p>
-
-  <div class="dialog-actions">
-    <button type="button" class="ghost" id="cropCancel">Cancel</button>
-    <button type="button" class="primary" id="cropSave">Save photo</button>
-  </div>
-
-</dialog>
-
+</section>
 
 <script>
+/* =====================================================
+   KOFKRO LMIS — SHARED SCRIPT FOR THE SIGNED-IN PAGES
+   Used by: home.html, jobs.html, saved.html, applications.html
+   (browser-only version: everything is kept in localStorage)
+===================================================== */
+
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* =====================================================
-     KOFKRO LMIS HOME JAVASCRIPT
-     LOCALSTORAGE VERSION — NO NODE.JS
-  ===================================================== */
+  'use strict';
 
-
-  let currentUser = null;
-
-
-  /* STORAGE KEYS */
+  /* ---------- Keys + settings ---------- */
 
   const USERS_KEY = 'kofkro-users';
   const CURRENT_USER_KEY = 'kofkro-current-user';
   const JOBS_KEY = 'kofkro-lmis-jobs';
   const SAVED_KEY = 'kofkro-saved-jobs';
-
-  /* Roles that are allowed to post jobs (candidates only browse and apply) */
-  const POSTER_ROLES = ['employer', 'training_provider'];
-
   const APPS_KEY = 'kofkro-applications';
   const AVATARS_KEY = 'kofkro-avatars';
 
-  let showSavedOnly = false;
-  let showApps = false;
+  /* Roles that can post jobs (candidates only browse and apply) */
+  const POSTER_ROLES = ['employer', 'training_provider'];
+
+  const page = document.body.dataset.page || 'home';
+
+  let currentUser = null;
 
 
-  /* LOCALSTORAGE HELPERS */
+  /* ---------- Small helpers ---------- */
 
-  function getUsers() {
+  function readJSON(key, fallback) {
     try {
-      return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
     } catch (error) {
-      console.error('Could not read users:', error);
-      return [];
+      console.error('Could not read ' + key, error);
+      return fallback;
     }
   }
 
-  function getJobs() {
-    try {
-      return JSON.parse(localStorage.getItem(JOBS_KEY) || '[]');
-    } catch (error) {
-      console.error('Could not read jobs:', error);
-      return [];
-    }
+  function writeJSON(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
-  function saveJobs(jobs) {
-    localStorage.setItem(JOBS_KEY, JSON.stringify(jobs));
+  function esc(value) {
+    const div = document.createElement('div');
+    div.textContent = value == null ? '' : value;
+    return div.innerHTML;
   }
 
-
-  /* SAVED JOBS (kept per signed-in user) */
-
-  function getSavedMap() {
-    try {
-      return JSON.parse(localStorage.getItem(SAVED_KEY) || '{}');
-    } catch (error) {
-      return {};
-    }
-  }
-
-  function getSavedIds() {
-    if (!currentUser) {
-      return [];
-    }
-
-    const map = getSavedMap();
-
-    return map[currentUser.email.toLowerCase()] || [];
-  }
-
-  function isSaved(id) {
-    return getSavedIds().indexOf(String(id)) !== -1;
-  }
-
-  function toggleSaved(id) {
-
-    if (!currentUser) {
-      return;
-    }
-
-    const key = currentUser.email.toLowerCase();
-    const map = getSavedMap();
-    const ids = map[key] || [];
-    const at = ids.indexOf(String(id));
-
-    if (at === -1) {
-      ids.push(String(id));
-    } else {
-      ids.splice(at, 1);
-    }
-
-    map[key] = ids;
-
-    localStorage.setItem(SAVED_KEY, JSON.stringify(map));
-  }
-
-  function refreshSavedUI() {
-
-    const savedCount = getJobs().filter(function (job) {
-      return isSaved(job.id);
-    }).length;
-
-    const badge = document.getElementById('savedBadge');
-    const savedLink = document.getElementById('savedLink');
-    const findLink = document.getElementById('findLink');
-    const title = document.getElementById('jobsTitle');
-
-    if (badge) badge.textContent = savedCount;
-    const appsLink = document.getElementById('appsLink');
-    const appsBadge = document.getElementById('appsBadge');
-    const appsLabel = document.getElementById('appsLabel');
-
-    if (savedLink) savedLink.classList.toggle('on', showSavedOnly);
-    if (appsLink) appsLink.classList.toggle('on', showApps);
-    if (findLink) findLink.classList.toggle('on', !showSavedOnly && !showApps);
-
-    if (appsBadge) appsBadge.textContent = myApps().length;
-    if (appsLabel) appsLabel.textContent = isPoster() ? 'Applications received' : 'My applications';
-
-    if (title) {
-      title.textContent = showApps
-        ? (isPoster() ? 'Applications received' : 'My applications')
-        : (showSavedOnly ? 'Saved jobs' : 'Job opportunities');
-    }
-  }
-
-
-  /* APPLICATIONS */
-
-  function getApps() {
-    try {
-      return JSON.parse(localStorage.getItem(APPS_KEY) || '[]');
-    } catch (error) {
-      return [];
-    }
-  }
-
-  function saveApps(apps) {
-    localStorage.setItem(APPS_KEY, JSON.stringify(apps));
-  }
-
-  function isPoster() {
-    return !!currentUser && POSTER_ROLES.indexOf(currentUser.role) !== -1;
-  }
-
-  /* Candidates see what they sent. Employers see what they received. */
-  function myApps() {
-
-    if (!currentUser) {
-      return [];
-    }
-
-    const me = currentUser.email.toLowerCase();
-
-    return getApps().filter(function (a) {
-      return isPoster()
-        ? (a.jobOwner || '').toLowerCase() === me
-        : (a.email || '').toLowerCase() === me;
-    });
-  }
-
-  function hasApplied(jobId) {
-
-    if (!currentUser) {
-      return false;
-    }
-
-    const me = currentUser.email.toLowerCase();
-
-    return getApps().some(function (a) {
-      return String(a.jobId) === String(jobId) && (a.email || '').toLowerCase() === me;
-    });
-  }
-
-  function isOwnJob(job) {
-    return !!currentUser && !!job.postedBy &&
-      job.postedBy.toLowerCase() === currentUser.email.toLowerCase();
+  function byId(id) {
+    return document.getElementById(id);
   }
 
   function formatDate(iso) {
@@ -1887,421 +1568,482 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function renderApps() {
-
-    const box = document.getElementById('jobs-list');
-    const count = document.getElementById('count');
-    const searchInput = document.getElementById('q');
-    const q = searchInput ? searchInput.value.trim().toLowerCase() : '';
-
-    if (!box) {
-      return;
-    }
-
-    const poster = isPoster();
-
-    const apps = myApps().filter(function (a) {
-      return !q || (
-        (a.jobTitle || '') + ' ' + (a.co || '') + ' ' + (a.name || '')
-      ).toLowerCase().includes(q);
-    });
-
-    if (count) {
-      count.textContent =
-        apps.length + (apps.length === 1 ? ' application' : ' applications') +
-        (poster ? ' received' : ' sent');
-    }
-
-    if (!apps.length) {
-
-      box.innerHTML = `
-        <div class="empty">
-          ${
-            poster
-              ? `<strong>No applications yet.</strong><br>
-                 When someone applies for a job you posted, it will show up here.`
-              : `<strong>You have not applied for any jobs yet.</strong><br>
-                 Tap Apply on a job to send your first application.`
-          }
-        </div>
-      `;
-
-      return;
-    }
-
-    box.innerHTML = apps.map(function (a) {
-
-      if (poster) {
-
-        const subject = encodeURIComponent('Your application for ' + (a.jobTitle || 'a job'));
-
-        return `
-          <article class="job-card">
-
-            <div class="job-logo">${
-              getAvatar(a.email)
-                ? `<img src="${getAvatar(a.email)}" alt="">`
-                : escapeHtml((a.name || '?').charAt(0).toUpperCase())
-            }</div>
-
-            <div class="job-content">
-
-              <h3>${escapeHtml(a.name || '')}</h3>
-
-              <p class="company">
-                ${escapeHtml(a.email || '')}${a.phone ? ' · ' + escapeHtml(a.phone) : ''}
-              </p>
-
-              <div class="job-pills">
-                <span>Applied for ${escapeHtml(a.jobTitle || '')}</span>
-                ${a.edu ? `<span>${escapeHtml(a.edu)}</span>` : ''}
-                ${a.residence ? `<span>${escapeHtml(a.residence)}</span>` : ''}
-                <span>${escapeHtml(formatDate(a.createdAt))}</span>
-              </div>
-
-              <p class="description">
-                <strong>Skills:</strong> ${escapeHtml(a.skills || '')}
-                ${a.exp ? `<br><strong>Experience:</strong> ${escapeHtml(a.exp)}` : ''}
-                ${a.message ? `<br><strong>Message:</strong> ${escapeHtml(a.message)}` : ''}
-              </p>
-
-            </div>
-
-            <div class="job-actions">
-              <a class="apply-btn" href="mailto:${escapeHtml(a.email || '')}?subject=${subject}">Email</a>
-            </div>
-
-          </article>
-        `;
-      }
-
-      return `
-        <article class="job-card">
-
-          <div class="job-logo">${escapeHtml((a.co || 'K').charAt(0).toUpperCase())}</div>
-
-          <div class="job-content">
-
-            <h3>${escapeHtml(a.jobTitle || '')}</h3>
-
-            <p class="company">${escapeHtml(a.co || '')} · ${escapeHtml(a.loc || '')}</p>
-
-            <div class="job-pills">
-              <span>${escapeHtml(a.type || '')}</span>
-              <span>✓ ${escapeHtml(a.status || 'Submitted')}</span>
-              <span>${escapeHtml(formatDate(a.createdAt))}</span>
-            </div>
-
-            <p class="description">
-              ${a.message ? escapeHtml(a.message) : 'No message was added to this application.'}
-            </p>
-
-          </div>
-
-          <div class="job-actions">
-            <button type="button" class="remove-btn" data-withdraw="${escapeHtml(String(a.id))}">
-              Withdraw
-            </button>
-          </div>
-
-        </article>
-      `;
-
-    }).join('');
-  }
-
-
-  /* SHOW / HIDE THINGS ONLY EMPLOYERS NEED */
-
-  function applyRole() {
-
-    const canPost =
-      !!currentUser && POSTER_ROLES.indexOf(currentUser.role) !== -1;
-
-    document.querySelectorAll('.employer-only').forEach(function (el) {
-      el.classList.toggle('hide-me', !canPost);
-    });
-  }
-
-
-  /* LOAD CURRENT USER */
-
-  function loadUser() {
-
-    try {
-
-      const savedUser = localStorage.getItem(CURRENT_USER_KEY);
-
-      if (!savedUser) {
-        window.location.href = 'login.html#login';
-        return null;
-      }
-
-      currentUser = JSON.parse(savedUser);
-
-      if (!currentUser || !currentUser.email) {
-        localStorage.removeItem(CURRENT_USER_KEY);
-        window.location.href = 'login.html#login';
-        return null;
-      }
-
-      function setText(id, text) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text;
-      }
-
-      const name = currentUser.name || 'User';
-      const firstName = name.trim().split(/\s+/)[0];
-
-      /* Profile */
-      setText('profileName', name);
-      setText('profileEmail', currentUser.email || '');
-      setText('profileRole', formatRole(currentUser.role));
-      setText('avatarLetter', name.charAt(0).toUpperCase());
-
-      /* Greeting */
-      setText('welcomeSmall', 'WELCOME BACK, ' + firstName.toUpperCase());
-
-      /* Account */
-      setText('accountName', name);
-      setText('accountEmail', currentUser.email || '');
-
-      /* Role */
-      applyRole();
-
-      /* Profile picture */
-      applyAvatar();
-
-      return currentUser;
-
-    } catch (error) {
-
-      console.error('User loading error:', error);
-
-      localStorage.removeItem(CURRENT_USER_KEY);
-      window.location.href = 'login.html#login';
-
-      return null;
-    }
-  }
-
-
-  /* FORMAT ROLE */
-
   function formatRole(role) {
-
-    if (role === 'employer') {
-      return 'Employer';
-    }
-
-    if (role === 'training_provider') {
-      return 'Training Provider';
-    }
-
+    if (role === 'employer') return 'Employer';
+    if (role === 'training_provider') return 'Training Provider';
     return 'Candidate';
   }
 
+  function isPoster() {
+    return !!currentUser && POSTER_ROLES.indexOf(currentUser.role) !== -1;
+  }
 
-  /* LOAD JOBS */
-
-  function loadJobs() {
-
-    const searchInput = document.getElementById('q');
-    const filterInput = document.getElementById('ft');
-
-    const q = searchInput ? searchInput.value.trim().toLowerCase() : '';
-    const type = filterInput ? filterInput.value : '';
-
-    if (showApps) {
-      refreshSavedUI();
-      renderApps();
-      return;
-    }
-
-    let jobs = getJobs();
-
-    /* Search */
-    if (q) {
-      jobs = jobs.filter(function (job) {
-        return (
-          (job.title || '').toLowerCase().includes(q) ||
-          (job.co || '').toLowerCase().includes(q) ||
-          (job.loc || '').toLowerCase().includes(q) ||
-          (job.desc || '').toLowerCase().includes(q)
-        );
-      });
-    }
-
-    /* Filter by type */
-    if (type) {
-      jobs = jobs.filter(function (job) {
-        return job.type === type;
-      });
-    }
-
-    /* Saved jobs only */
-    if (showSavedOnly) {
-      jobs = jobs.filter(function (job) {
-        return isSaved(job.id);
-      });
-    }
-
-    refreshSavedUI();
-
-    renderJobs(jobs);
+  function me() {
+    return currentUser.email.toLowerCase();
   }
 
 
+  /* ---------- Data: users, jobs, saved, applications, photos ---------- */
+
+  function getJobs() { return readJSON(JOBS_KEY, []); }
+  function saveJobs(jobs) { writeJSON(JOBS_KEY, jobs); }
+
+  function getApps() { return readJSON(APPS_KEY, []); }
+  function saveApps(apps) { writeJSON(APPS_KEY, apps); }
+
+  function getSavedIds() {
+    return (readJSON(SAVED_KEY, {})[me()]) || [];
+  }
+
+  function isSaved(id) {
+    return getSavedIds().indexOf(String(id)) !== -1;
+  }
+
+  function toggleSaved(id) {
+
+    const map = readJSON(SAVED_KEY, {});
+    const ids = map[me()] || [];
+    const at = ids.indexOf(String(id));
+
+    if (at === -1) {
+      ids.push(String(id));
+    } else {
+      ids.splice(at, 1);
+    }
+
+    map[me()] = ids;
+
+    writeJSON(SAVED_KEY, map);
+  }
+
+  /* Candidates see what they sent. Employers see what they received. */
+  function myApps() {
+    return getApps().filter(function (a) {
+      return isPoster()
+        ? (a.jobOwner || '').toLowerCase() === me()
+        : (a.email || '').toLowerCase() === me();
+    });
+  }
+
+  function hasApplied(jobId) {
+    return getApps().some(function (a) {
+      return String(a.jobId) === String(jobId) && (a.email || '').toLowerCase() === me();
+    });
+  }
+
+  function isOwnJob(job) {
+    return !!job.postedBy && job.postedBy.toLowerCase() === me();
+  }
+
   /* Only the person who posted a job can remove it */
-
   function canRemove(job) {
+    if (job.sample) return false;
+    if (!job.postedBy) return true;
+    return isOwnJob(job);
+  }
 
-    if (job.sample || !currentUser) {
+  function getAvatar(email) {
+    if (!email) return '';
+    return readJSON(AVATARS_KEY, {})[String(email).toLowerCase()] || '';
+  }
+
+  function createSampleJobs() {
+
+    if (localStorage.getItem(JOBS_KEY) !== null) {
+      return;
+    }
+
+    saveJobs([
+      {
+        id: 'sample-1',
+        title: 'Sales Assistant',
+        co: 'Kofkro Market Traders',
+        loc: 'Kofkro',
+        type: 'Full-time',
+        pay: 'GH₵1,500 / month',
+        mail: 'jobs@kofkro.example',
+        desc: 'Assist customers, manage products and support daily market operations.',
+        sample: true
+      },
+      {
+        id: 'sample-2',
+        title: 'Digital Skills Intern',
+        co: 'Youth Desk',
+        loc: 'Kofkro',
+        type: 'Internship',
+        pay: 'Stipend',
+        mail: 'youth@kofkro.example',
+        desc: 'Gain practical experience in digital skills, communication and office technology.',
+        sample: true
+      },
+      {
+        id: 'sample-3',
+        title: 'Tailoring Apprentice',
+        co: 'Ama Fashion House',
+        loc: 'Kofkro',
+        type: 'Apprenticeship',
+        pay: 'Negotiable',
+        mail: 'amafashion@example.com',
+        desc: 'Learn professional tailoring, garment production and customer service.',
+        sample: true
+      }
+    ]);
+  }
+
+
+  /* ---------- Signed-in user ---------- */
+
+  function loadUser() {
+
+    const user = readJSON(CURRENT_USER_KEY, null);
+
+    if (!user || !user.email) {
+      localStorage.removeItem(CURRENT_USER_KEY);
+      window.location.href = 'login.html#login';
+      return null;
+    }
+
+    currentUser = user;
+
+    return user;
+  }
+
+
+  /* =====================================================
+     PAGE SHELL (header, side menus, footer)
+     Each page only contains its own <section id="content">.
+  ===================================================== */
+
+  function link(href, key, html, extra) {
+    return '<a href="' + href + '" class="' + (page === key ? 'on ' : '') + (extra || '') + '">' + html + '</a>';
+  }
+
+  function buildShell() {
+
+    const content = byId('content');
+
+    if (!content) {
       return false;
     }
 
-    if (!job.postedBy) {
-      return true;
-    }
+    /* Header */
 
-    return job.postedBy.toLowerCase() === currentUser.email.toLowerCase();
-  }
+    const placeholders = {
+      home: 'Search jobs, companies or locations',
+      jobs: 'Search jobs, companies or locations',
+      saved: 'Search your saved jobs',
+      applications: 'Search your applications'
+    };
 
+    const header = document.createElement('header');
 
-  /* RENDER JOBS */
+    header.className = 'main-header';
 
-  function renderJobs(jobs) {
+    header.innerHTML = `
+      <div class="header-inner">
 
-    const box = document.getElementById('jobs-list');
-    const count = document.getElementById('count');
+        <a href="home.html" class="brand">
+          <span class="brand-mark">K</span>
+          <span>Kofkro <span class="l">LMIS</span></span>
+        </a>
 
-    if (!box) {
-      return;
-    }
-
-    if (count) {
-      count.textContent = jobs.length + (jobs.length === 1 ? ' job' : ' jobs');
-    }
-
-    if (!jobs.length) {
-
-      box.innerHTML = `
-
-        <div class="empty">
-          ${
-            showSavedOnly
-              ? `<strong>No saved jobs yet.</strong>
-                 <br>
-                 Tap ★ Save on a job to keep it here.`
-              : `<strong>No jobs found.</strong>
-                 <br>
-                 Try another search or filter.`
-          }
+        <div class="header-search">
+          <span class="search-icon">⌕</span>
+          <input id="q" type="search" placeholder="${placeholders[page] || placeholders.home}" autocomplete="off">
         </div>
 
-      `;
+        <nav class="main-nav">
 
-      renderRecentJobs([]);
+          <a href="home.html" class="nav-link ${page === 'home' ? 'active' : ''}">
+            <span class="nav-icon">⌂</span><span>Home</span>
+          </a>
 
-      return;
-    }
+          <a href="jobs.html" class="nav-link ${page === 'jobs' ? 'active' : ''}">
+            <span class="nav-icon">▣</span><span>Jobs</span>
+          </a>
 
-    box.innerHTML = jobs.map(function (job) {
+          <a href="home.html#post" class="nav-link employer-only">
+            <span class="nav-icon">＋</span><span>Post Job</span>
+          </a>
 
-      const letter = (job.co || 'K').charAt(0).toUpperCase();
+          <a href="home.html#profile" class="header-avatar" id="headerAvatar" title="Your profile">
+            <img id="headerImg" alt="" hidden>
+            <span id="headerLetter">U</span>
+          </a>
 
-      return `
+          <button type="button" id="logout" class="logout-btn">Sign out</button>
 
-        <article class="job-card">
+        </nav>
 
-          <div class="job-logo">
-            ${escapeHtml(letter)}
+      </div>
+    `;
+
+    document.body.insertBefore(header, document.body.firstChild);
+
+    /* Three columns: left menu, page content, right cards */
+
+    const layout = document.createElement('main');
+
+    layout.className = 'page-container';
+
+    const left = document.createElement('aside');
+
+    left.className = 'left-sidebar';
+
+    left.innerHTML = `
+
+      <section class="profile-card" id="profile">
+
+        <div class="profile-cover"></div>
+
+        <div class="profile-avatar" id="avatarBox" title="Change profile photo">
+
+          <img id="avatarImg" alt="Your profile photo" hidden>
+
+          <span id="avatarLetter">U</span>
+
+          <button type="button" class="avatar-edit" id="avatarEdit" aria-label="Change profile photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 8h3l2-3h6l2 3h3v11H4z"/>
+              <circle cx="12" cy="13" r="3.5"/>
+            </svg>
+          </button>
+
+        </div>
+
+        <input type="file" id="photoInput" accept="image/*" hidden>
+
+        <div class="profile-content">
+
+          <h2 id="profileName">Loading...</h2>
+
+          <p id="profileEmail" class="profile-email"></p>
+
+          <p id="profileRole" class="profile-role">Candidate</p>
+
+          <button type="button" class="link-btn" id="removePhoto" hidden>Remove photo</button>
+
+          <button type="button" id="updateProfile" class="profile-button">Update profile</button>
+
+        </div>
+
+      </section>
+
+      <section class="side-menu-card">
+
+        <h3>My LMIS</h3>
+
+        ${link('jobs.html', 'jobs', '<span>▣</span> Find jobs')}
+        ${link('home.html#post', 'post', '<span>＋</span> Post a job', 'employer-only')}
+        ${link('saved.html', 'saved', '<span>★</span> Saved jobs <b class="badge" id="savedBadge">0</b>')}
+        ${link('applications.html', 'applications', '<span>◉</span> <span id="appsLabel">My applications</span> <b class="badge" id="appsBadge">0</b>')}
+
+      </section>
+
+      <section class="side-menu-card">
+
+        <h3>Account</h3>
+
+        <a href="settings.html">Settings</a>
+        <a href="about.html">About Kofkro LMIS</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+
+      </section>
+    `;
+
+    const right = document.createElement('aside');
+
+    right.className = 'right-sidebar';
+
+    right.innerHTML = `
+
+      <section class="right-card">
+
+        <h3>Latest opportunities</h3>
+
+        <div id="recentJobs"><p class="muted">Loading...</p></div>
+
+        <a href="jobs.html" class="view-all">View all jobs →</a>
+
+      </section>
+
+      <section class="right-card">
+
+        <h3>Why use Kofkro LMIS?</h3>
+
+        <div class="benefit">
+          <div class="benefit-icon">✓</div>
+          <div>
+            <strong>Find local opportunities</strong>
+            <p>Discover jobs and training opportunities close to you.</p>
           </div>
+        </div>
 
-          <div class="job-content">
-
-            <h3>${escapeHtml(job.title || '')}</h3>
-
-            <p class="company">
-              ${escapeHtml(job.co || '')} · ${escapeHtml(job.loc || '')}
-            </p>
-
-            <div class="job-pills">
-
-              <span>${escapeHtml(job.type || '')}</span>
-
-              ${job.pay ? `<span>${escapeHtml(job.pay)}</span>` : ''}
-
-              ${job.sample ? `<span>Sample</span>` : ''}
-
-            </div>
-
-            <p class="description">
-              ${escapeHtml(job.desc || '')}
-            </p>
-
+        <div class="benefit">
+          <div class="benefit-icon">✓</div>
+          <div>
+            <strong>Build your career</strong>
+            <p>Connect your skills with employers and opportunities.</p>
           </div>
+        </div>
 
-          <div class="job-actions">
-
-            ${
-              isOwnJob(job)
-                ? ''
-                : hasApplied(job.id)
-                  ? `<span class="applied-tag">✓ Applied</span>`
-                  : `<a
-                       class="apply-btn"
-                       href="resume.html?id=${encodeURIComponent(job.id)}"
-                     >
-                       Apply
-                     </a>`
-            }
-
-            <button
-              type="button"
-              class="save-btn ${isSaved(job.id) ? 'saved' : ''}"
-              data-save="${escapeHtml(String(job.id))}"
-              aria-pressed="${isSaved(job.id) ? 'true' : 'false'}"
-            >
-              ${isSaved(job.id) ? '★ Saved' : '☆ Save'}
-            </button>
-
-            ${
-              canRemove(job)
-                ? `
-                  <button
-                    type="button"
-                    class="remove-btn"
-                    data-delete="${escapeHtml(String(job.id))}"
-                  >
-                    Remove
-                  </button>
-                `
-                : ''
-            }
-
+        <div class="benefit">
+          <div class="benefit-icon">✓</div>
+          <div>
+            <strong>Support local businesses</strong>
+            <p>Employers can reach people looking for work.</p>
           </div>
+        </div>
 
-        </article>
+      </section>
 
-      `;
+      <section class="right-card account-card">
 
-    }).join('');
+        <h3>Your account</h3>
 
-    renderRecentJobs(jobs.slice(0, 5));
+        <p>You are signed in as:</p>
 
+        <strong id="accountName"></strong>
+
+        <span id="accountEmail"></span>
+
+        <button type="button" id="logoutSide" class="secondary-button">Sign out</button>
+
+      </section>
+    `;
+
+    content.parentNode.insertBefore(layout, content);
+
+    content.classList.add('main-feed');
+
+    layout.appendChild(left);
+    layout.appendChild(content);
+    layout.appendChild(right);
+
+    /* Footer */
+
+    const footer = document.createElement('footer');
+
+    footer.className = 'site-footer';
+
+    footer.innerHTML = `
+      <div class="footer-inner">
+
+        <div>
+          <strong>Kofkro <span>LMIS</span></strong>
+          <p>Connecting people to jobs, skills and opportunities.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="about.html">About</a>
+          <a href="jobs.html">Jobs</a>
+          <a href="home.html#post" class="employer-only">Employers</a>
+          <a href="terms.html">Terms</a>
+          <a href="#">Help</a>
+        </div>
+
+      </div>
+    `;
+
+    document.body.appendChild(footer);
+
+    /* Photo cropper window */
+
+    const dialog = document.createElement('dialog');
+
+    dialog.id = 'photoDialog';
+    dialog.className = 'photo-dialog';
+    dialog.setAttribute('aria-label', 'Adjust your profile photo');
+
+    dialog.innerHTML = `
+      <h3>Adjust your photo</h3>
+
+      <p class="hint">Drag the picture to move it. Use the slider to zoom.</p>
+
+      <div class="crop-stage">
+        <canvas id="cropCanvas" width="280" height="280"></canvas>
+      </div>
+
+      <div class="zoom-row">
+        <span>－</span>
+        <input type="range" id="cropZoom" min="1" max="3" step="0.01" value="1" aria-label="Zoom">
+        <span>＋</span>
+      </div>
+
+      <p class="crop-error" id="cropError" hidden></p>
+
+      <div class="dialog-actions">
+        <button type="button" class="ghost" id="cropCancel">Cancel</button>
+        <button type="button" class="primary" id="cropSave">Save photo</button>
+      </div>
+    `;
+
+    document.body.appendChild(dialog);
+
+    return true;
   }
 
 
-  /* RECENT JOBS */
+  /* =====================================================
+     SHARED PIECES: profile, badges, role, recent jobs
+  ===================================================== */
 
-  function renderRecentJobs(jobs) {
+  function fillProfile() {
 
-    const box = document.getElementById('recentJobs');
+    const name = currentUser.name || 'User';
+
+    byId('profileName').textContent = name;
+    byId('profileEmail').textContent = currentUser.email || '';
+    byId('profileRole').textContent = formatRole(currentUser.role);
+    byId('accountName').textContent = name;
+    byId('accountEmail').textContent = currentUser.email || '';
+
+    const welcome = byId('welcomeSmall');
+
+    if (welcome) {
+      welcome.textContent = 'WELCOME BACK, ' + name.trim().split(/\s+/)[0].toUpperCase();
+    }
+
+    applyAvatar();
+  }
+
+  function applyRole() {
+
+    document.querySelectorAll('.employer-only').forEach(function (el) {
+      el.classList.toggle('hide-me', !isPoster());
+    });
+  }
+
+  function savedCount() {
+    return getJobs().filter(function (job) {
+      return isSaved(job.id);
+    }).length;
+  }
+
+  function appsTitle() {
+    return isPoster() ? 'Applications received' : 'My applications';
+  }
+
+  function updateBadges() {
+
+    const saved = byId('savedBadge');
+    const apps = byId('appsBadge');
+    const label = byId('appsLabel');
+
+    if (saved) saved.textContent = savedCount();
+    if (apps) apps.textContent = myApps().length;
+    if (label) label.textContent = appsTitle();
+  }
+
+  function renderRecentJobs() {
+
+    const box = byId('recentJobs');
 
     if (!box) {
       return;
     }
+
+    const jobs = getJobs().slice(0, 5);
 
     if (!jobs.length) {
       box.innerHTML = '<p class="muted">No recent jobs.</p>';
@@ -2309,128 +2051,484 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     box.innerHTML = jobs.map(function (job) {
-
       return `
-
         <div class="recent-job">
-          <strong>${escapeHtml(job.title || '')}</strong>
-          <span>${escapeHtml(job.co || '')}</span>
+          <strong>${esc(job.title)}</strong>
+          <span>${esc(job.co)}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+
+  /* =====================================================
+     CARDS
+  ===================================================== */
+
+  function jobCard(job) {
+
+    const saved = isSaved(job.id);
+
+    return `
+
+      <article class="job-card">
+
+        <div class="job-logo">${esc((job.co || 'K').charAt(0).toUpperCase())}</div>
+
+        <div class="job-content">
+
+          <h3>${esc(job.title)}</h3>
+
+          <p class="company">${esc(job.co)} · ${esc(job.loc)}</p>
+
+          <div class="job-pills">
+            <span>${esc(job.type)}</span>
+            ${job.pay ? `<span>${esc(job.pay)}</span>` : ''}
+            ${job.sample ? '<span>Sample</span>' : ''}
+          </div>
+
+          <p class="description">${esc(job.desc)}</p>
+
         </div>
 
+        <div class="job-actions">
+
+          ${
+            isOwnJob(job)
+              ? ''
+              : hasApplied(job.id)
+                ? '<span class="applied-tag">✓ Applied</span>'
+                : `<a class="apply-btn" href="resume.html?id=${encodeURIComponent(job.id)}">Apply</a>`
+          }
+
+          <button
+            type="button"
+            class="save-btn ${saved ? 'saved' : ''}"
+            data-save="${esc(String(job.id))}"
+            aria-pressed="${saved}"
+          >
+            ${saved ? '★ Saved' : '☆ Save'}
+          </button>
+
+          ${
+            canRemove(job)
+              ? `<button type="button" class="remove-btn" data-delete="${esc(String(job.id))}">Remove</button>`
+              : ''
+          }
+
+        </div>
+
+      </article>
+    `;
+  }
+
+  function appCard(a) {
+
+    if (isPoster()) {
+
+      const photo = getAvatar(a.email);
+      const subject = encodeURIComponent('Your application for ' + (a.jobTitle || 'a job'));
+
+      return `
+        <article class="job-card">
+
+          <div class="job-logo">${
+            photo
+              ? `<img src="${photo}" alt="">`
+              : esc((a.name || '?').charAt(0).toUpperCase())
+          }</div>
+
+          <div class="job-content">
+
+            <h3>${esc(a.name)}</h3>
+
+            <p class="company">${esc(a.email)}${a.phone ? ' · ' + esc(a.phone) : ''}</p>
+
+            <div class="job-pills">
+              <span>Applied for ${esc(a.jobTitle)}</span>
+              ${a.edu ? `<span>${esc(a.edu)}</span>` : ''}
+              ${a.residence ? `<span>${esc(a.residence)}</span>` : ''}
+              <span>${esc(formatDate(a.createdAt))}</span>
+            </div>
+
+            <p class="description">
+              <strong>Skills:</strong> ${esc(a.skills)}
+              ${a.exp ? `<br><strong>Experience:</strong> ${esc(a.exp)}` : ''}
+              ${a.message ? `<br><strong>Message:</strong> ${esc(a.message)}` : ''}
+            </p>
+
+          </div>
+
+          <div class="job-actions">
+            <a class="apply-btn" href="mailto:${esc(a.email)}?subject=${subject}">Email</a>
+          </div>
+
+        </article>
       `;
+    }
 
-    }).join('');
+    return `
+      <article class="job-card">
 
+        <div class="job-logo">${esc((a.co || 'K').charAt(0).toUpperCase())}</div>
+
+        <div class="job-content">
+
+          <h3>${esc(a.jobTitle)}</h3>
+
+          <p class="company">${esc(a.co)} · ${esc(a.loc)}</p>
+
+          <div class="job-pills">
+            <span>${esc(a.type)}</span>
+            <span>✓ ${esc(a.status || 'Submitted')}</span>
+            <span>${esc(formatDate(a.createdAt))}</span>
+          </div>
+
+          <p class="description">
+            ${a.message ? esc(a.message) : 'No message was added to this application.'}
+          </p>
+
+        </div>
+
+        <div class="job-actions">
+          <button type="button" class="remove-btn" data-withdraw="${esc(String(a.id))}">Withdraw</button>
+        </div>
+
+      </article>
+    `;
+  }
+
+  function searchText() {
+    const input = byId('q');
+    return input ? input.value.trim().toLowerCase() : '';
+  }
+
+  function matchesJob(job, q) {
+    return !q || (
+      (job.title || '') + ' ' + (job.co || '') + ' ' + (job.loc || '') + ' ' + (job.desc || '')
+    ).toLowerCase().indexOf(q) !== -1;
+  }
+
+  function setCount(text) {
+    const el = byId('count');
+    if (el) el.textContent = text;
+  }
+
+  function plural(n, one, many) {
+    return n + ' ' + (n === 1 ? one : many);
   }
 
 
-  /* SEARCH */
+  /* =====================================================
+     PAGES
+  ===================================================== */
 
-  const search = document.getElementById('q');
+  /* ---------- HOME ---------- */
 
-  if (search) {
-    search.addEventListener('input', loadJobs);
+  function renderHome() {
+
+    const jobs = getJobs();
+
+    const statJobs = byId('statJobs');
+    const statSaved = byId('statSaved');
+    const statApps = byId('statApps');
+    const statAppsLabel = byId('statAppsLabel');
+
+    if (statJobs) statJobs.textContent = jobs.length;
+    if (statSaved) statSaved.textContent = savedCount();
+    if (statApps) statApps.textContent = myApps().length;
+    if (statAppsLabel) statAppsLabel.textContent = appsTitle();
+
+    const box = byId('jobs-list');
+
+    if (!box) {
+      return;
+    }
+
+    setCount(plural(jobs.length, 'open job', 'open jobs'));
+
+    if (!jobs.length) {
+      box.innerHTML = `
+        <div class="empty">
+          <strong>No jobs yet.</strong><br>
+          New opportunities will appear here.
+        </div>
+      `;
+      return;
+    }
+
+    box.innerHTML = jobs.slice(0, 5).map(jobCard).join('');
+  }
+
+  /* ---------- FIND JOBS ---------- */
+
+  function renderJobsPage() {
+
+    const q = searchText();
+    const typeInput = byId('ft');
+    const type = typeInput ? typeInput.value : '';
+    const box = byId('jobs-list');
+
+    const jobs = getJobs().filter(function (job) {
+      return matchesJob(job, q) && (!type || job.type === type);
+    });
+
+    setCount(plural(jobs.length, 'job', 'jobs'));
+
+    if (!jobs.length) {
+      box.innerHTML = `
+        <div class="empty">
+          <strong>No jobs found.</strong><br>
+          Try another search or filter.
+        </div>
+      `;
+      return;
+    }
+
+    box.innerHTML = jobs.map(jobCard).join('');
+  }
+
+  /* ---------- SAVED JOBS ---------- */
+
+  function renderSavedPage() {
+
+    const q = searchText();
+    const box = byId('jobs-list');
+
+    const jobs = getJobs().filter(function (job) {
+      return isSaved(job.id) && matchesJob(job, q);
+    });
+
+    setCount(plural(jobs.length, 'saved job', 'saved jobs'));
+
+    if (!jobs.length) {
+      box.innerHTML = `
+        <div class="empty">
+          <strong>${q ? 'No saved jobs match your search.' : 'No saved jobs yet.'}</strong><br>
+          Tap ☆ Save on a job to keep it here.<br>
+          <a href="jobs.html">Browse jobs</a>
+        </div>
+      `;
+      return;
+    }
+
+    box.innerHTML = jobs.map(jobCard).join('');
+  }
+
+  /* ---------- APPLICATIONS ---------- */
+
+  function renderAppsPage() {
+
+    const q = searchText();
+    const box = byId('jobs-list');
+    const poster = isPoster();
+
+    const title = byId('pageTitle');
+
+    if (title) title.textContent = appsTitle();
+
+    const apps = myApps().filter(function (a) {
+      return !q || (
+        (a.jobTitle || '') + ' ' + (a.co || '') + ' ' + (a.name || '')
+      ).toLowerCase().indexOf(q) !== -1;
+    });
+
+    setCount(plural(apps.length, 'application', 'applications') + (poster ? ' received' : ' sent'));
+
+    if (!apps.length) {
+      box.innerHTML = `
+        <div class="empty">
+          ${
+            poster
+              ? `<strong>No applications yet.</strong><br>
+                 When someone applies for a job you posted, it will show up here.`
+              : `<strong>${q ? 'No applications match your search.' : 'You have not applied for any jobs yet.'}</strong><br>
+                 Tap Apply on a job to send your first application.<br>
+                 <a href="jobs.html">Find jobs</a>`
+          }
+        </div>
+      `;
+      return;
+    }
+
+    box.innerHTML = apps.map(appCard).join('');
   }
 
 
-  /* FILTER */
+  /* Re-draw whatever page we are on */
 
-  const filter = document.getElementById('ft');
+  function refresh() {
 
-  if (filter) {
-    filter.addEventListener('change', loadJobs);
+    if (page === 'home') renderHome();
+    if (page === 'jobs') renderJobsPage();
+    if (page === 'saved') renderSavedPage();
+    if (page === 'applications') renderAppsPage();
+
+    updateBadges();
+    renderRecentJobs();
   }
 
 
-  /* DELETE JOB */
+  /* =====================================================
+     EVENTS
+  ===================================================== */
 
-  const jobsList = document.getElementById('jobs-list');
+  /* Search box */
 
-  if (jobsList) {
+  const search = byId('q');
 
-    jobsList.addEventListener('click', function (event) {
+  /* (the shell is built first, so the box exists after buildShell) */
 
-      const withdrawButton = event.target.closest('[data-withdraw]');
+  function wireSearch() {
 
-      if (withdrawButton) {
+    const input = byId('q');
+
+    if (!input) {
+      return;
+    }
+
+    if (page === 'home') {
+
+      /* On the home page, search opens the full jobs list */
+      input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && input.value.trim()) {
+          window.location.href = 'jobs.html?q=' + encodeURIComponent(input.value.trim());
+        }
+      });
+
+      return;
+    }
+
+    if (page === 'jobs') {
+      const fromLink = new URLSearchParams(window.location.search).get('q');
+      if (fromLink) input.value = fromLink;
+    }
+
+    input.addEventListener('input', refresh);
+  }
+
+  function wireClicks() {
+
+    /* Save / remove / withdraw buttons on any job or application card */
+
+    document.addEventListener('click', function (event) {
+
+      const saveBtn = event.target.closest('[data-save]');
+
+      if (saveBtn) {
+        toggleSaved(saveBtn.dataset.save);
+        refresh();
+        return;
+      }
+
+      const deleteBtn = event.target.closest('[data-delete]');
+
+      if (deleteBtn) {
+
+        if (!confirm('Are you sure you want to remove this job?')) {
+          return;
+        }
+
+        saveJobs(getJobs().filter(function (job) {
+          return String(job.id) !== String(deleteBtn.dataset.delete);
+        }));
+
+        refresh();
+        return;
+      }
+
+      const withdrawBtn = event.target.closest('[data-withdraw]');
+
+      if (withdrawBtn) {
 
         if (!confirm('Withdraw this application?')) {
           return;
         }
 
         saveApps(getApps().filter(function (a) {
-          return String(a.id) !== String(withdrawButton.dataset.withdraw);
+          return String(a.id) !== String(withdrawBtn.dataset.withdraw);
         }));
 
-        loadJobs();
-
-        return;
-      }
-
-      const saveButton = event.target.closest('[data-save]');
-
-      if (saveButton) {
-        toggleSaved(saveButton.dataset.save);
-        loadJobs();
-        return;
-      }
-
-      const button = event.target.closest('[data-delete]');
-
-      if (!button) {
-        return;
-      }
-
-      const id = button.dataset.delete;
-
-      if (!confirm('Are you sure you want to remove this job?')) {
-        return;
-      }
-
-      try {
-
-        let jobs = getJobs();
-
-        jobs = jobs.filter(function (job) {
-          return String(job.id) !== String(id);
-        });
-
-        saveJobs(jobs);
-
-        loadJobs();
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert('Could not remove job.');
-
+        refresh();
       }
 
     });
 
+    /* Job type filter (Find jobs page) */
+
+    const filter = byId('ft');
+
+    if (filter) {
+      filter.addEventListener('change', refresh);
+    }
   }
 
+  function wireAccount() {
 
-  /* POST JOB */
+    function logoutUser() {
+      localStorage.removeItem(CURRENT_USER_KEY);
+      window.location.href = 'index.html';
+    }
 
-  const postForm = document.getElementById('pf');
+    byId('logout').addEventListener('click', logoutUser);
+    byId('logoutSide').addEventListener('click', logoutUser);
 
-  if (postForm) {
+    byId('updateProfile').addEventListener('click', function () {
 
-    postForm.addEventListener('submit', function (event) {
+      const input = prompt('Enter your new name:', currentUser.name || '');
+
+      if (input === null || !input.trim()) {
+        return;
+      }
+
+      const name = input.trim();
+
+      currentUser.name = name;
+
+      writeJSON(CURRENT_USER_KEY, currentUser);
+
+      const users = getUsers();
+
+      const index = users.findIndex(function (u) {
+        return (u.email || '').toLowerCase() === me();
+      });
+
+      if (index !== -1) {
+        users[index].name = name;
+        writeJSON(USERS_KEY, users);
+      }
+
+      fillProfile();
+
+      alert('Profile updated successfully.');
+    });
+  }
+
+  function getUsers() {
+    return readJSON(USERS_KEY, []);
+  }
+
+  /* Post a job (home page, employers and training providers) */
+
+  function wirePostForm() {
+
+    const form = byId('pf');
+
+    if (!form) {
+      return;
+    }
+
+    form.addEventListener('submit', function (event) {
 
       event.preventDefault();
 
       function value(id) {
-        const element = document.getElementById(id);
-        return element ? element.value.trim() : '';
+        const el = byId(id);
+        return el ? el.value.trim() : '';
       }
 
       const job = {
-
         id: Date.now(),
-
         title: value('f-title'),
         co: value('f-co'),
         loc: value('f-loc'),
@@ -2438,16 +2536,10 @@ document.addEventListener('DOMContentLoaded', function () {
         pay: value('f-pay'),
         mail: value('f-mail'),
         desc: value('f-desc'),
-
         sample: false,
-
-        postedBy: currentUser ? currentUser.email : '',
-
+        postedBy: currentUser.email,
         createdAt: new Date().toISOString()
-
       };
-
-      /* Validation */
 
       if (!job.title || !job.co || !job.loc || !job.type || !job.desc) {
         alert('Please fill in all required job fields.');
@@ -2462,26 +2554,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         saveJobs(jobs);
 
-        event.target.reset();
+        form.reset();
 
-        const success = document.getElementById('ok');
+        const ok = byId('ok');
 
-        if (success) {
-
-          success.style.display = 'block';
-
-          setTimeout(function () {
-            success.style.display = 'none';
-          }, 4000);
-
+        if (ok) {
+          ok.style.display = 'block';
+          setTimeout(function () { ok.style.display = 'none'; }, 4000);
         }
 
-        loadJobs();
+        refresh();
 
-        const jobsSection = document.getElementById('jobs');
+        const list = byId('jobs');
 
-        if (jobsSection) {
-          jobsSection.scrollIntoView({ behavior: 'smooth' });
+        if (list) {
+          list.scrollIntoView({ behavior: 'smooth' });
         }
 
       } catch (error) {
@@ -2489,198 +2576,23 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error(error);
 
         alert('Could not post job.');
-
       }
-
     });
-
-  }
-
-
-  /* LOGOUT */
-
-  function logoutUser() {
-
-    localStorage.removeItem(CURRENT_USER_KEY);
-
-    currentUser = null;
-
-    window.location.href = 'index.html';
-
-  }
-
-  const logout = document.getElementById('logout');
-
-  if (logout) {
-    logout.addEventListener('click', logoutUser);
-  }
-
-  const logoutSide = document.getElementById('logoutSide');
-
-  if (logoutSide) {
-    logoutSide.addEventListener('click', logoutUser);
-  }
-
-
-  /* UPDATE PROFILE */
-
-  const updateProfile = document.getElementById('updateProfile');
-
-  if (updateProfile) {
-
-    updateProfile.addEventListener('click', function () {
-
-      if (!currentUser) {
-        return;
-      }
-
-      const newName = prompt('Enter your new name:', currentUser.name || '');
-
-      if (newName === null || !newName.trim()) {
-        return;
-      }
-
-      const name = newName.trim();
-
-      /* Update current user */
-
-      currentUser.name = name;
-
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
-
-      /* Update user in users list */
-
-      const users = getUsers();
-
-      const index = users.findIndex(function (user) {
-        return user.email.toLowerCase() === currentUser.email.toLowerCase();
-      });
-
-      if (index !== -1) {
-
-        users[index].name = name;
-
-        localStorage.setItem(USERS_KEY, JSON.stringify(users));
-
-      }
-
-      /* Refresh profile */
-
-      loadUser();
-
-      alert('Profile updated successfully.');
-
-    });
-
-  }
-
-
-  /* ESCAPE HTML */
-
-  function escapeHtml(value) {
-
-    const div = document.createElement('div');
-
-    div.textContent = value ?? '';
-
-    return div.innerHTML;
-
-  }
-
-
-  /* SAMPLE JOBS */
-
-  function createSampleJobs() {
-
-    const existing = localStorage.getItem(JOBS_KEY);
-
-    if (existing !== null) {
-      return;
-    }
-
-    const sampleJobs = [
-
-      {
-        id: 'sample-1',
-        title: 'Sales Assistant',
-        co: 'Kofkro Market Traders',
-        loc: 'Kofkro',
-        type: 'Full-time',
-        pay: 'GH₵1,500 / month',
-        mail: 'jobs@kofkro.example',
-        desc: 'Assist customers, manage products and support daily market operations.',
-        sample: true
-      },
-
-      {
-        id: 'sample-2',
-        title: 'Digital Skills Intern',
-        co: 'Youth Desk',
-        loc: 'Kofkro',
-        type: 'Internship',
-        pay: 'Stipend',
-        mail: 'youth@kofkro.example',
-        desc: 'Gain practical experience in digital skills, communication and office technology.',
-        sample: true
-      },
-
-      {
-        id: 'sample-3',
-        title: 'Tailoring Apprentice',
-        co: 'Ama Fashion House',
-        loc: 'Kofkro',
-        type: 'Apprenticeship',
-        pay: 'Negotiable',
-        mail: 'amafashion@example.com',
-        desc: 'Learn professional tailoring, garment production and customer service.',
-        sample: true
-      }
-
-    ];
-
-    saveJobs(sampleJobs);
-
   }
 
 
   /* =====================================================
-     PROFILE PICTURE
-     Stored in this browser only, as a small square photo.
+     PROFILE PICTURE (kept in this browser only)
   ===================================================== */
 
-  function getAvatarMap() {
-    try {
-      return JSON.parse(localStorage.getItem(AVATARS_KEY) || '{}');
-    } catch (error) {
-      return {};
-    }
-  }
-
-  function getAvatar(email) {
-    if (!email) {
-      return '';
-    }
-
-    return getAvatarMap()[String(email).toLowerCase()] || '';
-  }
-
-  /* Shows the photo (or the first letter) in the profile card and the header */
   function applyAvatar() {
-
-    if (!currentUser) {
-      return;
-    }
 
     const photo = getAvatar(currentUser.email);
 
     [['avatarImg', 'avatarLetter'], ['headerImg', 'headerLetter']].forEach(function (ids) {
 
-      const img = document.getElementById(ids[0]);
-      const letter = document.getElementById(ids[1]);
-
-      if (!img || !letter) {
-        return;
-      }
+      const img = byId(ids[0]);
+      const letter = byId(ids[1]);
 
       if (photo) {
         img.src = photo;
@@ -2692,98 +2604,83 @@ document.addEventListener('DOMContentLoaded', function () {
         letter.hidden = false;
         letter.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
       }
-
     });
 
-    const remove = document.getElementById('removePhoto');
-
-    if (remove) {
-      remove.hidden = !photo;
-    }
+    byId('removePhoto').hidden = !photo;
   }
 
-  const photoInput = document.getElementById('photoInput');
-  const photoDialog = document.getElementById('photoDialog');
-  const cropCanvas = document.getElementById('cropCanvas');
-  const cropZoom = document.getElementById('cropZoom');
-  const cropError = document.getElementById('cropError');
+  function wirePhoto() {
 
-  const STAGE = 280;     /* size of the preview square */
-  const OUTPUT = 256;    /* size of the saved picture  */
+    const photoInput = byId('photoInput');
+    const photoDialog = byId('photoDialog');
+    const cropCanvas = byId('cropCanvas');
+    const cropZoom = byId('cropZoom');
+    const cropError = byId('cropError');
 
-  const crop = { img: null, zoom: 1, x: 0, y: 0 };
+    const STAGE = 280;    /* preview square */
+    const OUTPUT = 256;   /* saved picture  */
 
-  function cropScale() {
-    return (STAGE / Math.min(crop.img.width, crop.img.height)) * crop.zoom;
-  }
+    const crop = { img: null, zoom: 1, x: 0, y: 0 };
 
-  /* Keep the picture covering the whole square */
-  function clampCrop() {
-
-    const maxX = Math.max(0, (crop.img.width * cropScale() - STAGE) / 2);
-    const maxY = Math.max(0, (crop.img.height * cropScale() - STAGE) / 2);
-
-    crop.x = Math.min(maxX, Math.max(-maxX, crop.x));
-    crop.y = Math.min(maxY, Math.max(-maxY, crop.y));
-  }
-
-  function drawImageTo(ctx, ratio) {
-
-    const w = crop.img.width * cropScale() * ratio;
-    const h = crop.img.height * cropScale() * ratio;
-
-    ctx.drawImage(
-      crop.img,
-      (STAGE * ratio) / 2 - w / 2 + crop.x * ratio,
-      (STAGE * ratio) / 2 - h / 2 + crop.y * ratio,
-      w,
-      h
-    );
-  }
-
-  function drawCrop() {
-
-    if (!crop.img) {
-      return;
+    function scale() {
+      return (STAGE / Math.min(crop.img.width, crop.img.height)) * crop.zoom;
     }
 
-    clampCrop();
+    function clamp() {
 
-    const ctx = cropCanvas.getContext('2d');
+      const maxX = Math.max(0, (crop.img.width * scale() - STAGE) / 2);
+      const maxY = Math.max(0, (crop.img.height * scale() - STAGE) / 2);
 
-    ctx.clearRect(0, 0, STAGE, STAGE);
+      crop.x = Math.min(maxX, Math.max(-maxX, crop.x));
+      crop.y = Math.min(maxY, Math.max(-maxY, crop.y));
+    }
 
-    drawImageTo(ctx, 1);
+    function drawTo(ctx, ratio) {
 
-    /* Darken everything outside the round photo area */
-    ctx.save();
-    ctx.fillStyle = 'rgba(20, 33, 26, .55)';
-    ctx.beginPath();
-    ctx.rect(0, 0, STAGE, STAGE);
-    ctx.arc(STAGE / 2, STAGE / 2, STAGE / 2 - 6, 0, Math.PI * 2, true);
-    ctx.fill('evenodd');
-    ctx.restore();
+      const w = crop.img.width * scale() * ratio;
+      const h = crop.img.height * scale() * ratio;
 
-    ctx.strokeStyle = 'rgba(255, 255, 255, .9)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(STAGE / 2, STAGE / 2, STAGE / 2 - 6, 0, Math.PI * 2);
-    ctx.stroke();
-  }
+      ctx.drawImage(
+        crop.img,
+        (STAGE * ratio) / 2 - w / 2 + crop.x * ratio,
+        (STAGE * ratio) / 2 - h / 2 + crop.y * ratio,
+        w,
+        h
+      );
+    }
 
-  function openPhotoPicker() {
-    if (photoInput) {
+    function draw() {
+
+      if (!crop.img) {
+        return;
+      }
+
+      clamp();
+
+      const ctx = cropCanvas.getContext('2d');
+
+      ctx.clearRect(0, 0, STAGE, STAGE);
+
+      drawTo(ctx, 1);
+
+      ctx.save();
+      ctx.fillStyle = 'rgba(20, 33, 26, .55)';
+      ctx.beginPath();
+      ctx.rect(0, 0, STAGE, STAGE);
+      ctx.arc(STAGE / 2, STAGE / 2, STAGE / 2 - 6, 0, Math.PI * 2, true);
+      ctx.fill('evenodd');
+      ctx.restore();
+
+      ctx.strokeStyle = 'rgba(255, 255, 255, .9)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(STAGE / 2, STAGE / 2, STAGE / 2 - 6, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    byId('avatarBox').addEventListener('click', function () {
       photoInput.click();
-    }
-  }
-
-  const avatarBox = document.getElementById('avatarBox');
-
-  if (avatarBox) {
-    avatarBox.addEventListener('click', openPhotoPicker);
-  }
-
-  if (photoInput) {
+    });
 
     photoInput.addEventListener('change', function () {
 
@@ -2821,7 +2718,7 @@ document.addEventListener('DOMContentLoaded', function () {
           cropZoom.value = 1;
           cropError.hidden = true;
 
-          drawCrop();
+          draw();
 
           photoDialog.showModal();
         };
@@ -2839,15 +2736,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       reader.readAsDataURL(file);
     });
-  }
 
-  /* Drag to move */
+    /* Drag to move */
 
-  let dragging = false;
-  let lastX = 0;
-  let lastY = 0;
-
-  if (cropCanvas) {
+    let dragging = false;
+    let lastX = 0;
+    let lastY = 0;
 
     cropCanvas.addEventListener('pointerdown', function (event) {
       dragging = true;
@@ -2863,7 +2757,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      /* The canvas can be drawn smaller than 280px on small screens */
       const k = STAGE / cropCanvas.getBoundingClientRect().width;
 
       crop.x += (event.clientX - lastX) * k;
@@ -2872,7 +2765,7 @@ document.addEventListener('DOMContentLoaded', function () {
       lastX = event.clientX;
       lastY = event.clientY;
 
-      drawCrop();
+      draw();
     });
 
     ['pointerup', 'pointercancel'].forEach(function (name) {
@@ -2881,30 +2774,19 @@ document.addEventListener('DOMContentLoaded', function () {
         cropCanvas.classList.remove('dragging');
       });
     });
-  }
 
-  if (cropZoom) {
     cropZoom.addEventListener('input', function () {
       crop.zoom = parseFloat(cropZoom.value) || 1;
-      drawCrop();
+      draw();
     });
-  }
 
-  const cropCancel = document.getElementById('cropCancel');
-
-  if (cropCancel) {
-    cropCancel.addEventListener('click', function () {
+    byId('cropCancel').addEventListener('click', function () {
       photoDialog.close();
     });
-  }
 
-  const cropSave = document.getElementById('cropSave');
+    byId('cropSave').addEventListener('click', function () {
 
-  if (cropSave) {
-
-    cropSave.addEventListener('click', function () {
-
-      if (!crop.img || !currentUser) {
+      if (!crop.img) {
         return;
       }
 
@@ -2918,15 +2800,15 @@ document.addEventListener('DOMContentLoaded', function () {
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, OUTPUT, OUTPUT);
 
-      drawImageTo(ctx, OUTPUT / STAGE);
+      drawTo(ctx, OUTPUT / STAGE);
 
       try {
 
-        const map = getAvatarMap();
+        const map = readJSON(AVATARS_KEY, {});
 
-        map[currentUser.email.toLowerCase()] = out.toDataURL('image/jpeg', 0.86);
+        map[me()] = out.toDataURL('image/jpeg', 0.86);
 
-        localStorage.setItem(AVATARS_KEY, JSON.stringify(map));
+        writeJSON(AVATARS_KEY, map);
 
       } catch (error) {
 
@@ -2942,86 +2824,64 @@ document.addEventListener('DOMContentLoaded', function () {
 
       applyAvatar();
 
-      loadJobs();
+      refresh();
     });
-  }
 
-  const removePhoto = document.getElementById('removePhoto');
+    byId('removePhoto').addEventListener('click', function () {
 
-  if (removePhoto) {
-
-    removePhoto.addEventListener('click', function () {
-
-      if (!currentUser || !confirm('Remove your profile photo?')) {
+      if (!confirm('Remove your profile photo?')) {
         return;
       }
 
-      const map = getAvatarMap();
+      const map = readJSON(AVATARS_KEY, {});
 
-      delete map[currentUser.email.toLowerCase()];
+      delete map[me()];
 
-      localStorage.setItem(AVATARS_KEY, JSON.stringify(map));
+      writeJSON(AVATARS_KEY, map);
 
       applyAvatar();
 
-      loadJobs();
+      refresh();
     });
   }
 
 
-  /* SIDEBAR: FIND JOBS / SAVED JOBS */
-
-  const savedLink = document.getElementById('savedLink');
-  const findLink = document.getElementById('findLink');
-
-  const appsLink = document.getElementById('appsLink');
-
-  if (savedLink) {
-    savedLink.addEventListener('click', function () {
-      showSavedOnly = true;
-      showApps = false;
-      loadJobs();
-    });
-  }
-
-  if (findLink) {
-    findLink.addEventListener('click', function () {
-      showSavedOnly = false;
-      showApps = false;
-      loadJobs();
-    });
-  }
-
-  if (appsLink) {
-    appsLink.addEventListener('click', function () {
-      showApps = true;
-      showSavedOnly = false;
-      loadJobs();
-    });
-  }
-
-
-  /* START APPLICATION */
+  /* =====================================================
+     START
+  ===================================================== */
 
   createSampleJobs();
 
-  const user = loadUser();
+  if (!loadUser()) {
+    return;
+  }
 
-  if (user) {
+  if (!buildShell()) {
+    return;
+  }
 
-    if (window.location.hash === '#applications') {
-      showApps = true;
-    }
+  fillProfile();
+  applyRole();
+  wireSearch();
+  wireClicks();
+  wireAccount();
+  wirePostForm();
+  wirePhoto();
+  refresh();
 
-    loadJobs();
+  /* Links such as home.html#post: jump there once the page is built */
 
-    if (showApps) {
-      const jobsBox = document.getElementById('jobs');
-      if (jobsBox) jobsBox.scrollIntoView();
+  if (window.location.hash) {
+
+    const target = document.getElementById(window.location.hash.slice(1));
+
+    if (target) {
+      target.scrollIntoView();
     }
   }
 
 });
+
 </script>
 
 </body>
