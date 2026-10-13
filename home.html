@@ -4,20 +4,32 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Kofkro LMIS | Home</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 /* =====================================================
-   RESET
+   THEME + RESET
 ===================================================== */
+
+:root {
+  --forest: #1c2b24;
+  --forest-dark: #14211a;
+  --mint: #a3d1b5;
+  --mint-hover: #b9e0c8;
+  --deep: #2f6b4f;
+  --ink: #13201a;
+  --muted: #5f7066;
+  --line: #dce6de;
+  --tint: #eaf2ec;
+  --page: #f1f5f2;
+}
 
 * {
   box-sizing: border-box;
@@ -25,28 +37,17 @@
   padding: 0;
 }
 
-
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
-
 
 body {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
-
-  background: #f3f2ef;
-
-  color: #172b4d;
-
+  font-family: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--page);
+  color: var(--ink);
   line-height: 1.5;
 }
-
 
 button,
 input,
@@ -55,17 +56,18 @@ textarea {
   font: inherit;
 }
 
-
 button {
   cursor: pointer;
 }
-
 
 a {
   text-decoration: none;
   color: inherit;
 }
 
+[hidden] {
+  display: none !important;
+}
 
 
 /* =====================================================
@@ -73,187 +75,130 @@ a {
 ===================================================== */
 
 .main-header {
-
   position: sticky;
-
   top: 0;
-
   z-index: 1000;
-
-  background: white;
-
-  border-bottom:
-    1px solid #ddd;
-
+  background: var(--forest);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .14);
 }
-
 
 .header-inner {
-
   max-width: 1180px;
-
-  height: 68px;
-
+  height: 70px;
   margin: auto;
-
   padding: 0 20px;
-
   display: flex;
-
   align-items: center;
-
-  gap: 25px;
-
+  gap: 24px;
 }
-
-
-/* LOGO */
 
 .brand {
-
-  font-size: 25px;
-
-  font-weight: 800;
-
-  color: #0a66c2;
-
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 21px;
+  font-weight: 700;
+  color: #ffffff;
   white-space: nowrap;
-
 }
 
-
-.brand span {
-
-  color: #172b4d;
-
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--mint);
+  color: var(--forest);
+  font-weight: 800;
 }
 
-
-/* SEARCH */
+.brand span.l {
+  color: var(--mint);
+}
 
 .header-search {
-
-  width: 320px;
-
+  width: 330px;
   height: 42px;
-
-  background: #eef3f8;
-
-  border-radius: 8px;
-
   display: flex;
-
   align-items: center;
-
-  padding: 0 12px;
-
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .14);
+  transition: background .2s, border-color .2s;
 }
 
+.header-search:focus-within {
+  background: rgba(255, 255, 255, .16);
+  border-color: var(--mint);
+}
 
 .search-icon {
-
-  font-size: 24px;
-
-  color: #56687a;
-
-  margin-right: 8px;
-
+  margin-right: 9px;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--mint);
 }
-
 
 .header-search input {
-
-  border: none;
-
-  outline: none;
-
-  background: transparent;
-
   width: 100%;
-
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
   font-size: 14px;
-
 }
 
-
-/* NAV */
+.header-search input::placeholder {
+  color: rgba(255, 255, 255, .6);
+}
 
 .main-nav {
-
   margin-left: auto;
-
   display: flex;
-
   align-items: center;
-
-  gap: 10px;
-
+  gap: 6px;
 }
-
 
 .nav-link {
-
   min-width: 70px;
-
-  padding: 5px 8px;
-
+  padding: 6px 10px;
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
-  gap: 2px;
-
-  color: #5e6b75;
-
+  gap: 1px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, .75);
   font-size: 12px;
-
-  border-bottom: 2px solid transparent;
-
+  transition: color .2s, background .2s;
 }
-
 
 .nav-link:hover,
 .nav-link.active {
-
-  color: #172b4d;
-
+  color: var(--mint);
+  background: rgba(255, 255, 255, .07);
 }
-
 
 .nav-icon {
-
-  font-size: 21px;
-
+  font-size: 20px;
+  line-height: 1.2;
 }
-
 
 .logout-btn {
-
   margin-left: 10px;
-
-  border: 1px solid #0a66c2;
-
-  background: white;
-
-  color: #0a66c2;
-
-  padding: 9px 18px;
-
-  border-radius: 20px;
-
+  padding: 9px 20px;
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
   font-weight: 600;
-
+  transition: background .2s;
 }
-
 
 .logout-btn:hover {
-
-  background: #e8f3ff;
-
+  background: rgba(255, 255, 255, .12);
 }
-
 
 
 /* =====================================================
@@ -261,26 +206,25 @@ a {
 ===================================================== */
 
 .page-container {
-
   max-width: 1180px;
-
-  margin: 25px auto;
-
+  margin: 26px auto;
   padding: 0 20px;
-
   display: grid;
-
-  grid-template-columns:
-    220px
-    minmax(450px, 1fr)
-    280px;
-
-  gap: 20px;
-
+  grid-template-columns: 230px minmax(450px, 1fr) 285px;
+  gap: 22px;
   align-items: start;
-
 }
 
+.card-base,
+.profile-card,
+.side-menu-card,
+.jobs-section,
+.post-job-card,
+.right-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
 
 
 /* =====================================================
@@ -288,192 +232,112 @@ a {
 ===================================================== */
 
 .left-sidebar {
-
   display: flex;
-
   flex-direction: column;
-
-  gap: 15px;
-
+  gap: 16px;
 }
-
 
 .profile-card {
-
-  background: white;
-
-  border-radius: 9px;
-
   overflow: hidden;
-
-  border: 1px solid #ddd;
-
 }
-
 
 .profile-cover {
-
-  height: 65px;
-
+  height: 72px;
   background:
-    linear-gradient(
-      135deg,
-      #d9eaf7,
-      #b7d0e7
-    );
-
+    radial-gradient(160px 80px at 85% 0%, rgba(163, 209, 181, .55), rgba(163, 209, 181, 0)),
+    linear-gradient(135deg, #2d4a3a, var(--forest));
 }
-
 
 .profile-avatar {
-
   width: 72px;
-
   height: 72px;
-
-  margin-top: -35px;
-
+  margin-top: -36px;
   margin-left: 20px;
-
-  border-radius: 50%;
-
-  background: #71869d;
-
-  border: 4px solid white;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  color: white;
-
-  font-size: 30px;
-
-  font-weight: 600;
-
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  background: var(--mint);
+  color: var(--forest);
+  font-size: 29px;
+  font-weight: 700;
 }
-
 
 .profile-content {
-
-  padding: 12px 18px 20px;
-
+  padding: 12px 20px 22px;
 }
-
 
 .profile-content h2 {
-
-  font-size: 19px;
-
-  color: #172b4d;
-
-  margin-bottom: 3px;
-
+  margin-bottom: 2px;
+  font-size: 20px;
+  letter-spacing: -.3px;
 }
-
 
 .profile-email {
-
-  color: #667788;
-
-  font-size: 12px;
-
+  color: var(--muted);
+  font-size: 12.5px;
   word-break: break-word;
-
 }
-
 
 .profile-role {
-
-  color: #555;
-
-  font-size: 13px;
-
-  margin-top: 8px;
-
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--deep);
+  font-size: 12px;
   font-weight: 600;
-
 }
-
 
 .profile-button {
-
-  margin-top: 15px;
-
+  display: block;
   width: 100%;
-
-  padding: 8px;
-
-  border-radius: 18px;
-
-  border: 1px solid #0a66c2;
-
-  background: white;
-
-  color: #0a66c2;
-
+  margin-top: 16px;
+  padding: 9px;
+  border: 1px solid var(--deep);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--deep);
   font-weight: 600;
-
+  font-size: 14px;
+  transition: background .2s;
 }
-
 
 .profile-button:hover {
-
-  background: #e8f3ff;
-
+  background: var(--tint);
 }
-
-
-
-/* SIDE MENU */
 
 .side-menu-card {
-
-  background: white;
-
-  border: 1px solid #ddd;
-
-  border-radius: 9px;
-
-  padding: 16px;
-
+  padding: 18px;
 }
-
 
 .side-menu-card h3 {
-
-  font-size: 15px;
-
-  margin-bottom: 12px;
-
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--deep);
 }
-
 
 .side-menu-card a {
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
-  padding: 9px 4px;
-
-  color: #56687a;
-
-  font-size: 13px;
-
+  padding: 9px 10px;
+  margin: 0 -10px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  transition: background .2s, color .2s;
 }
-
 
 .side-menu-card a:hover {
-
-  color: #0a66c2;
-
+  background: var(--tint);
+  color: var(--ink);
 }
-
 
 
 /* =====================================================
@@ -481,97 +345,63 @@ a {
 ===================================================== */
 
 .main-feed {
-
   min-width: 0;
-
 }
-
 
 .welcome-card {
-
-  background: white;
-
-  border: 1px solid #ddd;
-
-  border-radius: 9px;
-
-  padding: 28px;
-
-  margin-bottom: 18px;
-
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding: 34px 32px;
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   gap: 20px;
-
+  border-radius: 22px;
+  color: #ffffff;
+  background:
+    linear-gradient(100deg, rgba(20, 33, 26, .92) 0%, rgba(20, 33, 26, .7) 55%, rgba(20, 33, 26, .35) 100%),
+    url('yg.jpg') center / cover no-repeat,
+    linear-gradient(135deg, #2d4a3a, var(--forest));
 }
-
 
 .welcome-small {
-
-  color: #0a66c2;
-
-  font-size: 11px;
-
+  margin-bottom: 8px;
+  color: var(--mint);
+  font-size: 11.5px;
   font-weight: 700;
-
-  letter-spacing: 1px;
-
-  margin-bottom: 7px;
-
+  letter-spacing: 1.5px;
 }
-
 
 .welcome-card h1 {
-
-  font-size: 27px;
-
-  line-height: 1.2;
-
-  margin-bottom: 9px;
-
-  color: #172b4d;
-
+  margin-bottom: 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 31px;
+  line-height: 1.12;
+  letter-spacing: -.8px;
 }
-
 
 .welcome-card p {
-
-  color: #56687a;
-
-  font-size: 14px;
-
+  max-width: 440px;
+  color: rgba(255, 255, 255, .86);
+  font-size: 14.5px;
 }
-
 
 .welcome-button {
-
-  background: #0a66c2;
-
-  color: white;
-
-  padding: 11px 20px;
-
-  border-radius: 22px;
-
-  white-space: nowrap;
-
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--forest);
   font-weight: 600;
-
-  font-size: 14px;
-
+  font-size: 14.5px;
+  white-space: nowrap;
+  transition: background .2s, transform .2s;
 }
-
 
 .welcome-button:hover {
-
-  background: #004182;
-
+  background: var(--mint-hover);
+  transform: translateY(-2px);
 }
-
 
 
 /* =====================================================
@@ -579,301 +409,432 @@ a {
 ===================================================== */
 
 .jobs-section {
-
-  background: white;
-
-  border: 1px solid #ddd;
-
-  border-radius: 9px;
-
   overflow: hidden;
-
 }
-
 
 .jobs-heading {
-
-  padding: 20px;
-
+  padding: 22px 24px;
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
-  border-bottom: 1px solid #eee;
-
+  gap: 14px;
+  border-bottom: 1px solid var(--line);
 }
-
 
 .jobs-heading h2 {
-
-  font-size: 20px;
-
+  font-size: 22px;
+  letter-spacing: -.4px;
 }
-
 
 .jobs-heading p {
-
-  color: #667788;
-
+  margin-top: 1px;
+  color: var(--muted);
   font-size: 13px;
-
-  margin-top: 2px;
-
 }
-
 
 .jobs-heading select {
-
-  padding: 9px 12px;
-
-  border: 1px solid #bbb;
-
-  border-radius: 7px;
-
-  background: white;
-
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
   outline: none;
-
+  font-size: 14px;
 }
 
-
-
-/* JOB CARD */
+.jobs-heading select:focus {
+  border-color: var(--deep);
+}
 
 .job-card {
-
-  padding: 20px;
-
-  border-bottom: 1px solid #eee;
-
+  padding: 22px 24px;
   display: grid;
-
-  grid-template-columns: 48px 1fr auto;
-
-  gap: 15px;
-
+  grid-template-columns: 50px 1fr auto;
+  gap: 16px;
   align-items: start;
-
+  border-bottom: 1px solid var(--line);
+  transition: background .2s;
 }
 
+.job-card:hover {
+  background: #f8fbf9;
+}
 
 .job-card:last-child {
-
   border-bottom: none;
-
 }
-
 
 .job-logo {
-
-  width: 48px;
-
-  height: 48px;
-
-  background: #e8f3ff;
-
-  color: #0a66c2;
-
+  width: 50px;
+  height: 50px;
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
+  border-radius: 14px;
+  background: var(--tint);
+  color: var(--deep);
   font-size: 21px;
-
   font-weight: 700;
-
-  border-radius: 5px;
-
 }
-
 
 .job-content h3 {
-
-  color: #0a66c2;
-
-  font-size: 17px;
-
-  margin-bottom: 2px;
-
+  margin-bottom: 1px;
+  color: var(--ink);
+  font-size: 18px;
+  letter-spacing: -.2px;
 }
-
-
-.job-content h3:hover {
-
-  text-decoration: underline;
-
-}
-
 
 .company {
-
-  color: #172b4d;
-
-  font-size: 13px;
-
+  color: var(--muted);
+  font-size: 13.5px;
 }
-
 
 .job-pills {
-
+  margin-top: 9px;
   display: flex;
-
-  gap: 6px;
-
+  gap: 7px;
   flex-wrap: wrap;
-
-  margin-top: 8px;
-
 }
-
 
 .job-pills span {
-
-  background: #eef3f8;
-
-  color: #56687a;
-
-  border-radius: 15px;
-
-  padding: 4px 9px;
-
-  font-size: 11px;
-
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--deep);
+  font-size: 12px;
+  font-weight: 500;
 }
-
 
 .description {
-
   margin-top: 10px;
-
-  color: #56687a;
-
-  font-size: 13px;
-
+  color: #3d4d43;
+  font-size: 14px;
 }
-
 
 .job-actions {
-
   display: flex;
-
   flex-direction: column;
-
   gap: 8px;
-
   align-items: stretch;
-
 }
-
 
 .apply-btn {
-
-  background: #0a66c2;
-
-  color: white;
-
-  border-radius: 20px;
-
-  padding: 8px 18px;
-
+  padding: 9px 22px;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--forest);
   text-align: center;
-
-  font-size: 13px;
-
+  font-size: 14px;
   font-weight: 600;
-
   white-space: nowrap;
-
+  transition: background .2s, transform .2s;
 }
-
 
 .apply-btn:hover {
-
-  background: #004182;
-
+  background: var(--mint-hover);
+  transform: translateY(-1px);
 }
-
 
 .remove-btn {
-
-  background: white;
-
-  color: #777;
-
-  border: 1px solid #aaa;
-
-  border-radius: 20px;
-
   padding: 7px 15px;
-
-  font-size: 12px;
-
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--muted);
+  font-size: 12.5px;
+  transition: background .2s, color .2s, border-color .2s;
 }
-
 
 .remove-btn:hover {
-
-  background: #f5f5f5;
-
+  background: #fff1f0;
+  color: #b42318;
+  border-color: #f3c3c0;
 }
-
-
-
-/* LOADING */
 
 .loading-box {
-
-  padding: 45px;
-
+  padding: 48px;
   text-align: center;
-
-  color: #667788;
-
+  color: var(--muted);
 }
-
 
 .loading-spinner {
-
   width: 28px;
-
   height: 28px;
-
-  border: 3px solid #ddd;
-
-  border-top-color: #0a66c2;
-
-  border-radius: 50%;
-
-  animation: spin 1s linear infinite;
-
   margin: auto auto 10px;
-
+  border: 3px solid var(--line);
+  border-top-color: var(--deep);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
-
 
 @keyframes spin {
-
-  to {
-    transform: rotate(360deg);
-  }
-
+  to { transform: rotate(360deg); }
 }
-
 
 .empty {
-
-  padding: 40px 20px;
-
+  padding: 46px 20px;
   text-align: center;
-
-  color: #667788;
-
+  color: var(--muted);
 }
 
+
+/* Save button, badge, helpers */
+
+.save-btn {
+  padding: 7px 15px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--muted);
+  font-size: 12.5px;
+  white-space: nowrap;
+  transition: background .2s, color .2s, border-color .2s;
+}
+
+.save-btn:hover {
+  background: var(--tint);
+  color: var(--ink);
+}
+
+.save-btn.saved {
+  background: var(--tint);
+  border-color: var(--mint);
+  color: var(--deep);
+  font-weight: 600;
+}
+
+.side-menu-card a.on {
+  background: var(--tint);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.badge {
+  margin-left: auto;
+  min-width: 22px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--forest);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.hide-me {
+  display: none !important;
+}
+
+.applied-tag {
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--deep);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+/* Profile picture */
+
+.profile-avatar {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-edit {
+  position: absolute;
+  right: -6px;
+  bottom: -2px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #ffffff;
+  transition: background .2s, transform .2s;
+}
+
+.avatar-edit:hover,
+.profile-avatar:hover .avatar-edit {
+  background: var(--deep);
+  transform: scale(1.08);
+}
+
+.avatar-edit svg {
+  width: 15px;
+  height: 15px;
+}
+
+.link-btn {
+  display: block;
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 12.5px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link-btn:hover {
+  color: #b42318;
+}
+
+.header-avatar {
+  width: 38px;
+  height: 38px;
+  margin-left: 8px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, .5);
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--forest);
+  font-weight: 700;
+  font-size: 15px;
+  transition: border-color .2s;
+}
+
+.header-avatar:hover {
+  border-color: var(--mint);
+}
+
+.header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.job-logo {
+  overflow: hidden;
+}
+
+.job-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Photo cropper */
+
+.photo-dialog {
+  border: 0;
+  border-radius: 24px;
+  padding: 26px;
+  width: calc(100% - 32px);
+  max-width: 360px;
+  margin: auto;
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
+}
+
+.photo-dialog::backdrop {
+  background: rgba(14, 26, 20, .6);
+}
+
+.photo-dialog h3 {
+  margin-bottom: 4px;
+  font-size: 21px;
+  letter-spacing: -.3px;
+}
+
+.photo-dialog .hint {
+  margin-bottom: 16px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+.crop-stage {
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+#cropCanvas {
+  width: 280px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 18px;
+  background: var(--tint);
+  cursor: grab;
+  touch-action: none;
+}
+
+#cropCanvas.dragging {
+  cursor: grabbing;
+}
+
+.zoom-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.zoom-row input {
+  flex: 1;
+  accent-color: var(--deep);
+}
+
+.crop-error {
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fff1f0;
+  border: 1px solid #f3c3c0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.dialog-actions button {
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dialog-actions .ghost {
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.dialog-actions .ghost:hover {
+  background: var(--tint);
+}
+
+.dialog-actions .primary {
+  border: 0;
+  background: var(--mint);
+  color: var(--forest);
+}
+
+.dialog-actions .primary:hover {
+  background: var(--mint-hover);
+}
 
 
 /* =====================================================
@@ -881,178 +842,105 @@ a {
 ===================================================== */
 
 .post-job-card {
-
-  margin-top: 20px;
-
-  background: white;
-
-  border: 1px solid #ddd;
-
-  border-radius: 9px;
-
-  padding: 25px;
-
+  margin-top: 22px;
+  padding: 28px;
 }
-
 
 .post-heading {
-
-  margin-bottom: 20px;
-
+  margin-bottom: 22px;
 }
-
 
 .post-heading h2 {
-
-  font-size: 20px;
-
+  font-size: 22px;
+  letter-spacing: -.4px;
 }
-
 
 .post-heading p {
-
-  color: #667788;
-
-  font-size: 13px;
-
+  color: var(--muted);
+  font-size: 14px;
 }
-
 
 #pf {
-
   display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
-
 }
-
 
 .form-group {
-
   display: flex;
-
   flex-direction: column;
-
   gap: 6px;
-
 }
-
 
 .form-group.full-width {
-
   grid-column: 1 / -1;
-
 }
-
 
 .form-group label {
-
+  margin-left: 4px;
   font-size: 13px;
-
   font-weight: 600;
-
-  color: #34495e;
-
+  color: #34493d;
 }
-
 
 .form-group label span {
-
-  color: #888;
-
-  font-weight: normal;
-
+  color: #8a988f;
+  font-weight: 400;
 }
-
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-
   width: 100%;
-
-  border: 1px solid #b7b7b7;
-
-  border-radius: 6px;
-
-  padding: 11px;
-
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
   outline: none;
-
-  background: white;
-
+  background: #fbfdfb;
+  transition: border-color .2s, box-shadow .2s;
 }
-
 
 .form-group textarea {
-
   resize: vertical;
-
 }
-
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-
-  border-color: #0a66c2;
-
-  box-shadow:
-    0 0 0 1px #0a66c2;
-
+  border-color: var(--deep);
+  box-shadow: 0 0 0 4px rgba(47, 107, 79, .13);
+  background: #ffffff;
 }
-
 
 .form-actions {
-
   grid-column: 1 / -1;
-
   display: flex;
-
   align-items: center;
-
   gap: 15px;
-
 }
-
 
 .post-button {
-
+  padding: 12px 30px;
   border: none;
-
-  background: #0a66c2;
-
-  color: white;
-
-  border-radius: 22px;
-
-  padding: 11px 25px;
-
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--forest);
   font-weight: 600;
-
+  font-size: 15px;
+  box-shadow: 0 8px 20px rgba(47, 107, 79, .2);
+  transition: background .2s, transform .2s;
 }
-
 
 .post-button:hover {
-
-  background: #004182;
-
+  background: var(--mint-hover);
+  transform: translateY(-1px);
 }
-
 
 .success-message {
-
-  color: #287d3c;
-
-  font-size: 13px;
-
+  color: #16734a;
+  font-size: 14px;
   font-weight: 600;
-
 }
-
 
 
 /* =====================================================
@@ -1060,207 +948,126 @@ a {
 ===================================================== */
 
 .right-sidebar {
-
   display: flex;
-
   flex-direction: column;
-
-  gap: 15px;
-
+  gap: 16px;
 }
-
 
 .right-card {
-
-  background: white;
-
-  border: 1px solid #ddd;
-
-  border-radius: 9px;
-
-  padding: 18px;
-
+  padding: 20px;
 }
-
 
 .right-card h3 {
-
-  font-size: 16px;
-
-  margin-bottom: 15px;
-
+  margin-bottom: 14px;
+  font-size: 17px;
+  letter-spacing: -.2px;
 }
-
 
 .recent-job {
-
   padding: 12px 0;
-
-  border-bottom: 1px solid #eee;
-
   display: flex;
-
   flex-direction: column;
-
-  gap: 2px;
-
+  gap: 1px;
+  border-bottom: 1px solid var(--line);
 }
-
 
 .recent-job:last-child {
-
   border-bottom: none;
-
 }
-
 
 .recent-job strong {
-
-  color: #0a66c2;
-
-  font-size: 13px;
-
+  font-size: 14px;
 }
-
 
 .recent-job span {
-
-  color: #667788;
-
-  font-size: 12px;
-
+  color: var(--muted);
+  font-size: 12.5px;
 }
-
 
 .view-all {
-
   display: block;
-
   margin-top: 12px;
-
-  color: #0a66c2;
-
-  font-size: 13px;
-
+  color: var(--deep);
+  font-size: 14px;
   font-weight: 600;
-
 }
 
+.view-all:hover {
+  text-decoration: underline;
+}
 
 .benefit {
-
   display: flex;
-
-  gap: 10px;
-
-  margin-bottom: 17px;
-
+  gap: 11px;
+  margin-bottom: 16px;
 }
 
+.benefit:last-child {
+  margin-bottom: 0;
+}
 
 .benefit-icon {
-
-  width: 25px;
-
-  height: 25px;
-
+  width: 26px;
+  height: 26px;
   flex-shrink: 0;
-
-  border-radius: 50%;
-
-  background: #e8f3ff;
-
-  color: #0a66c2;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  font-weight: bold;
-
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--forest);
+  font-size: 13px;
+  font-weight: 800;
 }
-
 
 .benefit strong {
-
   display: block;
-
-  font-size: 12px;
-
+  font-size: 13.5px;
 }
-
 
 .benefit p {
-
-  color: #667788;
-
-  font-size: 11px;
-
-  margin-top: 3px;
-
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12.5px;
 }
-
 
 .muted {
-
-  color: #777;
-
+  color: var(--muted);
   font-size: 13px;
-
 }
-
 
 .account-card p {
-
-  color: #777;
-
-  font-size: 12px;
-
-  margin-bottom: 3px;
-
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 12.5px;
 }
-
 
 .account-card strong {
-
   display: block;
-
-  font-size: 14px;
-
+  font-size: 15px;
 }
-
 
 .account-card span {
-
   display: block;
-
-  color: #667788;
-
-  font-size: 12px;
-
+  color: var(--muted);
+  font-size: 12.5px;
   word-break: break-word;
-
 }
-
 
 .secondary-button {
-
-  margin-top: 15px;
-
-  border: 1px solid #777;
-
-  background: white;
-
-  border-radius: 20px;
-
-  padding: 7px 15px;
-
-  font-size: 12px;
-
+  margin-top: 16px;
+  padding: 8px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background .2s;
 }
 
+.secondary-button:hover {
+  background: var(--tint);
+}
 
 
 /* =====================================================
@@ -1268,77 +1075,48 @@ a {
 ===================================================== */
 
 .site-footer {
-
-  margin-top: 40px;
-
-  background: white;
-
-  border-top: 1px solid #ddd;
-
+  margin-top: 44px;
+  background: var(--forest-dark);
 }
-
 
 .footer-inner {
-
   max-width: 1180px;
-
   margin: auto;
-
-  padding: 25px 20px;
-
+  padding: 32px 20px;
   display: flex;
-
   justify-content: space-between;
-
   gap: 20px;
-
 }
-
 
 .footer-inner strong {
-
-  color: #0a66c2;
-
+  color: #ffffff;
+  font-size: 17px;
 }
 
+.footer-inner strong span {
+  color: var(--mint);
+}
 
 .footer-inner p {
-
-  color: #777;
-
-  font-size: 12px;
-
   margin-top: 4px;
-
+  color: #9db0a4;
+  font-size: 13px;
 }
-
 
 .footer-links {
-
   display: flex;
-
-  gap: 20px;
-
+  gap: 22px;
   align-items: center;
-
 }
-
 
 .footer-links a {
-
-  color: #667788;
-
-  font-size: 12px;
-
+  color: #cfdad2;
+  font-size: 13px;
 }
-
 
 .footer-links a:hover {
-
-  color: #0a66c2;
-
+  color: var(--mint);
 }
-
 
 
 /* =====================================================
@@ -1348,262 +1126,153 @@ a {
 @media (max-width: 1000px) {
 
   .page-container {
-
-    grid-template-columns:
-      190px
-      1fr;
-
+    grid-template-columns: 200px 1fr;
   }
-
 
   .right-sidebar {
-
     display: none;
-
   }
-
 
   .header-search {
-
     width: 250px;
-
   }
-
 }
 
 
 @media (max-width: 750px) {
 
   .header-inner {
-
     height: auto;
-
-    min-height: 65px;
-
+    min-height: 66px;
     flex-wrap: wrap;
-
     padding: 10px 15px;
-
   }
-
 
   .header-search {
-
     order: 3;
-
     width: 100%;
-
   }
-
 
   .main-nav {
-
     gap: 3px;
-
   }
-
 
   .nav-link {
-
     min-width: 50px;
-
   }
-
 
   .nav-link span:last-child {
-
     display: none;
-
   }
-
 
   .logout-btn {
-
-    padding: 7px 12px;
-
-    font-size: 12px;
-
+    padding: 7px 14px;
+    font-size: 13px;
   }
-
 
   .page-container {
-
     display: block;
-
-    margin-top: 15px;
-
+    margin-top: 16px;
   }
-
 
   .left-sidebar {
-
-    margin-bottom: 15px;
-
+    margin-bottom: 16px;
   }
-
 
   .side-menu-card {
-
     display: none;
-
   }
-
 
   .profile-card {
-
     display: flex;
-
     align-items: center;
-
   }
-
 
   .profile-cover {
-
     display: none;
-
   }
-
 
   .profile-avatar {
-
-    margin: 15px;
-
+    margin: 16px;
     flex-shrink: 0;
-
   }
-
 
   .profile-content {
-
     padding: 15px 15px 15px 0;
-
   }
-
 
   .profile-button {
-
-    margin-top: 7px;
-
     width: auto;
-
-    padding: 5px 12px;
-
+    margin-top: 8px;
+    padding: 5px 14px;
   }
-
 
   .welcome-card {
-
     flex-direction: column;
-
     align-items: flex-start;
-
+    padding: 28px 24px;
   }
 
+  .welcome-card h1 {
+    font-size: 26px;
+  }
 
   #pf {
-
     grid-template-columns: 1fr;
-
   }
 
-
-  .form-group.full-width {
-
-    grid-column: auto;
-
-  }
-
-
+  .form-group.full-width,
   .form-actions {
-
     grid-column: auto;
-
   }
-
 }
 
 
 @media (max-width: 550px) {
 
   .header-inner {
-
     gap: 10px;
-
   }
-
 
   .brand {
-
-    font-size: 21px;
-
+    font-size: 19px;
   }
-
 
   .main-nav {
-
     margin-left: auto;
-
   }
-
 
   .nav-link {
-
-    min-width: 35px;
-
+    min-width: 38px;
   }
-
 
   .job-card {
-
-    grid-template-columns:
-      42px 1fr;
-
+    padding: 18px;
+    grid-template-columns: 42px 1fr;
   }
-
 
   .job-logo {
-
     width: 42px;
-
     height: 42px;
-
   }
-
 
   .job-actions {
-
     grid-column: 2;
-
     flex-direction: row;
-
   }
-
 
   .jobs-heading {
-
     align-items: flex-start;
-
-    gap: 10px;
-
     flex-direction: column;
-
   }
-
 
   .footer-inner {
-
     flex-direction: column;
-
   }
-
 
   .footer-links {
-
     flex-wrap: wrap;
-
   }
-
 }
 
 </style>
@@ -1623,20 +1292,14 @@ a {
 
   <div class="header-inner">
 
-
-    <a
-      href="/index.html"
-      class="brand"
-    >
-      Kofkro <span>LMIS</span>
+    <a href="index.html" class="brand">
+      <span class="brand-mark">K</span>
+      <span>Kofkro <span class="l">LMIS</span></span>
     </a>
-
 
     <div class="header-search">
 
-      <span class="search-icon">
-        ⌕
-      </span>
+      <span class="search-icon">⌕</span>
 
       <input
         id="q"
@@ -1646,41 +1309,29 @@ a {
 
     </div>
 
-
     <nav class="main-nav">
 
-      <a
-        href="#jobs"
-        class="nav-link active"
-      >
+      <a href="#jobs" class="nav-link active">
         <span class="nav-icon">⌂</span>
         <span>Home</span>
       </a>
 
-
-      <a
-        href="#jobs"
-        class="nav-link"
-      >
+      <a href="#jobs" class="nav-link">
         <span class="nav-icon">▣</span>
         <span>Jobs</span>
       </a>
 
-
-      <a
-        href="#post"
-        class="nav-link"
-      >
+      <a href="#post" class="nav-link employer-only">
         <span class="nav-icon">＋</span>
         <span>Post Job</span>
       </a>
 
+      <a href="#profile" class="header-avatar" id="headerAvatar" title="Your profile">
+        <img id="headerImg" alt="" hidden>
+        <span id="headerLetter">U</span>
+      </a>
 
-      <button
-        type="button"
-        id="logout"
-        class="logout-btn"
-      >
+      <button type="button" id="logout" class="logout-btn">
         Sign out
       </button>
 
@@ -1699,55 +1350,42 @@ a {
 <main class="page-container">
 
 
-  <!-- ===================================================
-       LEFT
-  ==================================================== -->
+  <!-- LEFT -->
 
   <aside class="left-sidebar">
 
-
-    <section class="profile-card">
+    <section class="profile-card" id="profile">
 
       <div class="profile-cover"></div>
 
+      <div class="profile-avatar" id="avatarBox" title="Change profile photo">
 
-      <div class="profile-avatar">
+        <img id="avatarImg" alt="Your profile photo" hidden>
 
-        <span id="avatarLetter">
-          U
-        </span>
+        <span id="avatarLetter">U</span>
+
+        <button type="button" class="avatar-edit" id="avatarEdit" aria-label="Change profile photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 8h3l2-3h6l2 3h3v11H4z"/>
+            <circle cx="12" cy="13" r="3.5"/>
+          </svg>
+        </button>
 
       </div>
 
+      <input type="file" id="photoInput" accept="image/*" hidden>
 
       <div class="profile-content">
 
-        <h2 id="profileName">
-          Loading...
-        </h2>
+        <h2 id="profileName">Loading...</h2>
 
+        <p id="profileEmail" class="profile-email">Loading...</p>
 
-        <p
-          id="profileEmail"
-          class="profile-email"
-        >
-          Loading...
-        </p>
+        <p id="profileRole" class="profile-role">Candidate</p>
 
+        <button type="button" class="link-btn" id="removePhoto" hidden>Remove photo</button>
 
-        <p
-          id="profileRole"
-          class="profile-role"
-        >
-          Candidate
-        </p>
-
-
-        <button
-          type="button"
-          id="updateProfile"
-          class="profile-button"
-        >
+        <button type="button" id="updateProfile" class="profile-button">
           Update profile
         </button>
 
@@ -1756,56 +1394,25 @@ a {
     </section>
 
 
-
     <section class="side-menu-card">
 
-      <h3>
-        My LMIS
-      </h3>
+      <h3>My LMIS</h3>
 
-
-      <a href="#jobs">
-        <span>▣</span>
-        Find jobs
-      </a>
-
-
-      <a href="#post">
-        <span>＋</span>
-        Post a job
-      </a>
-
-
-      <a href="#">
-        <span>★</span>
-        Saved jobs
-      </a>
-
-
-      <a href="#">
-        <span>◉</span>
-        My applications
-      </a>
+      <a href="#jobs" id="findLink" class="on"><span>▣</span> Find jobs</a>
+      <a href="#post" class="employer-only"><span>＋</span> Post a job</a>
+      <a href="#jobs" id="savedLink"><span>★</span> Saved jobs <b class="badge" id="savedBadge">0</b></a>
+      <a href="#jobs" id="appsLink"><span>◉</span> <span id="appsLabel">My applications</span> <b class="badge" id="appsBadge">0</b></a>
 
     </section>
 
 
-
     <section class="side-menu-card">
 
-      <h3>
-        Account
-      </h3>
+      <h3>Account</h3>
 
-
-      <a href="#">
-        Settings
-      </a>
-
-
-      <a href="/index.html">
-        About Kofkro LMIS
-      </a>
+      <a href="#">Settings</a>
+      <a href="about.html">About Kofkro LMIS</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
 
     </section>
 
@@ -1813,9 +1420,7 @@ a {
 
 
 
-  <!-- ===================================================
-       CENTER
-  ==================================================== -->
+  <!-- CENTER -->
 
   <section class="main-feed">
 
@@ -1824,30 +1429,23 @@ a {
 
       <div>
 
-        <p class="welcome-small">
+        <p class="welcome-small" id="welcomeSmall">
           WELCOME TO KOFKRO LMIS
         </p>
-
 
         <h1>
           Find opportunities.
           Build your future.
         </h1>
 
-
         <p>
-          Discover jobs, internships and
-          apprenticeships available in
+          Discover jobs, internships and apprenticeships available in
           Kofkro and surrounding communities.
         </p>
 
       </div>
 
-
-      <a
-        href="#jobs"
-        class="welcome-button"
-      >
+      <a href="#jobs" class="welcome-button">
         Explore jobs
       </a>
 
@@ -1855,64 +1453,33 @@ a {
 
 
 
-    <section
-      class="jobs-section"
-      id="jobs"
-    >
-
+    <section class="jobs-section" id="jobs">
 
       <div class="jobs-heading">
 
         <div>
 
-          <h2>
-            Job opportunities
-          </h2>
+          <h2 id="jobsTitle">Job opportunities</h2>
 
-          <p id="count">
-            Loading jobs...
-          </p>
+          <p id="count">Loading jobs...</p>
 
         </div>
 
-
         <select id="ft">
-
-          <option value="">
-            All job types
-          </option>
-
-          <option value="Full-time">
-            Full-time
-          </option>
-
-          <option value="Part-time">
-            Part-time
-          </option>
-
-          <option value="Internship">
-            Internship
-          </option>
-
-          <option value="Apprenticeship">
-            Apprenticeship
-          </option>
-
+          <option value="">All job types</option>
+          <option value="Full-time">Full-time</option>
+          <option value="Part-time">Part-time</option>
+          <option value="Internship">Internship</option>
+          <option value="Apprenticeship">Apprenticeship</option>
         </select>
 
       </div>
 
-
       <div id="jobs-list">
 
         <div class="loading-box">
-
           <div class="loading-spinner"></div>
-
-          <p>
-            Loading jobs...
-          </p>
-
+          <p>Loading jobs...</p>
         </div>
 
       </div>
@@ -1923,181 +1490,64 @@ a {
 
     <!-- POST JOB -->
 
-    <section
-      class="post-job-card"
-      id="post"
-    >
+    <section class="post-job-card employer-only" id="post">
 
       <div class="post-heading">
 
-        <h2>
-          Post a job
-        </h2>
+        <h2>Post a job</h2>
 
-        <p>
-          Have an opportunity?
-          Share it with people in Kofkro.
-        </p>
+        <p>Have an opportunity? Share it with people in Kofkro.</p>
 
       </div>
 
-
       <form id="pf">
 
-
         <div class="form-group">
-
-          <label for="f-title">
-            Job title
-          </label>
-
-          <input
-            id="f-title"
-            type="text"
-            placeholder="e.g. Sales Assistant"
-            maxlength="80"
-            required
-          >
-
+          <label for="f-title">Job title</label>
+          <input id="f-title" type="text" placeholder="e.g. Sales Assistant" maxlength="80" required>
         </div>
 
-
         <div class="form-group">
-
-          <label for="f-co">
-            Company / Organisation
-          </label>
-
-          <input
-            id="f-co"
-            type="text"
-            placeholder="e.g. Kofkro Market Traders"
-            maxlength="60"
-            required
-          >
-
+          <label for="f-co">Company / Organisation</label>
+          <input id="f-co" type="text" placeholder="e.g. Kofkro Market Traders" maxlength="60" required>
         </div>
 
-
         <div class="form-group">
-
-          <label for="f-loc">
-            Location
-          </label>
-
-          <input
-            id="f-loc"
-            type="text"
-            placeholder="e.g. Kofkro"
-            maxlength="60"
-            required
-          >
-
+          <label for="f-loc">Location</label>
+          <input id="f-loc" type="text" placeholder="e.g. Kofkro" maxlength="60" required>
         </div>
 
-
         <div class="form-group">
-
-          <label for="f-type">
-            Job type
-          </label>
-
-          <select
-            id="f-type"
-            required
-          >
-
-            <option value="">
-              Select job type
-            </option>
-
-            <option value="Full-time">
-              Full-time
-            </option>
-
-            <option value="Part-time">
-              Part-time
-            </option>
-
-            <option value="Internship">
-              Internship
-            </option>
-
-            <option value="Apprenticeship">
-              Apprenticeship
-            </option>
-
+          <label for="f-type">Job type</label>
+          <select id="f-type" required>
+            <option value="">Select job type</option>
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Internship">Internship</option>
+            <option value="Apprenticeship">Apprenticeship</option>
           </select>
-
         </div>
-
 
         <div class="form-group">
-
-          <label for="f-pay">
-            Pay / Stipend
-            <span>(optional)</span>
-          </label>
-
-          <input
-            id="f-pay"
-            type="text"
-            placeholder="e.g. GHS 1,500 per month"
-            maxlength="40"
-          >
-
+          <label for="f-pay">Pay / Stipend <span>(optional)</span></label>
+          <input id="f-pay" type="text" placeholder="e.g. GHS 1,500 per month" maxlength="40">
         </div>
-
 
         <div class="form-group">
-
-          <label for="f-mail">
-            Application email
-          </label>
-
-          <input
-            id="f-mail"
-            type="email"
-            placeholder="applications@example.com"
-            maxlength="160"
-            required
-          >
-
+          <label for="f-mail">Application email</label>
+          <input id="f-mail" type="email" placeholder="applications@example.com" maxlength="160" required>
         </div>
-
 
         <div class="form-group full-width">
-
-          <label for="f-desc">
-            Job description
-          </label>
-
-          <textarea
-            id="f-desc"
-            rows="6"
-            maxlength="800"
-            placeholder="Describe the job, responsibilities and requirements..."
-            required
-          ></textarea>
-
+          <label for="f-desc">Job description</label>
+          <textarea id="f-desc" rows="6" maxlength="800" placeholder="Describe the job, responsibilities and requirements..." required></textarea>
         </div>
-
 
         <div class="form-actions">
 
-          <button
-            type="submit"
-            class="post-button"
-          >
-            Post job
-          </button>
+          <button type="submit" class="post-button">Post job</button>
 
-
-          <p
-            id="ok"
-            class="success-message"
-            style="display:none;"
-          >
+          <p id="ok" class="success-message" style="display:none;">
             ✓ Job posted successfully.
           </p>
 
@@ -2112,143 +1562,66 @@ a {
 
 
 
-  <!-- ===================================================
-       RIGHT
-  ==================================================== -->
+  <!-- RIGHT -->
 
   <aside class="right-sidebar">
 
 
     <section class="right-card">
 
-      <h3>
-        Latest opportunities
-      </h3>
-
+      <h3>Latest opportunities</h3>
 
       <div id="recentJobs">
-
-        <p class="muted">
-          Loading...
-        </p>
-
+        <p class="muted">Loading...</p>
       </div>
 
-
-      <a
-        href="#jobs"
-        class="view-all"
-      >
-        View all jobs →
-      </a>
+      <a href="#jobs" class="view-all">View all jobs →</a>
 
     </section>
-
 
 
     <section class="right-card">
 
-      <h3>
-        Why use Kofkro LMIS?
-      </h3>
-
+      <h3>Why use Kofkro LMIS?</h3>
 
       <div class="benefit">
-
-        <div class="benefit-icon">
-          ✓
-        </div>
-
+        <div class="benefit-icon">✓</div>
         <div>
-
-          <strong>
-            Find local opportunities
-          </strong>
-
-          <p>
-            Discover jobs and training
-            opportunities close to you.
-          </p>
-
+          <strong>Find local opportunities</strong>
+          <p>Discover jobs and training opportunities close to you.</p>
         </div>
-
       </div>
 
-
       <div class="benefit">
-
-        <div class="benefit-icon">
-          ✓
-        </div>
-
+        <div class="benefit-icon">✓</div>
         <div>
-
-          <strong>
-            Build your career
-          </strong>
-
-          <p>
-            Connect your skills with
-            employers and opportunities.
-          </p>
-
+          <strong>Build your career</strong>
+          <p>Connect your skills with employers and opportunities.</p>
         </div>
-
       </div>
 
-
       <div class="benefit">
-
-        <div class="benefit-icon">
-          ✓
-        </div>
-
+        <div class="benefit-icon">✓</div>
         <div>
-
-          <strong>
-            Support local businesses
-          </strong>
-
-          <p>
-            Employers can reach people
-            looking for work.
-          </p>
-
+          <strong>Support local businesses</strong>
+          <p>Employers can reach people looking for work.</p>
         </div>
-
       </div>
 
     </section>
 
 
-
     <section class="right-card account-card">
 
-      <h3>
-        Your account
-      </h3>
+      <h3>Your account</h3>
 
+      <p>You are signed in as:</p>
 
-      <p>
-        You are signed in as:
-      </p>
+      <strong id="accountName">Loading...</strong>
 
+      <span id="accountEmail">Loading...</span>
 
-      <strong id="accountName">
-        Loading...
-      </strong>
-
-
-      <span id="accountEmail">
-        Loading...
-      </span>
-
-
-      <button
-        type="button"
-        id="logoutSide"
-        class="secondary-button"
-      >
+      <button type="button" id="logoutSide" class="secondary-button">
         Sign out
       </button>
 
@@ -2271,35 +1644,19 @@ a {
 
     <div>
 
-      <strong>
-        Kofkro LMIS
-      </strong>
+      <strong>Kofkro <span>LMIS</span></strong>
 
-      <p>
-        Connecting people to jobs,
-        skills and opportunities.
-      </p>
+      <p>Connecting people to jobs, skills and opportunities.</p>
 
     </div>
 
-
     <div class="footer-links">
 
-      <a href="/index.html">
-        About
-      </a>
-
-      <a href="#jobs">
-        Jobs
-      </a>
-
-      <a href="#post">
-        Employers
-      </a>
-
-      <a href="#">
-        Help
-      </a>
+      <a href="about.html">About</a>
+      <a href="#jobs">Jobs</a>
+      <a href="#post" class="employer-only">Employers</a>
+      <a href="terms.html">Terms</a>
+      <a href="#">Help</a>
 
     </div>
 
@@ -2307,6 +1664,34 @@ a {
 
 </footer>
 
+
+
+<!-- PHOTO CROPPER -->
+
+<dialog id="photoDialog" class="photo-dialog" aria-label="Adjust your profile photo">
+
+  <h3>Adjust your photo</h3>
+
+  <p class="hint">Drag the picture to move it. Use the slider to zoom.</p>
+
+  <div class="crop-stage">
+    <canvas id="cropCanvas" width="280" height="280"></canvas>
+  </div>
+
+  <div class="zoom-row">
+    <span>－</span>
+    <input type="range" id="cropZoom" min="1" max="3" step="0.01" value="1" aria-label="Zoom">
+    <span>＋</span>
+  </div>
+
+  <p class="crop-error" id="cropError" hidden></p>
+
+  <div class="dialog-actions">
+    <button type="button" class="ghost" id="cropCancel">Cancel</button>
+    <button type="button" class="primary" id="cropSave">Save photo</button>
+  </div>
+
+</dialog>
 
 
 <script>
@@ -2321,170 +1706,387 @@ document.addEventListener('DOMContentLoaded', function () {
   let currentUser = null;
 
 
-  /* =====================================================
-     STORAGE KEYS
-  ===================================================== */
+  /* STORAGE KEYS */
 
   const USERS_KEY = 'kofkro-users';
   const CURRENT_USER_KEY = 'kofkro-current-user';
   const JOBS_KEY = 'kofkro-lmis-jobs';
+  const SAVED_KEY = 'kofkro-saved-jobs';
+
+  /* Roles that are allowed to post jobs (candidates only browse and apply) */
+  const POSTER_ROLES = ['employer', 'training_provider'];
+
+  const APPS_KEY = 'kofkro-applications';
+  const AVATARS_KEY = 'kofkro-avatars';
+
+  let showSavedOnly = false;
+  let showApps = false;
 
 
-  /* =====================================================
-     LOCALSTORAGE HELPERS
-  ===================================================== */
+  /* LOCALSTORAGE HELPERS */
 
   function getUsers() {
     try {
-      return JSON.parse(
-        localStorage.getItem(USERS_KEY) || '[]'
-      );
+      return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
     } catch (error) {
       console.error('Could not read users:', error);
       return [];
     }
   }
 
-
   function getJobs() {
     try {
-      return JSON.parse(
-        localStorage.getItem(JOBS_KEY) || '[]'
-      );
+      return JSON.parse(localStorage.getItem(JOBS_KEY) || '[]');
     } catch (error) {
       console.error('Could not read jobs:', error);
       return [];
     }
   }
 
-
   function saveJobs(jobs) {
-    localStorage.setItem(
-      JOBS_KEY,
-      JSON.stringify(jobs)
-    );
+    localStorage.setItem(JOBS_KEY, JSON.stringify(jobs));
   }
 
 
-  /* =====================================================
-     LOAD CURRENT USER
-  ===================================================== */
+  /* SAVED JOBS (kept per signed-in user) */
+
+  function getSavedMap() {
+    try {
+      return JSON.parse(localStorage.getItem(SAVED_KEY) || '{}');
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function getSavedIds() {
+    if (!currentUser) {
+      return [];
+    }
+
+    const map = getSavedMap();
+
+    return map[currentUser.email.toLowerCase()] || [];
+  }
+
+  function isSaved(id) {
+    return getSavedIds().indexOf(String(id)) !== -1;
+  }
+
+  function toggleSaved(id) {
+
+    if (!currentUser) {
+      return;
+    }
+
+    const key = currentUser.email.toLowerCase();
+    const map = getSavedMap();
+    const ids = map[key] || [];
+    const at = ids.indexOf(String(id));
+
+    if (at === -1) {
+      ids.push(String(id));
+    } else {
+      ids.splice(at, 1);
+    }
+
+    map[key] = ids;
+
+    localStorage.setItem(SAVED_KEY, JSON.stringify(map));
+  }
+
+  function refreshSavedUI() {
+
+    const savedCount = getJobs().filter(function (job) {
+      return isSaved(job.id);
+    }).length;
+
+    const badge = document.getElementById('savedBadge');
+    const savedLink = document.getElementById('savedLink');
+    const findLink = document.getElementById('findLink');
+    const title = document.getElementById('jobsTitle');
+
+    if (badge) badge.textContent = savedCount;
+    const appsLink = document.getElementById('appsLink');
+    const appsBadge = document.getElementById('appsBadge');
+    const appsLabel = document.getElementById('appsLabel');
+
+    if (savedLink) savedLink.classList.toggle('on', showSavedOnly);
+    if (appsLink) appsLink.classList.toggle('on', showApps);
+    if (findLink) findLink.classList.toggle('on', !showSavedOnly && !showApps);
+
+    if (appsBadge) appsBadge.textContent = myApps().length;
+    if (appsLabel) appsLabel.textContent = isPoster() ? 'Applications received' : 'My applications';
+
+    if (title) {
+      title.textContent = showApps
+        ? (isPoster() ? 'Applications received' : 'My applications')
+        : (showSavedOnly ? 'Saved jobs' : 'Job opportunities');
+    }
+  }
+
+
+  /* APPLICATIONS */
+
+  function getApps() {
+    try {
+      return JSON.parse(localStorage.getItem(APPS_KEY) || '[]');
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveApps(apps) {
+    localStorage.setItem(APPS_KEY, JSON.stringify(apps));
+  }
+
+  function isPoster() {
+    return !!currentUser && POSTER_ROLES.indexOf(currentUser.role) !== -1;
+  }
+
+  /* Candidates see what they sent. Employers see what they received. */
+  function myApps() {
+
+    if (!currentUser) {
+      return [];
+    }
+
+    const me = currentUser.email.toLowerCase();
+
+    return getApps().filter(function (a) {
+      return isPoster()
+        ? (a.jobOwner || '').toLowerCase() === me
+        : (a.email || '').toLowerCase() === me;
+    });
+  }
+
+  function hasApplied(jobId) {
+
+    if (!currentUser) {
+      return false;
+    }
+
+    const me = currentUser.email.toLowerCase();
+
+    return getApps().some(function (a) {
+      return String(a.jobId) === String(jobId) && (a.email || '').toLowerCase() === me;
+    });
+  }
+
+  function isOwnJob(job) {
+    return !!currentUser && !!job.postedBy &&
+      job.postedBy.toLowerCase() === currentUser.email.toLowerCase();
+  }
+
+  function formatDate(iso) {
+    try {
+      return new Date(iso).toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      });
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function renderApps() {
+
+    const box = document.getElementById('jobs-list');
+    const count = document.getElementById('count');
+    const searchInput = document.getElementById('q');
+    const q = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
+    if (!box) {
+      return;
+    }
+
+    const poster = isPoster();
+
+    const apps = myApps().filter(function (a) {
+      return !q || (
+        (a.jobTitle || '') + ' ' + (a.co || '') + ' ' + (a.name || '')
+      ).toLowerCase().includes(q);
+    });
+
+    if (count) {
+      count.textContent =
+        apps.length + (apps.length === 1 ? ' application' : ' applications') +
+        (poster ? ' received' : ' sent');
+    }
+
+    if (!apps.length) {
+
+      box.innerHTML = `
+        <div class="empty">
+          ${
+            poster
+              ? `<strong>No applications yet.</strong><br>
+                 When someone applies for a job you posted, it will show up here.`
+              : `<strong>You have not applied for any jobs yet.</strong><br>
+                 Tap Apply on a job to send your first application.`
+          }
+        </div>
+      `;
+
+      return;
+    }
+
+    box.innerHTML = apps.map(function (a) {
+
+      if (poster) {
+
+        const subject = encodeURIComponent('Your application for ' + (a.jobTitle || 'a job'));
+
+        return `
+          <article class="job-card">
+
+            <div class="job-logo">${
+              getAvatar(a.email)
+                ? `<img src="${getAvatar(a.email)}" alt="">`
+                : escapeHtml((a.name || '?').charAt(0).toUpperCase())
+            }</div>
+
+            <div class="job-content">
+
+              <h3>${escapeHtml(a.name || '')}</h3>
+
+              <p class="company">
+                ${escapeHtml(a.email || '')}${a.phone ? ' · ' + escapeHtml(a.phone) : ''}
+              </p>
+
+              <div class="job-pills">
+                <span>Applied for ${escapeHtml(a.jobTitle || '')}</span>
+                ${a.edu ? `<span>${escapeHtml(a.edu)}</span>` : ''}
+                ${a.residence ? `<span>${escapeHtml(a.residence)}</span>` : ''}
+                <span>${escapeHtml(formatDate(a.createdAt))}</span>
+              </div>
+
+              <p class="description">
+                <strong>Skills:</strong> ${escapeHtml(a.skills || '')}
+                ${a.exp ? `<br><strong>Experience:</strong> ${escapeHtml(a.exp)}` : ''}
+                ${a.message ? `<br><strong>Message:</strong> ${escapeHtml(a.message)}` : ''}
+              </p>
+
+            </div>
+
+            <div class="job-actions">
+              <a class="apply-btn" href="mailto:${escapeHtml(a.email || '')}?subject=${subject}">Email</a>
+            </div>
+
+          </article>
+        `;
+      }
+
+      return `
+        <article class="job-card">
+
+          <div class="job-logo">${escapeHtml((a.co || 'K').charAt(0).toUpperCase())}</div>
+
+          <div class="job-content">
+
+            <h3>${escapeHtml(a.jobTitle || '')}</h3>
+
+            <p class="company">${escapeHtml(a.co || '')} · ${escapeHtml(a.loc || '')}</p>
+
+            <div class="job-pills">
+              <span>${escapeHtml(a.type || '')}</span>
+              <span>✓ ${escapeHtml(a.status || 'Submitted')}</span>
+              <span>${escapeHtml(formatDate(a.createdAt))}</span>
+            </div>
+
+            <p class="description">
+              ${a.message ? escapeHtml(a.message) : 'No message was added to this application.'}
+            </p>
+
+          </div>
+
+          <div class="job-actions">
+            <button type="button" class="remove-btn" data-withdraw="${escapeHtml(String(a.id))}">
+              Withdraw
+            </button>
+          </div>
+
+        </article>
+      `;
+
+    }).join('');
+  }
+
+
+  /* SHOW / HIDE THINGS ONLY EMPLOYERS NEED */
+
+  function applyRole() {
+
+    const canPost =
+      !!currentUser && POSTER_ROLES.indexOf(currentUser.role) !== -1;
+
+    document.querySelectorAll('.employer-only').forEach(function (el) {
+      el.classList.toggle('hide-me', !canPost);
+    });
+  }
+
+
+  /* LOAD CURRENT USER */
 
   function loadUser() {
 
     try {
 
-      const savedUser =
-        localStorage.getItem(CURRENT_USER_KEY);
-
+      const savedUser = localStorage.getItem(CURRENT_USER_KEY);
 
       if (!savedUser) {
-
-        window.location.href = 'login.html';
-
+        window.location.href = 'login.html#login';
         return null;
       }
-
 
       currentUser = JSON.parse(savedUser);
 
-
       if (!currentUser || !currentUser.email) {
-
         localStorage.removeItem(CURRENT_USER_KEY);
-
-        window.location.href = 'login.html';
-
+        window.location.href = 'login.html#login';
         return null;
       }
 
+      function setText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      }
+
+      const name = currentUser.name || 'User';
+      const firstName = name.trim().split(/\s+/)[0];
 
       /* Profile */
+      setText('profileName', name);
+      setText('profileEmail', currentUser.email || '');
+      setText('profileRole', formatRole(currentUser.role));
+      setText('avatarLetter', name.charAt(0).toUpperCase());
 
-      const profileName =
-        document.getElementById('profileName');
-
-      if (profileName) {
-        profileName.textContent =
-          currentUser.name || 'User';
-      }
-
-
-      const profileEmail =
-        document.getElementById('profileEmail');
-
-      if (profileEmail) {
-        profileEmail.textContent =
-          currentUser.email || '';
-      }
-
-
-      const profileRole =
-        document.getElementById('profileRole');
-
-      if (profileRole) {
-        profileRole.textContent =
-          formatRole(currentUser.role);
-      }
-
-
-      const avatarLetter =
-        document.getElementById('avatarLetter');
-
-      if (avatarLetter) {
-
-        avatarLetter.textContent =
-          (currentUser.name || 'U')
-            .charAt(0)
-            .toUpperCase();
-
-      }
-
+      /* Greeting */
+      setText('welcomeSmall', 'WELCOME BACK, ' + firstName.toUpperCase());
 
       /* Account */
+      setText('accountName', name);
+      setText('accountEmail', currentUser.email || '');
 
-      const accountName =
-        document.getElementById('accountName');
+      /* Role */
+      applyRole();
 
-      if (accountName) {
-        accountName.textContent =
-          currentUser.name || 'User';
-      }
-
-
-      const accountEmail =
-        document.getElementById('accountEmail');
-
-      if (accountEmail) {
-        accountEmail.textContent =
-          currentUser.email || '';
-      }
-
+      /* Profile picture */
+      applyAvatar();
 
       return currentUser;
 
-
     } catch (error) {
 
-      console.error(
-        'User loading error:',
-        error
-      );
+      console.error('User loading error:', error);
 
-      localStorage.removeItem(
-        CURRENT_USER_KEY
-      );
-
-      window.location.href = 'login.html';
+      localStorage.removeItem(CURRENT_USER_KEY);
+      window.location.href = 'login.html#login';
 
       return null;
     }
   }
 
 
-  /* =====================================================
-     FORMAT ROLE
-  ===================================================== */
+  /* FORMAT ROLE */
 
   function formatRole(role) {
 
@@ -2492,870 +2094,549 @@ document.addEventListener('DOMContentLoaded', function () {
       return 'Employer';
     }
 
-
     if (role === 'training_provider') {
       return 'Training Provider';
     }
-
 
     return 'Candidate';
   }
 
 
-  /* =====================================================
-     LOAD JOBS
-  ===================================================== */
+  /* LOAD JOBS */
 
   function loadJobs() {
 
-    const searchInput =
-      document.getElementById('q');
+    const searchInput = document.getElementById('q');
+    const filterInput = document.getElementById('ft');
 
-    const filterInput =
-      document.getElementById('ft');
+    const q = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    const type = filterInput ? filterInput.value : '';
 
-
-    const q =
-      searchInput
-        ? searchInput.value.trim().toLowerCase()
-        : '';
-
-
-    const type =
-      filterInput
-        ? filterInput.value
-        : '';
-
+    if (showApps) {
+      refreshSavedUI();
+      renderApps();
+      return;
+    }
 
     let jobs = getJobs();
 
-
     /* Search */
-
     if (q) {
-
       jobs = jobs.filter(function (job) {
-
         return (
-
-          (job.title || '')
-            .toLowerCase()
-            .includes(q)
-
-          ||
-
-          (job.co || '')
-            .toLowerCase()
-            .includes(q)
-
-          ||
-
-          (job.loc || '')
-            .toLowerCase()
-            .includes(q)
-
-          ||
-
-          (job.desc || '')
-            .toLowerCase()
-            .includes(q)
-
+          (job.title || '').toLowerCase().includes(q) ||
+          (job.co || '').toLowerCase().includes(q) ||
+          (job.loc || '').toLowerCase().includes(q) ||
+          (job.desc || '').toLowerCase().includes(q)
         );
-
       });
-
     }
-
 
     /* Filter by type */
-
     if (type) {
-
       jobs = jobs.filter(function (job) {
-
         return job.type === type;
-
       });
-
     }
 
+    /* Saved jobs only */
+    if (showSavedOnly) {
+      jobs = jobs.filter(function (job) {
+        return isSaved(job.id);
+      });
+    }
+
+    refreshSavedUI();
 
     renderJobs(jobs);
   }
 
 
-  /* =====================================================
-     RENDER JOBS
-  ===================================================== */
+  /* Only the person who posted a job can remove it */
+
+  function canRemove(job) {
+
+    if (job.sample || !currentUser) {
+      return false;
+    }
+
+    if (!job.postedBy) {
+      return true;
+    }
+
+    return job.postedBy.toLowerCase() === currentUser.email.toLowerCase();
+  }
+
+
+  /* RENDER JOBS */
 
   function renderJobs(jobs) {
 
-    const box =
-      document.getElementById('jobs-list');
-
-
-    const count =
-      document.getElementById('count');
-
+    const box = document.getElementById('jobs-list');
+    const count = document.getElementById('count');
 
     if (!box) {
       return;
     }
 
-
     if (count) {
-
-      count.textContent =
-        jobs.length +
-        (
-          jobs.length === 1
-            ? ' job'
-            : ' jobs'
-        );
-
+      count.textContent = jobs.length + (jobs.length === 1 ? ' job' : ' jobs');
     }
-
 
     if (!jobs.length) {
 
       box.innerHTML = `
 
         <div class="empty">
-
-          <strong>
-            No jobs found.
-          </strong>
-
-          <br>
-
-          Try another search
-          or filter.
-
+          ${
+            showSavedOnly
+              ? `<strong>No saved jobs yet.</strong>
+                 <br>
+                 Tap ★ Save on a job to keep it here.`
+              : `<strong>No jobs found.</strong>
+                 <br>
+                 Try another search or filter.`
+          }
         </div>
 
       `;
-
 
       renderRecentJobs([]);
 
       return;
     }
 
+    box.innerHTML = jobs.map(function (job) {
 
-    box.innerHTML = jobs.map(
-      function (job) {
+      const letter = (job.co || 'K').charAt(0).toUpperCase();
 
-        const letter =
-          (job.co || 'K')
-            .charAt(0)
-            .toUpperCase();
+      return `
 
+        <article class="job-card">
 
-        return `
+          <div class="job-logo">
+            ${escapeHtml(letter)}
+          </div>
 
-          <article class="job-card">
+          <div class="job-content">
 
-            <div class="job-logo">
+            <h3>${escapeHtml(job.title || '')}</h3>
 
-              ${escapeHtml(letter)}
+            <p class="company">
+              ${escapeHtml(job.co || '')} · ${escapeHtml(job.loc || '')}
+            </p>
 
-            </div>
+            <div class="job-pills">
 
+              <span>${escapeHtml(job.type || '')}</span>
 
-            <div class="job-content">
+              ${job.pay ? `<span>${escapeHtml(job.pay)}</span>` : ''}
 
-              <h3>
-                ${escapeHtml(job.title || '')}
-              </h3>
-
-
-              <p class="company">
-
-                ${escapeHtml(job.co || '')}
-
-                ·
-
-                ${escapeHtml(job.loc || '')}
-
-              </p>
-
-
-              <div class="job-pills">
-
-                <span>
-                  ${escapeHtml(job.type || '')}
-                </span>
-
-
-                ${
-                  job.pay
-                    ? `
-                      <span>
-                        ${escapeHtml(job.pay)}
-                      </span>
-                    `
-                    : ''
-                }
-
-
-                ${
-                  job.sample
-                    ? `
-                      <span>
-                        Sample
-                      </span>
-                    `
-                    : ''
-                }
-
-              </div>
-
-
-              <p class="description">
-
-                ${escapeHtml(job.desc || '')}
-
-              </p>
+              ${job.sample ? `<span>Sample</span>` : ''}
 
             </div>
 
+            <p class="description">
+              ${escapeHtml(job.desc || '')}
+            </p>
 
-            <div class="job-actions">
+          </div>
 
-              <a
-                class="btn b-navy"
-                href="resume.html?id=${encodeURIComponent(job.id)}"
-              >
-                Apply
-              </a>
+          <div class="job-actions">
 
+            ${
+              isOwnJob(job)
+                ? ''
+                : hasApplied(job.id)
+                  ? `<span class="applied-tag">✓ Applied</span>`
+                  : `<a
+                       class="apply-btn"
+                       href="resume.html?id=${encodeURIComponent(job.id)}"
+                     >
+                       Apply
+                     </a>`
+            }
 
-              ${
-                !job.sample && currentUser
-                  ? `
+            <button
+              type="button"
+              class="save-btn ${isSaved(job.id) ? 'saved' : ''}"
+              data-save="${escapeHtml(String(job.id))}"
+              aria-pressed="${isSaved(job.id) ? 'true' : 'false'}"
+            >
+              ${isSaved(job.id) ? '★ Saved' : '☆ Save'}
+            </button>
 
-                    <button
-                      type="button"
-                      class="remove-btn"
-                      data-delete="${escapeHtml(String(job.id))}"
-                    >
-                      Remove
-                    </button>
+            ${
+              canRemove(job)
+                ? `
+                  <button
+                    type="button"
+                    class="remove-btn"
+                    data-delete="${escapeHtml(String(job.id))}"
+                  >
+                    Remove
+                  </button>
+                `
+                : ''
+            }
 
-                  `
-                  : ''
-              }
+          </div>
 
-            </div>
+        </article>
 
-          </article>
+      `;
 
-        `;
+    }).join('');
 
-      }
-    ).join('');
-
-
-    renderRecentJobs(
-      jobs.slice(0, 5)
-    );
+    renderRecentJobs(jobs.slice(0, 5));
 
   }
 
 
-  /* =====================================================
-     RECENT JOBS
-  ===================================================== */
+  /* RECENT JOBS */
 
   function renderRecentJobs(jobs) {
 
-    const box =
-      document.getElementById('recentJobs');
-
+    const box = document.getElementById('recentJobs');
 
     if (!box) {
       return;
     }
 
-
     if (!jobs.length) {
-
-      box.innerHTML = `
-
-        <p class="muted">
-          No recent jobs.
-        </p>
-
-      `;
-
+      box.innerHTML = '<p class="muted">No recent jobs.</p>';
       return;
     }
 
+    box.innerHTML = jobs.map(function (job) {
 
-    box.innerHTML =
-      jobs.map(function (job) {
+      return `
 
-        return `
+        <div class="recent-job">
+          <strong>${escapeHtml(job.title || '')}</strong>
+          <span>${escapeHtml(job.co || '')}</span>
+        </div>
 
-          <div class="recent-job">
+      `;
 
-            <strong>
-              ${escapeHtml(job.title || '')}
-            </strong>
-
-            <span>
-              ${escapeHtml(job.co || '')}
-            </span>
-
-          </div>
-
-        `;
-
-      }).join('');
+    }).join('');
 
   }
 
 
-  /* =====================================================
-     SEARCH
-  ===================================================== */
+  /* SEARCH */
 
-  const search =
-    document.getElementById('q');
-
+  const search = document.getElementById('q');
 
   if (search) {
-
-    search.addEventListener(
-      'input',
-      loadJobs
-    );
-
+    search.addEventListener('input', loadJobs);
   }
 
 
-  /* =====================================================
-     FILTER
-  ===================================================== */
+  /* FILTER */
 
-  const filter =
-    document.getElementById('ft');
-
+  const filter = document.getElementById('ft');
 
   if (filter) {
-
-    filter.addEventListener(
-      'change',
-      loadJobs
-    );
-
+    filter.addEventListener('change', loadJobs);
   }
 
 
-  /* =====================================================
-     DELETE JOB
-  ===================================================== */
+  /* DELETE JOB */
 
-  const jobsList =
-    document.getElementById('jobs-list');
-
+  const jobsList = document.getElementById('jobs-list');
 
   if (jobsList) {
 
-    jobsList.addEventListener(
-      'click',
-      function (event) {
+    jobsList.addEventListener('click', function (event) {
 
-        const button =
-          event.target.closest('[data-delete]');
+      const withdrawButton = event.target.closest('[data-withdraw]');
 
+      if (withdrawButton) {
 
-        if (!button) {
+        if (!confirm('Withdraw this application?')) {
           return;
         }
 
+        saveApps(getApps().filter(function (a) {
+          return String(a.id) !== String(withdrawButton.dataset.withdraw);
+        }));
 
-        const id =
-          button.dataset.delete;
+        loadJobs();
 
+        return;
+      }
 
-        if (
-          !confirm(
-            'Are you sure you want to remove this job?'
-          )
-        ) {
+      const saveButton = event.target.closest('[data-save]');
 
-          return;
+      if (saveButton) {
+        toggleSaved(saveButton.dataset.save);
+        loadJobs();
+        return;
+      }
 
-        }
+      const button = event.target.closest('[data-delete]');
 
+      if (!button) {
+        return;
+      }
 
-        try {
+      const id = button.dataset.delete;
 
-          let jobs = getJobs();
+      if (!confirm('Are you sure you want to remove this job?')) {
+        return;
+      }
 
+      try {
 
-          jobs = jobs.filter(function (job) {
+        let jobs = getJobs();
 
-            return String(job.id) !== String(id);
+        jobs = jobs.filter(function (job) {
+          return String(job.id) !== String(id);
+        });
 
-          });
+        saveJobs(jobs);
 
+        loadJobs();
 
-          saveJobs(jobs);
+      } catch (error) {
 
+        console.error(error);
 
-          loadJobs();
-
-
-        } catch (error) {
-
-          console.error(error);
-
-          alert(
-            'Could not remove job.'
-          );
-
-        }
+        alert('Could not remove job.');
 
       }
-    );
+
+    });
 
   }
 
 
-  /* =====================================================
-     POST JOB
-  ===================================================== */
+  /* POST JOB */
 
-  const postForm =
-    document.getElementById('pf');
-
+  const postForm = document.getElementById('pf');
 
   if (postForm) {
 
-    postForm.addEventListener(
-      'submit',
-      function (event) {
+    postForm.addEventListener('submit', function (event) {
 
-        event.preventDefault();
+      event.preventDefault();
 
+      function value(id) {
+        const element = document.getElementById(id);
+        return element ? element.value.trim() : '';
+      }
 
-        function value(id) {
+      const job = {
 
-          const element =
-            document.getElementById(id);
+        id: Date.now(),
 
-          return element
-            ? element.value.trim()
-            : '';
+        title: value('f-title'),
+        co: value('f-co'),
+        loc: value('f-loc'),
+        type: value('f-type'),
+        pay: value('f-pay'),
+        mail: value('f-mail'),
+        desc: value('f-desc'),
 
-        }
+        sample: false,
 
+        postedBy: currentUser ? currentUser.email : '',
 
-        const job = {
+        createdAt: new Date().toISOString()
 
-          id: Date.now(),
+      };
 
-          title:
-            value('f-title'),
+      /* Validation */
 
-          co:
-            value('f-co'),
+      if (!job.title || !job.co || !job.loc || !job.type || !job.desc) {
+        alert('Please fill in all required job fields.');
+        return;
+      }
 
-          loc:
-            value('f-loc'),
+      try {
 
-          type:
-            value('f-type'),
+        const jobs = getJobs();
 
-          pay:
-            value('f-pay'),
+        jobs.unshift(job);
 
-          mail:
-            value('f-mail'),
+        saveJobs(jobs);
 
-          desc:
-            value('f-desc'),
+        event.target.reset();
 
-          sample:
-            false,
+        const success = document.getElementById('ok');
 
-          postedBy:
-            currentUser
-              ? currentUser.email
-              : '',
+        if (success) {
 
-          createdAt:
-            new Date().toISOString()
+          success.style.display = 'block';
 
-        };
-
-
-        /* Validation */
-
-        if (
-          !job.title ||
-          !job.co ||
-          !job.loc ||
-          !job.type ||
-          !job.desc
-        ) {
-
-          alert(
-            'Please fill in all required job fields.'
-          );
-
-          return;
+          setTimeout(function () {
+            success.style.display = 'none';
+          }, 4000);
 
         }
 
+        loadJobs();
 
-        try {
+        const jobsSection = document.getElementById('jobs');
 
-          const jobs =
-            getJobs();
-
-
-          jobs.unshift(job);
-
-
-          saveJobs(jobs);
-
-
-          event.target.reset();
-
-
-          const success =
-            document.getElementById('ok');
-
-
-          if (success) {
-
-            success.style.display =
-              'block';
-
-
-            setTimeout(
-              function () {
-
-                success.style.display =
-                  'none';
-
-              },
-              4000
-            );
-
-          }
-
-
-          loadJobs();
-
-
-          const jobsSection =
-            document.getElementById('jobs');
-
-
-          if (jobsSection) {
-
-            jobsSection.scrollIntoView({
-              behavior: 'smooth'
-            });
-
-          }
-
-
-        } catch (error) {
-
-          console.error(error);
-
-          alert(
-            'Could not post job.'
-          );
-
+        if (jobsSection) {
+          jobsSection.scrollIntoView({ behavior: 'smooth' });
         }
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert('Could not post job.');
 
       }
-    );
+
+    });
 
   }
 
 
-  /* =====================================================
-     LOGOUT
-  ===================================================== */
+  /* LOGOUT */
 
   function logoutUser() {
 
-    localStorage.removeItem(
-      CURRENT_USER_KEY
-    );
-
+    localStorage.removeItem(CURRENT_USER_KEY);
 
     currentUser = null;
 
-
-    window.location.href =
-      'index.html';
+    window.location.href = 'index.html';
 
   }
 
-
-  const logout =
-    document.getElementById('logout');
-
+  const logout = document.getElementById('logout');
 
   if (logout) {
-
-    logout.addEventListener(
-      'click',
-      logoutUser
-    );
-
+    logout.addEventListener('click', logoutUser);
   }
 
-
-  const logoutSide =
-    document.getElementById('logoutSide');
-
+  const logoutSide = document.getElementById('logoutSide');
 
   if (logoutSide) {
-
-    logoutSide.addEventListener(
-      'click',
-      logoutUser
-    );
-
+    logoutSide.addEventListener('click', logoutUser);
   }
 
 
-  /* =====================================================
-     UPDATE PROFILE
-  ===================================================== */
+  /* UPDATE PROFILE */
 
-  const updateProfile =
-    document.getElementById('updateProfile');
-
+  const updateProfile = document.getElementById('updateProfile');
 
   if (updateProfile) {
 
-    updateProfile.addEventListener(
-      'click',
-      function () {
+    updateProfile.addEventListener('click', function () {
 
-        if (!currentUser) {
-          return;
-        }
+      if (!currentUser) {
+        return;
+      }
 
+      const newName = prompt('Enter your new name:', currentUser.name || '');
 
-        const newName =
-          prompt(
-            'Enter your new name:',
-            currentUser.name || ''
-          );
+      if (newName === null || !newName.trim()) {
+        return;
+      }
 
+      const name = newName.trim();
 
-        if (
-          newName === null ||
-          !newName.trim()
-        ) {
+      /* Update current user */
 
-          return;
+      currentUser.name = name;
 
-        }
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
 
+      /* Update user in users list */
 
-        const name =
-          newName.trim();
+      const users = getUsers();
 
+      const index = users.findIndex(function (user) {
+        return user.email.toLowerCase() === currentUser.email.toLowerCase();
+      });
 
-        /* Update current user */
+      if (index !== -1) {
 
-        currentUser.name =
-          name;
+        users[index].name = name;
 
-
-        localStorage.setItem(
-          CURRENT_USER_KEY,
-          JSON.stringify(currentUser)
-        );
-
-
-        /* Update user in users list */
-
-        const users =
-          getUsers();
-
-
-        const index =
-          users.findIndex(
-            function (user) {
-
-              return (
-                user.email.toLowerCase() ===
-                currentUser.email.toLowerCase()
-              );
-
-            }
-          );
-
-
-        if (index !== -1) {
-
-          users[index].name =
-            name;
-
-
-          localStorage.setItem(
-            USERS_KEY,
-            JSON.stringify(users)
-          );
-
-        }
-
-
-        /* Refresh profile */
-
-        loadUser();
-
-
-        alert(
-          'Profile updated successfully.'
-        );
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
 
       }
-    );
+
+      /* Refresh profile */
+
+      loadUser();
+
+      alert('Profile updated successfully.');
+
+    });
 
   }
 
 
-  /* =====================================================
-     ESCAPE HTML
-  ===================================================== */
+  /* ESCAPE HTML */
 
   function escapeHtml(value) {
 
-    const div =
-      document.createElement('div');
+    const div = document.createElement('div');
 
-
-    div.textContent =
-      value ?? '';
-
+    div.textContent = value ?? '';
 
     return div.innerHTML;
 
   }
 
 
-  /* =====================================================
-     SAMPLE JOBS
-  ===================================================== */
+  /* SAMPLE JOBS */
 
   function createSampleJobs() {
 
-    const existing =
-      localStorage.getItem(JOBS_KEY);
-
+    const existing = localStorage.getItem(JOBS_KEY);
 
     if (existing !== null) {
       return;
     }
 
-
     const sampleJobs = [
 
       {
         id: 'sample-1',
-
-        title:
-          'Sales Assistant',
-
-        co:
-          'Kofkro Market Traders',
-
-        loc:
-          'Kofkro',
-
-        type:
-          'Full-time',
-
-        pay:
-          'GH₵1,500 / month',
-
-        mail:
-          'jobs@kofkro.example',
-
-        desc:
-          'Assist customers, manage products and support daily market operations.',
-
-        sample:
-          true
-
+        title: 'Sales Assistant',
+        co: 'Kofkro Market Traders',
+        loc: 'Kofkro',
+        type: 'Full-time',
+        pay: 'GH₵1,500 / month',
+        mail: 'jobs@kofkro.example',
+        desc: 'Assist customers, manage products and support daily market operations.',
+        sample: true
       },
-
 
       {
         id: 'sample-2',
-
-        title:
-          'Digital Skills Intern',
-
-        co:
-          'Youth Desk',
-
-        loc:
-          'Kofkro',
-
-        type:
-          'Internship',
-
-        pay:
-          'Stipend',
-
-        mail:
-          'youth@kofkro.example',
-
-        desc:
-          'Gain practical experience in digital skills, communication and office technology.',
-
-        sample:
-          true
-
+        title: 'Digital Skills Intern',
+        co: 'Youth Desk',
+        loc: 'Kofkro',
+        type: 'Internship',
+        pay: 'Stipend',
+        mail: 'youth@kofkro.example',
+        desc: 'Gain practical experience in digital skills, communication and office technology.',
+        sample: true
       },
-
 
       {
         id: 'sample-3',
-
-        title:
-          'Tailoring Apprentice',
-
-        co:
-          'Ama Fashion House',
-
-        loc:
-          'Kofkro',
-
-        type:
-          'Apprenticeship',
-
-        pay:
-          'Negotiable',
-
-        mail:
-          'amafashion@example.com',
-
-        desc:
-          'Learn professional tailoring, garment production and customer service.',
-
-        sample:
-          true
-
+        title: 'Tailoring Apprentice',
+        co: 'Ama Fashion House',
+        loc: 'Kofkro',
+        type: 'Apprenticeship',
+        pay: 'Negotiable',
+        mail: 'amafashion@example.com',
+        desc: 'Learn professional tailoring, garment production and customer service.',
+        sample: true
       }
 
     ];
-
 
     saveJobs(sampleJobs);
 
@@ -3363,20 +2644,381 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /* =====================================================
-     START APPLICATION
+     PROFILE PICTURE
+     Stored in this browser only, as a small square photo.
   ===================================================== */
+
+  function getAvatarMap() {
+    try {
+      return JSON.parse(localStorage.getItem(AVATARS_KEY) || '{}');
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function getAvatar(email) {
+    if (!email) {
+      return '';
+    }
+
+    return getAvatarMap()[String(email).toLowerCase()] || '';
+  }
+
+  /* Shows the photo (or the first letter) in the profile card and the header */
+  function applyAvatar() {
+
+    if (!currentUser) {
+      return;
+    }
+
+    const photo = getAvatar(currentUser.email);
+
+    [['avatarImg', 'avatarLetter'], ['headerImg', 'headerLetter']].forEach(function (ids) {
+
+      const img = document.getElementById(ids[0]);
+      const letter = document.getElementById(ids[1]);
+
+      if (!img || !letter) {
+        return;
+      }
+
+      if (photo) {
+        img.src = photo;
+        img.hidden = false;
+        letter.hidden = true;
+      } else {
+        img.removeAttribute('src');
+        img.hidden = true;
+        letter.hidden = false;
+        letter.textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+      }
+
+    });
+
+    const remove = document.getElementById('removePhoto');
+
+    if (remove) {
+      remove.hidden = !photo;
+    }
+  }
+
+  const photoInput = document.getElementById('photoInput');
+  const photoDialog = document.getElementById('photoDialog');
+  const cropCanvas = document.getElementById('cropCanvas');
+  const cropZoom = document.getElementById('cropZoom');
+  const cropError = document.getElementById('cropError');
+
+  const STAGE = 280;     /* size of the preview square */
+  const OUTPUT = 256;    /* size of the saved picture  */
+
+  const crop = { img: null, zoom: 1, x: 0, y: 0 };
+
+  function cropScale() {
+    return (STAGE / Math.min(crop.img.width, crop.img.height)) * crop.zoom;
+  }
+
+  /* Keep the picture covering the whole square */
+  function clampCrop() {
+
+    const maxX = Math.max(0, (crop.img.width * cropScale() - STAGE) / 2);
+    const maxY = Math.max(0, (crop.img.height * cropScale() - STAGE) / 2);
+
+    crop.x = Math.min(maxX, Math.max(-maxX, crop.x));
+    crop.y = Math.min(maxY, Math.max(-maxY, crop.y));
+  }
+
+  function drawImageTo(ctx, ratio) {
+
+    const w = crop.img.width * cropScale() * ratio;
+    const h = crop.img.height * cropScale() * ratio;
+
+    ctx.drawImage(
+      crop.img,
+      (STAGE * ratio) / 2 - w / 2 + crop.x * ratio,
+      (STAGE * ratio) / 2 - h / 2 + crop.y * ratio,
+      w,
+      h
+    );
+  }
+
+  function drawCrop() {
+
+    if (!crop.img) {
+      return;
+    }
+
+    clampCrop();
+
+    const ctx = cropCanvas.getContext('2d');
+
+    ctx.clearRect(0, 0, STAGE, STAGE);
+
+    drawImageTo(ctx, 1);
+
+    /* Darken everything outside the round photo area */
+    ctx.save();
+    ctx.fillStyle = 'rgba(20, 33, 26, .55)';
+    ctx.beginPath();
+    ctx.rect(0, 0, STAGE, STAGE);
+    ctx.arc(STAGE / 2, STAGE / 2, STAGE / 2 - 6, 0, Math.PI * 2, true);
+    ctx.fill('evenodd');
+    ctx.restore();
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, .9)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(STAGE / 2, STAGE / 2, STAGE / 2 - 6, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  function openPhotoPicker() {
+    if (photoInput) {
+      photoInput.click();
+    }
+  }
+
+  const avatarBox = document.getElementById('avatarBox');
+
+  if (avatarBox) {
+    avatarBox.addEventListener('click', openPhotoPicker);
+  }
+
+  if (photoInput) {
+
+    photoInput.addEventListener('change', function () {
+
+      const file = photoInput.files && photoInput.files[0];
+
+      photoInput.value = '';
+
+      if (!file) {
+        return;
+      }
+
+      if (!file.type || file.type.indexOf('image/') !== 0) {
+        alert('Please choose a picture (JPG or PNG).');
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        alert('That picture is too big. Please choose one under 10 MB.');
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function () {
+
+        const img = new Image();
+
+        img.onload = function () {
+
+          crop.img = img;
+          crop.zoom = 1;
+          crop.x = 0;
+          crop.y = 0;
+
+          cropZoom.value = 1;
+          cropError.hidden = true;
+
+          drawCrop();
+
+          photoDialog.showModal();
+        };
+
+        img.onerror = function () {
+          alert('We could not read that picture. Please try a JPG or PNG.');
+        };
+
+        img.src = reader.result;
+      };
+
+      reader.onerror = function () {
+        alert('We could not open that file.');
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* Drag to move */
+
+  let dragging = false;
+  let lastX = 0;
+  let lastY = 0;
+
+  if (cropCanvas) {
+
+    cropCanvas.addEventListener('pointerdown', function (event) {
+      dragging = true;
+      lastX = event.clientX;
+      lastY = event.clientY;
+      cropCanvas.setPointerCapture(event.pointerId);
+      cropCanvas.classList.add('dragging');
+    });
+
+    cropCanvas.addEventListener('pointermove', function (event) {
+
+      if (!dragging) {
+        return;
+      }
+
+      /* The canvas can be drawn smaller than 280px on small screens */
+      const k = STAGE / cropCanvas.getBoundingClientRect().width;
+
+      crop.x += (event.clientX - lastX) * k;
+      crop.y += (event.clientY - lastY) * k;
+
+      lastX = event.clientX;
+      lastY = event.clientY;
+
+      drawCrop();
+    });
+
+    ['pointerup', 'pointercancel'].forEach(function (name) {
+      cropCanvas.addEventListener(name, function () {
+        dragging = false;
+        cropCanvas.classList.remove('dragging');
+      });
+    });
+  }
+
+  if (cropZoom) {
+    cropZoom.addEventListener('input', function () {
+      crop.zoom = parseFloat(cropZoom.value) || 1;
+      drawCrop();
+    });
+  }
+
+  const cropCancel = document.getElementById('cropCancel');
+
+  if (cropCancel) {
+    cropCancel.addEventListener('click', function () {
+      photoDialog.close();
+    });
+  }
+
+  const cropSave = document.getElementById('cropSave');
+
+  if (cropSave) {
+
+    cropSave.addEventListener('click', function () {
+
+      if (!crop.img || !currentUser) {
+        return;
+      }
+
+      const out = document.createElement('canvas');
+
+      out.width = OUTPUT;
+      out.height = OUTPUT;
+
+      const ctx = out.getContext('2d');
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, OUTPUT, OUTPUT);
+
+      drawImageTo(ctx, OUTPUT / STAGE);
+
+      try {
+
+        const map = getAvatarMap();
+
+        map[currentUser.email.toLowerCase()] = out.toDataURL('image/jpeg', 0.86);
+
+        localStorage.setItem(AVATARS_KEY, JSON.stringify(map));
+
+      } catch (error) {
+
+        console.error(error);
+
+        cropError.textContent = 'There is not enough space in the browser to save this photo. Try a different picture.';
+        cropError.hidden = false;
+
+        return;
+      }
+
+      photoDialog.close();
+
+      applyAvatar();
+
+      loadJobs();
+    });
+  }
+
+  const removePhoto = document.getElementById('removePhoto');
+
+  if (removePhoto) {
+
+    removePhoto.addEventListener('click', function () {
+
+      if (!currentUser || !confirm('Remove your profile photo?')) {
+        return;
+      }
+
+      const map = getAvatarMap();
+
+      delete map[currentUser.email.toLowerCase()];
+
+      localStorage.setItem(AVATARS_KEY, JSON.stringify(map));
+
+      applyAvatar();
+
+      loadJobs();
+    });
+  }
+
+
+  /* SIDEBAR: FIND JOBS / SAVED JOBS */
+
+  const savedLink = document.getElementById('savedLink');
+  const findLink = document.getElementById('findLink');
+
+  const appsLink = document.getElementById('appsLink');
+
+  if (savedLink) {
+    savedLink.addEventListener('click', function () {
+      showSavedOnly = true;
+      showApps = false;
+      loadJobs();
+    });
+  }
+
+  if (findLink) {
+    findLink.addEventListener('click', function () {
+      showSavedOnly = false;
+      showApps = false;
+      loadJobs();
+    });
+  }
+
+  if (appsLink) {
+    appsLink.addEventListener('click', function () {
+      showApps = true;
+      showSavedOnly = false;
+      loadJobs();
+    });
+  }
+
+
+  /* START APPLICATION */
 
   createSampleJobs();
 
-
-  const user =
-    loadUser();
-
+  const user = loadUser();
 
   if (user) {
 
+    if (window.location.hash === '#applications') {
+      showApps = true;
+    }
+
     loadJobs();
 
+    if (showApps) {
+      const jobsBox = document.getElementById('jobs');
+      if (jobsBox) jobsBox.scrollIntoView();
+    }
   }
 
 });
