@@ -4,6 +4,39 @@
 <head>
 
 <meta charset="UTF-8">
+
+<script>
+/* Theme: follows Settings > Appearance on every page of the site */
+(function () {
+  try {
+    var choice = localStorage.getItem('kofkro-theme') || 'system';
+    var media = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+    function paint() {
+      var dark = choice === 'dark' || (choice === 'system' && media && media.matches);
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    }
+
+    paint();
+
+    if (media && media.addEventListener) {
+      media.addEventListener('change', function () {
+        choice = localStorage.getItem('kofkro-theme') || 'system';
+        paint();
+      });
+    }
+
+    /* changing the theme in another tab updates this one too */
+    window.addEventListener('storage', function (e) {
+      if (e.key === 'kofkro-theme') {
+        choice = e.newValue || 'system';
+        paint();
+      }
+    });
+  } catch (e) {}
+})();
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>My applications | Kofkro LMIS</title>
@@ -1354,6 +1387,483 @@ a {
   }
 }
 
+
+/* =====================================================
+   SETTINGS PAGE
+===================================================== */
+
+.settings-head {
+  margin-bottom: 20px;
+}
+
+.settings-head h1 {
+  font-size: 30px;
+  letter-spacing: -.6px;
+}
+
+.settings-head p {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.settings-card {
+  margin-bottom: 18px;
+  padding: 26px 28px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.settings-card h2 {
+  font-size: 20px;
+  letter-spacing: -.3px;
+}
+
+.settings-card .sub {
+  margin: 2px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.s-form {
+  display: grid;
+  gap: 14px;
+  max-width: 440px;
+}
+
+.form-group input[readonly] {
+  background: var(--tint);
+  color: var(--muted);
+}
+
+.s-btn {
+  padding: 11px 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--forest);
+  font-weight: 600;
+  font-size: 14.5px;
+  transition: background .2s, transform .2s;
+}
+
+.s-btn:hover:not(:disabled) {
+  background: var(--mint-hover);
+  transform: translateY(-1px);
+}
+
+.s-btn.ghost {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.s-btn.ghost:hover:not(:disabled) {
+  background: var(--tint);
+}
+
+.s-btn.danger {
+  background: #b42318;
+  color: #ffffff;
+}
+
+.s-btn.danger:hover:not(:disabled) {
+  background: #9a1d14;
+}
+
+.s-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.s-msg {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13.5px;
+}
+
+.s-msg.ok {
+  background: #effaf4;
+  border: 1px solid #b9e4cd;
+  color: #16734a;
+}
+
+.s-msg.err {
+  background: #fff1f0;
+  border: 1px solid #f3c3c0;
+  color: #b42318;
+}
+
+.s-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 0;
+  border-top: 1px solid var(--line);
+}
+
+.s-row:first-of-type {
+  border-top: 0;
+}
+
+.s-row .t strong {
+  display: block;
+  font-size: 15px;
+}
+
+.s-row .t span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.s-row select {
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  outline: none;
+  font-size: 14px;
+}
+
+/* On / off switch */
+
+.switch {
+  position: relative;
+  flex: none;
+  width: 48px;
+  height: 28px;
+}
+
+.switch input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.switch .slider {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #c6d3ca;
+  transition: background .2s;
+}
+
+.switch .slider::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+  transition: transform .2s;
+}
+
+.switch input:checked + .slider {
+  background: var(--deep);
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(20px);
+}
+
+.switch input:focus-visible + .slider {
+  outline: 3px solid rgba(47, 107, 79, .35);
+  outline-offset: 2px;
+}
+
+/* Light / Dark / System */
+
+.seg {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--tint);
+}
+
+.seg button {
+  padding: 7px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.seg button.on {
+  background: var(--forest);
+  color: #ffffff;
+}
+
+.meter {
+  height: 8px;
+  margin: 12px 0 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--tint);
+}
+
+.meter i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--mint);
+}
+
+.about-list {
+  display: grid;
+  gap: 0;
+}
+
+.about-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 11px 0;
+  border-top: 1px solid var(--line);
+  font-size: 14.5px;
+}
+
+.about-list div:first-child {
+  border-top: 0;
+}
+
+.about-list dt {
+  color: var(--muted);
+}
+
+.about-list dd {
+  text-align: right;
+  font-weight: 500;
+}
+
+.about-links {
+  display: flex;
+  gap: 18px;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.about-links a {
+  color: var(--deep);
+}
+
+.about-links a:hover {
+  text-decoration: underline;
+}
+
+.danger-card {
+  border-color: #f3c3c0;
+}
+
+.danger-card h2 {
+  color: #b42318;
+}
+
+.delete-box {
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.delete-box p {
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.delete-box .line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.delete-box input {
+  flex: 1;
+  min-width: 160px;
+  max-width: 240px;
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fbfdfb;
+  outline: none;
+}
+
+.delete-box input:focus {
+  border-color: #b42318;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 2000;
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: var(--forest);
+  color: #ffffff;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 20px);
+  transition: opacity .25s, transform .25s;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 550px) {
+
+  .settings-card {
+    padding: 22px 18px;
+  }
+
+  .s-row {
+    flex-wrap: wrap;
+  }
+
+  .about-list div {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .about-list dd {
+    text-align: left;
+  }
+}
+
+
+/* =====================================================
+   DARK THEME (Settings → Appearance)
+===================================================== */
+
+html[data-theme="dark"] {
+  --page: #0f1814;
+  --ink: #e8f0ea;
+  --muted: #9db0a4;
+  --line: #2a3b32;
+  --tint: #1f3128;
+  --deep: #7fc29a;
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] .profile-card,
+html[data-theme="dark"] .side-menu-card,
+html[data-theme="dark"] .jobs-section,
+html[data-theme="dark"] .post-job-card,
+html[data-theme="dark"] .right-card,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .settings-card {
+  background: #16231c;
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .profile-button,
+html[data-theme="dark"] .jobs-heading select,
+html[data-theme="dark"] .s-row select,
+html[data-theme="dark"] .remove-btn,
+html[data-theme="dark"] .save-btn,
+html[data-theme="dark"] .secondary-button,
+html[data-theme="dark"] .s-btn.ghost,
+html[data-theme="dark"] .dialog-actions .ghost,
+html[data-theme="dark"] .photo-dialog {
+  background: #16231c;
+  color: var(--ink);
+}
+
+html[data-theme="dark"] .save-btn.saved {
+  background: var(--tint);
+  color: var(--deep);
+}
+
+html[data-theme="dark"] .form-group input,
+html[data-theme="dark"] .form-group select,
+html[data-theme="dark"] .form-group textarea,
+html[data-theme="dark"] .delete-box input {
+  background: #101b15;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .form-group input[readonly] {
+  background: var(--tint);
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .form-group label {
+  color: #b5c5ba;
+}
+
+html[data-theme="dark"] .description {
+  color: #c3d0c7;
+}
+
+html[data-theme="dark"] .job-card:hover {
+  background: #1a2a21;
+}
+
+html[data-theme="dark"] .profile-avatar,
+html[data-theme="dark"] .avatar-edit {
+  border-color: #16231c;
+}
+
+html[data-theme="dark"] .remove-btn:hover {
+  background: #3a1f1c;
+  color: #ffb4a8;
+  border-color: #6b2f29;
+}
+
+html[data-theme="dark"] .s-msg.ok {
+  background: #153325;
+  border-color: #245a3f;
+  color: #8fe0b2;
+}
+
+html[data-theme="dark"] .s-msg.err {
+  background: #3a1f1c;
+  border-color: #6b2f29;
+  color: #ffb4a8;
+}
+
+html[data-theme="dark"] .danger-card {
+  border-color: #6b2f29;
+}
+
+html[data-theme="dark"] .danger-card h2 {
+  color: #ff9d8f;
+}
+
+html[data-theme="dark"] .seg button.on {
+  background: var(--mint);
+  color: var(--forest);
+}
+
+html[data-theme="dark"] .switch .slider {
+  background: #3b4f43;
+}
+
+html[data-theme="dark"] .switch input:checked + .slider {
+  background: #4f9e72;
+}
+
+html[data-theme="dark"] .toast {
+  background: var(--mint);
+  color: var(--forest);
+}
+
 </style>
 
 </head>
@@ -1410,6 +1920,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const SAVED_KEY = 'kofkro-saved-jobs';
   const APPS_KEY = 'kofkro-applications';
   const AVATARS_KEY = 'kofkro-avatars';
+  const SETTINGS_KEY = 'kofkro-settings';
+
+  /* Settings every new account starts with */
+  const DEFAULT_SETTINGS = {
+    theme: 'system',        /* light | dark | system */
+    showSamples: true,      /* show the example jobs that come with the app */
+    defaultType: '',        /* job type pre-selected on Find jobs */
+    confirmActions: true    /* ask before removing a job or withdrawing */
+  };
 
   /* Roles that can post jobs (candidates only browse and apply) */
   const POSTER_ROLES = ['employer', 'training_provider'];
@@ -1417,6 +1936,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const page = document.body.dataset.page || 'home';
 
   let currentUser = null;
+  let settings = Object.assign({}, DEFAULT_SETTINGS);
 
 
   /* ---------- Small helpers ---------- */
@@ -1473,6 +1993,50 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------- Data: users, jobs, saved, applications, photos ---------- */
 
   function getJobs() { return readJSON(JOBS_KEY, []); }
+
+  /* Jobs the person wants to see (sample jobs can be switched off in Settings) */
+  function visibleJobs() {
+    return getJobs().filter(function (job) {
+      return settings.showSamples || !job.sample;
+    });
+  }
+
+  /* Settings are kept per account */
+  function getSettings() {
+    const all = readJSON(SETTINGS_KEY, {});
+    return Object.assign({}, DEFAULT_SETTINGS, all[currentUser.email.toLowerCase()] || {});
+  }
+
+  function updateSettings(patch) {
+    const all = readJSON(SETTINGS_KEY, {});
+    const key = currentUser.email.toLowerCase();
+    all[key] = Object.assign({}, DEFAULT_SETTINGS, all[key] || {}, patch);
+    writeJSON(SETTINGS_KEY, all);
+    settings = getSettings();
+  }
+
+  function applyTheme() {
+
+    const wantsDark =
+      settings.theme === 'dark' ||
+      (settings.theme === 'system' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+    document.documentElement.setAttribute('data-theme', wantsDark ? 'dark' : 'light');
+
+    /* Every page (even the ones before sign-in) reads this one value */
+    try {
+      localStorage.setItem('kofkro-theme', settings.theme);
+    } catch (error) {
+      /* storage can be blocked; the theme still applies on this page */
+    }
+  }
+
+  /* Routine confirmations can be switched off in Settings */
+  function ask(message) {
+    return settings.confirmActions ? confirm(message) : true;
+  }
   function saveJobs(jobs) { writeJSON(JOBS_KEY, jobs); }
 
   function getApps() { return readJSON(APPS_KEY, []); }
@@ -1534,13 +2098,9 @@ document.addEventListener('DOMContentLoaded', function () {
     return readJSON(AVATARS_KEY, {})[String(email).toLowerCase()] || '';
   }
 
-  function createSampleJobs() {
+  function sampleList() {
 
-    if (localStorage.getItem(JOBS_KEY) !== null) {
-      return;
-    }
-
-    saveJobs([
+    return [
       {
         id: 'sample-1',
         title: 'Sales Assistant',
@@ -1574,7 +2134,39 @@ document.addEventListener('DOMContentLoaded', function () {
         desc: 'Learn professional tailoring, garment production and customer service.',
         sample: true
       }
-    ]);
+    ];
+  }
+
+  function createSampleJobs() {
+
+    if (localStorage.getItem(JOBS_KEY) !== null) {
+      return;
+    }
+
+    saveJobs(sampleList());
+  }
+
+  /* Adds back any example job that is missing (never touches real jobs) */
+  function restoreSampleJobs() {
+
+    const jobs = getJobs();
+    let added = 0;
+
+    sampleList().forEach(function (sample) {
+
+      const there = jobs.some(function (j) {
+        return String(j.id) === String(sample.id);
+      });
+
+      if (!there) {
+        jobs.push(sample);
+        added++;
+      }
+    });
+
+    saveJobs(jobs);
+
+    return added;
   }
 
 
@@ -1731,7 +2323,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         <h3>Account</h3>
 
-        <a href="settings.html">Settings</a>
+        ${link('settings.html', 'settings', 'Settings')}
         <a href="about.html">About Kofkro LMIS</a>
         <a href="terms.html">Terms &amp; Conditions</a>
 
@@ -1902,7 +2494,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function savedCount() {
-    return getJobs().filter(function (job) {
+    return visibleJobs().filter(function (job) {
       return isSaved(job.id);
     }).length;
   }
@@ -1930,7 +2522,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    const jobs = getJobs().slice(0, 5);
+    const jobs = visibleJobs().slice(0, 5);
 
     if (!jobs.length) {
       box.innerHTML = '<p class="muted">No recent jobs.</p>';
@@ -2114,7 +2706,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderHome() {
 
-    const jobs = getJobs();
+    const jobs = visibleJobs();
 
     const statJobs = byId('statJobs');
     const statSaved = byId('statSaved');
@@ -2156,7 +2748,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const type = typeInput ? typeInput.value : '';
     const box = byId('jobs-list');
 
-    const jobs = getJobs().filter(function (job) {
+    const jobs = visibleJobs().filter(function (job) {
       return matchesJob(job, q) && (!type || job.type === type);
     });
 
@@ -2182,7 +2774,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const q = searchText();
     const box = byId('jobs-list');
 
-    const jobs = getJobs().filter(function (job) {
+    const jobs = visibleJobs().filter(function (job) {
       return isSaved(job.id) && matchesJob(job, q);
     });
 
@@ -2250,6 +2842,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (page === 'jobs') renderJobsPage();
     if (page === 'saved') renderSavedPage();
     if (page === 'applications') renderAppsPage();
+    if (page === 'settings') renderStorage();
 
     updateBadges();
     renderRecentJobs();
@@ -2312,7 +2905,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (deleteBtn) {
 
-        if (!confirm('Are you sure you want to remove this job?')) {
+        if (!ask('Are you sure you want to remove this job?')) {
           return;
         }
 
@@ -2328,7 +2921,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (withdrawBtn) {
 
-        if (!confirm('Withdraw this application?')) {
+        if (!ask('Withdraw this application?')) {
           return;
         }
 
@@ -2734,6 +3327,374 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /* =====================================================
+     SETTINGS PAGE
+  ===================================================== */
+
+  function toast(message) {
+
+    const el = byId('toast');
+
+    if (!el) {
+      return;
+    }
+
+    el.textContent = message;
+    el.classList.add('show');
+
+    clearTimeout(toast.timer);
+
+    toast.timer = setTimeout(function () {
+      el.classList.remove('show');
+    }, 2200);
+  }
+
+  function say(id, text, ok) {
+
+    const el = byId(id);
+
+    if (!el) {
+      return;
+    }
+
+    el.hidden = false;
+    el.textContent = text;
+    el.className = 's-msg ' + (ok ? 'ok' : 'err');
+  }
+
+  /* How much of the browser's storage Kofkro is using */
+  function renderStorage() {
+
+    const text = byId('storageText');
+    const bar = byId('storageBar');
+
+    if (!text || !bar) {
+      return;
+    }
+
+    let bytes = 0;
+
+    for (let i = 0; i < localStorage.length; i++) {
+
+      const key = localStorage.key(i);
+
+      if (key && key.indexOf('kofkro-') === 0) {
+        bytes += (key.length + (localStorage.getItem(key) || '').length) * 2;
+      }
+    }
+
+    const kb = bytes / 1024;
+    const limit = 5 * 1024;
+
+    text.textContent =
+      'Using ' + (kb < 1024 ? kb.toFixed(1) + ' KB' : (kb / 1024).toFixed(2) + ' MB') +
+      ' of about 5 MB on this device.';
+
+    bar.style.width = Math.max(2, Math.min(100, (kb / limit) * 100)) + '%';
+
+    const clearApps = byId('clearApps');
+    const appsRow = byId('clearAppsLabel');
+
+    if (appsRow) {
+      appsRow.textContent = isPoster() ? 'Clear applications received' : 'Withdraw all my applications';
+    }
+
+    if (clearApps) {
+      clearApps.disabled = myApps().length === 0;
+    }
+
+    const clearSaved = byId('clearSaved');
+
+    if (clearSaved) {
+      clearSaved.disabled = getSavedIds().length === 0;
+    }
+  }
+
+  function downloadFile(name, text) {
+
+    const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = name;
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function wireSettings() {
+
+    /* ----- Account: name ----- */
+
+    byId('s-name').value = currentUser.name || '';
+    byId('s-email').value = currentUser.email || '';
+    byId('s-role').value = formatRole(currentUser.role);
+
+    byId('nameForm').addEventListener('submit', function (event) {
+
+      event.preventDefault();
+
+      const name = byId('s-name').value.trim();
+
+      if (name.length < 2) {
+        say('nameMsg', 'Please enter your full name.', false);
+        return;
+      }
+
+      currentUser.name = name;
+
+      writeJSON(CURRENT_USER_KEY, currentUser);
+
+      const users = getUsers();
+
+      const index = users.findIndex(function (u) {
+        return (u.email || '').toLowerCase() === me();
+      });
+
+      if (index !== -1) {
+        users[index].name = name;
+        writeJSON(USERS_KEY, users);
+      }
+
+      fillProfile();
+
+      say('nameMsg', 'Your name was updated.', true);
+    });
+
+    /* ----- Account: password ----- */
+
+    byId('pwForm').addEventListener('submit', function (event) {
+
+      event.preventDefault();
+
+      const current = byId('s-pw-current').value;
+      const next = byId('s-pw-new').value;
+      const again = byId('s-pw-again').value;
+
+      const users = getUsers();
+
+      const index = users.findIndex(function (u) {
+        return (u.email || '').toLowerCase() === me();
+      });
+
+      if (index === -1) {
+        say('pwMsg', 'We could not find your account on this device.', false);
+        return;
+      }
+
+      if (users[index].password !== current) {
+        say('pwMsg', 'Your current password is not correct.', false);
+        return;
+      }
+
+      if (next.length < 8) {
+        say('pwMsg', 'The new password must be at least 8 characters.', false);
+        return;
+      }
+
+      if (next === current) {
+        say('pwMsg', 'Please choose a password different from the current one.', false);
+        return;
+      }
+
+      if (next !== again) {
+        say('pwMsg', 'The new passwords do not match.', false);
+        return;
+      }
+
+      users[index].password = next;
+
+      writeJSON(USERS_KEY, users);
+
+      byId('pwForm').reset();
+
+      say('pwMsg', 'Your password was changed.', true);
+    });
+
+    /* ----- Appearance ----- */
+
+    const themeButtons = document.querySelectorAll('[data-theme-choice]');
+
+    function markTheme() {
+      themeButtons.forEach(function (b) {
+        const on = b.dataset.themeChoice === settings.theme;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', on);
+      });
+    }
+
+    themeButtons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        updateSettings({ theme: b.dataset.themeChoice });
+        applyTheme();
+        markTheme();
+        toast('Theme saved');
+      });
+    });
+
+    markTheme();
+
+    /* ----- Jobs and preferences ----- */
+
+    const samples = byId('setSamples');
+    const type = byId('setType');
+    const confirmBox = byId('setConfirm');
+
+    samples.checked = !!settings.showSamples;
+    type.value = settings.defaultType || '';
+    confirmBox.checked = !!settings.confirmActions;
+
+    samples.addEventListener('change', function () {
+      updateSettings({ showSamples: samples.checked });
+      refresh();
+      toast('Saved');
+    });
+
+    type.addEventListener('change', function () {
+      updateSettings({ defaultType: type.value });
+      toast('Saved');
+    });
+
+    confirmBox.addEventListener('change', function () {
+      updateSettings({ confirmActions: confirmBox.checked });
+      toast('Saved');
+    });
+
+    /* ----- Your data ----- */
+
+    byId('exportBtn').addEventListener('click', function () {
+
+      const key = me();
+
+      const data = {
+        exportedAt: new Date().toISOString(),
+        profile: {
+          name: currentUser.name,
+          email: currentUser.email,
+          role: currentUser.role
+        },
+        settings: settings,
+        savedJobIds: getSavedIds(),
+        applicationsSent: getApps().filter(function (a) {
+          return (a.email || '').toLowerCase() === key;
+        }),
+        applicationsReceived: getApps().filter(function (a) {
+          return (a.jobOwner || '').toLowerCase() === key;
+        }),
+        jobsPosted: getJobs().filter(function (j) {
+          return (j.postedBy || '').toLowerCase() === key;
+        })
+      };
+
+      downloadFile('kofkro-my-data.json', JSON.stringify(data, null, 2));
+
+      toast('Your data was downloaded');
+    });
+
+    byId('restoreBtn').addEventListener('click', function () {
+
+      const added = restoreSampleJobs();
+
+      refresh();
+
+      toast(added ? added + ' sample job' + (added === 1 ? '' : 's') + ' added back' : 'All sample jobs are already there');
+    });
+
+    byId('clearSaved').addEventListener('click', function () {
+
+      if (!confirm('Remove all of your saved jobs?')) {
+        return;
+      }
+
+      const map = readJSON(SAVED_KEY, {});
+
+      delete map[me()];
+
+      writeJSON(SAVED_KEY, map);
+
+      refresh();
+
+      toast('Saved jobs cleared');
+    });
+
+    byId('clearApps').addEventListener('click', function () {
+
+      if (!confirm(isPoster()
+        ? 'Remove all applications received for your jobs?'
+        : 'Withdraw all of your applications?')) {
+        return;
+      }
+
+      saveApps(getApps().filter(function (a) {
+        return isPoster()
+          ? (a.jobOwner || '').toLowerCase() !== me()
+          : (a.email || '').toLowerCase() !== me();
+      }));
+
+      refresh();
+
+      toast('Applications cleared');
+    });
+
+    /* ----- Danger zone ----- */
+
+    byId('signoutBtn').addEventListener('click', function () {
+      localStorage.removeItem(CURRENT_USER_KEY);
+      window.location.href = 'index.html';
+    });
+
+    const confirmDelete = byId('deleteConfirm');
+    const deleteBtn = byId('deleteBtn');
+
+    confirmDelete.addEventListener('input', function () {
+      deleteBtn.disabled = confirmDelete.value.trim() !== 'DELETE';
+    });
+
+    deleteBtn.addEventListener('click', function () {
+
+      if (confirmDelete.value.trim() !== 'DELETE') {
+        return;
+      }
+
+      const key = me();
+
+      function without(storageKey) {
+        const map = readJSON(storageKey, {});
+        delete map[key];
+        writeJSON(storageKey, map);
+      }
+
+      /* the account itself */
+      writeJSON(USERS_KEY, getUsers().filter(function (u) {
+        return (u.email || '').toLowerCase() !== key;
+      }));
+
+      /* everything that belongs to it */
+      without(SAVED_KEY);
+      without(AVATARS_KEY);
+      without(SETTINGS_KEY);
+      without('kofkro-resumes');
+
+      saveJobs(getJobs().filter(function (j) {
+        return (j.postedBy || '').toLowerCase() !== key;
+      }));
+
+      saveApps(getApps().filter(function (a) {
+        return (a.email || '').toLowerCase() !== key && (a.jobOwner || '').toLowerCase() !== key;
+      }));
+
+      localStorage.removeItem(CURRENT_USER_KEY);
+
+      window.location.href = 'index.html';
+    });
+
+    renderStorage();
+  }
+
+
+  /* =====================================================
      START
   ===================================================== */
 
@@ -2741,6 +3702,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!loadUser()) {
     return;
+  }
+
+  settings = getSettings();
+
+  applyTheme();
+
+  /* Follow the device when the theme is set to "System" */
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+      if (settings.theme === 'system') {
+        applyTheme();
+      }
+    });
   }
 
   if (!buildShell()) {
@@ -2754,6 +3728,18 @@ document.addEventListener('DOMContentLoaded', function () {
   wireAccount();
   wirePostForm();
   wirePhoto();
+
+  if (page === 'settings') {
+    wireSettings();
+  }
+
+  /* Find jobs opens with the person's preferred job type */
+  const typeFilter = byId('ft');
+
+  if (typeFilter && page === 'jobs' && settings.defaultType) {
+    typeFilter.value = settings.defaultType;
+  }
+
   refresh();
 
   /* Links such as home.html#post: jump there once the page is built */
