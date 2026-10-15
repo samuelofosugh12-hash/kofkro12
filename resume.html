@@ -1,19 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Apply | Kofkro LMIS</title>
+
+<script>
+(function () {
+  try {
+    var choice = localStorage.getItem('kofkro-theme') || 'system';
+    var media = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function paint() {
+      var dark = choice === 'dark' ||
+        (choice === 'system' && media.matches);
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    }
+
+    paint();
+
+    if (media.addEventListener) {
+      media.addEventListener('change', function () {
+        choice = localStorage.getItem('kofkro-theme') || 'system';
+        paint();
+      });
+    }
+
+    window.addEventListener('storage', function (e) {
+      if (e.key === 'kofkro-theme') {
+        choice = e.newValue || 'system';
+        paint();
+      }
+    });
+  } catch (e) {}
+})();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <style>
-
 :root {
   --forest: #1c2b24;
   --forest-dark: #14211a;
@@ -27,54 +56,28 @@
   --page: #f1f5f2;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
-  font-family: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: "Outfit", system-ui, Arial, sans-serif;
   background: var(--page);
   color: var(--ink);
   line-height: 1.55;
 }
 
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-[hidden] {
-  display: none !important;
-}
-
-
-/* =========================
-   HEADER
-========================= */
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { text-decoration: none; color: inherit; }
+[hidden] { display: none !important; }
 
 .main-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
   background: var(--forest);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, .14);
+  box-shadow: 0 6px 24px rgba(0,0,0,.14);
 }
 
 .header-inner {
@@ -93,7 +96,7 @@ a {
   gap: 9px;
   font-size: 21px;
   font-weight: 700;
-  color: #ffffff;
+  color: #fff;
   white-space: nowrap;
 }
 
@@ -108,9 +111,7 @@ a {
   font-weight: 800;
 }
 
-.brand .l {
-  color: var(--mint);
-}
+.brand .l { color: var(--mint); }
 
 .main-nav {
   margin-left: auto;
@@ -120,47 +121,30 @@ a {
   font-size: 14px;
 }
 
-.main-nav a {
-  color: rgba(255, 255, 255, .85);
-  transition: color .2s;
-}
-
-.main-nav a:hover {
-  color: var(--mint);
-}
+.main-nav a { color: rgba(255,255,255,.85); }
+.main-nav a:hover { color: var(--mint); }
 
 .logout-btn {
   padding: 9px 20px;
-  border: 1px solid rgba(255, 255, 255, .6);
+  border: 1px solid rgba(255,255,255,.6);
   border-radius: 999px;
   background: transparent;
-  color: #ffffff;
+  color: #fff;
   font-weight: 600;
   font-size: 14px;
-  transition: background .2s;
 }
 
-.logout-btn:hover {
-  background: rgba(255, 255, 255, .12);
-}
-
-
-/* =========================
-   TITLE BANNER
-========================= */
+.logout-btn:hover { background: rgba(255,255,255,.12); }
 
 .page-banner {
   padding: 54px 20px 90px;
-  color: #ffffff;
+  color: #fff;
   background:
-    radial-gradient(800px 380px at 85% 0%, #3f6b53 0%, rgba(63, 107, 83, 0) 65%),
+    radial-gradient(800px 380px at 85% 0%, #3f6b53 0%, transparent 65%),
     linear-gradient(135deg, var(--forest-dark), #2d4a3a);
 }
 
-.banner-inner {
-  max-width: 1120px;
-  margin: auto;
-}
+.banner-inner { max-width: 1120px; margin: auto; }
 
 .eyebrow {
   margin-bottom: 10px;
@@ -175,20 +159,14 @@ a {
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(32px, 4vw, 46px);
   line-height: 1.1;
-  letter-spacing: -1px;
   margin-bottom: 10px;
 }
 
 .page-banner p {
   max-width: 560px;
-  color: rgba(255, 255, 255, .85);
+  color: rgba(255,255,255,.85);
   font-size: 17px;
 }
-
-
-/* =========================
-   LAYOUT
-========================= */
 
 .layout {
   max-width: 1120px;
@@ -201,13 +179,10 @@ a {
 }
 
 .card {
-  background: #ffffff;
+  background: #fff;
   border: 1px solid var(--line);
   border-radius: 20px;
 }
-
-
-/* JOB SUMMARY */
 
 .job-summary {
   position: sticky;
@@ -244,16 +219,8 @@ a {
   font-weight: 700;
 }
 
-.job-head h2 {
-  font-size: 21px;
-  line-height: 1.2;
-  letter-spacing: -.3px;
-}
-
-.job-head p {
-  color: var(--muted);
-  font-size: 14px;
-}
+.job-head h2 { font-size: 21px; line-height: 1.2; }
+.job-head p { color: var(--muted); font-size: 14px; }
 
 .pills {
   display: flex;
@@ -268,7 +235,6 @@ a {
   background: var(--tint);
   color: var(--deep);
   font-size: 12.5px;
-  font-weight: 500;
 }
 
 .job-desc {
@@ -280,18 +246,8 @@ a {
   overflow-wrap: anywhere;
 }
 
-
-/* FORM */
-
-.apply-card {
-  padding: 32px;
-}
-
-.apply-card h2 {
-  margin-bottom: 4px;
-  font-size: 24px;
-  letter-spacing: -.4px;
-}
+.apply-card { padding: 32px; }
+.apply-card h2 { margin-bottom: 4px; font-size: 24px; }
 
 .apply-card .sub {
   margin-bottom: 24px;
@@ -310,25 +266,14 @@ a {
   color: var(--deep);
 }
 
-.group-title:first-of-type {
-  margin-top: 0;
-}
-
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.field.full {
-  grid-column: 1 / -1;
-}
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field.full { grid-column: 1 / -1; }
 
 .field label {
   margin-left: 4px;
@@ -337,10 +282,7 @@ a {
   color: #34493d;
 }
 
-.field label span {
-  color: #8a988f;
-  font-weight: 400;
-}
+.field label span { color: #8a988f; font-weight: 400; }
 
 .field input,
 .field select,
@@ -351,24 +293,16 @@ a {
   border-radius: 14px;
   background: #fbfdfb;
   outline: none;
-  transition: border-color .2s, box-shadow .2s;
 }
 
-.field input[readonly] {
-  background: var(--tint);
-  color: var(--muted);
-}
-
-.field textarea {
-  resize: vertical;
-}
+.field input[readonly] { background: var(--tint); color: var(--muted); }
+.field textarea { resize: vertical; }
 
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
   border-color: var(--deep);
-  box-shadow: 0 0 0 4px rgba(47, 107, 79, .13);
-  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(47,107,79,.13);
 }
 
 .check {
@@ -386,656 +320,528 @@ a {
   width: 17px;
   height: 17px;
   accent-color: var(--deep);
-  flex: none;
 }
 
-.check a {
-  color: var(--deep);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.form-actions {
-  margin-top: 26px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
-}
-
-.submit {
-  padding: 14px 34px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--mint);
-  color: var(--forest);
-  font-weight: 600;
-  font-size: 16px;
-  box-shadow: 0 10px 24px rgba(47, 107, 79, .22);
-  transition: background .2s, transform .2s;
-}
-
-.submit:hover {
-  background: var(--mint-hover);
-  transform: translateY(-1px);
-}
-
-.submit:disabled {
-  opacity: .65;
-  cursor: wait;
-  transform: none;
-}
-
-.cancel {
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.cancel:hover {
-  color: var(--ink);
-}
-
-.error {
-  margin-top: 16px;
-  padding: 11px 15px;
+.primary-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px 20px;
+  border: none;
   border-radius: 14px;
-  background: #fff1f0;
-  border: 1px solid #f3c3c0;
-  color: #b42318;
-  font-size: 14px;
+  background: var(--forest);
+  color: #fff;
+  font-weight: 700;
 }
 
+.primary-btn:hover { background: var(--deep); }
 
-/* MESSAGE / SUCCESS CARDS */
-
-.state {
-  max-width: 560px;
-  margin: -50px auto 70px;
-  padding: 44px 36px;
-  text-align: center;
-}
-
-.state .icon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 18px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--mint);
-  color: var(--forest);
-  font-size: 30px;
-  font-weight: 800;
-}
-
-.state h2 {
-  margin-bottom: 8px;
-  font-size: 26px;
-  letter-spacing: -.4px;
-}
-
-.state p {
-  margin-bottom: 24px;
-  color: var(--muted);
-}
-
-.state .btn-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 26px;
-  border-radius: 999px;
-  font-weight: 600;
-  transition: background .2s, transform .2s;
-}
-
-.btn.primary {
-  background: var(--mint);
-  color: var(--forest);
-}
-
-.btn.primary:hover {
-  background: var(--mint-hover);
-  transform: translateY(-1px);
-}
-
-.btn.ghost {
+.location-panel {
+  margin-top: 20px;
+  padding: 18px;
   border: 1px solid var(--line);
-  background: #ffffff;
+  border-radius: 16px;
+  background: #fbfdfb;
 }
 
-.btn.ghost:hover {
+.location-panel h3 { margin-bottom: 6px; font-size: 17px; }
+
+.location-panel p {
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+#applicantMap {
+  width: 100%;
+  height: 340px;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+.map-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+.map-btn {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.map-btn:hover { background: var(--tint); }
+
+.location-status { margin-top: 10px; font-size: 13px; overflow-wrap: anywhere; }
+.location-status.success { color: var(--deep); }
+.location-status.error { color: #b42318; }
+
+.coordinates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.coordinates input {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
   background: var(--tint);
 }
 
-
-/* FOOTER */
-
-.site-footer {
-  background: var(--forest-dark);
-}
-
-.footer-inner {
-  max-width: 1120px;
-  margin: auto;
-  padding: 28px 20px;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  color: #9db0a4;
+footer {
+  padding: 25px 20px;
+  background: var(--forest);
+  color: rgba(255,255,255,.8);
+  text-align: center;
   font-size: 13px;
 }
 
-.footer-inner a:hover {
-  color: var(--mint);
+@media (max-width: 850px) {
+  .layout { grid-template-columns: 1fr; }
+  .job-summary { position: static; }
 }
 
-
-/* RESPONSIVE */
-
-@media (max-width: 900px) {
-
-  .layout {
-    grid-template-columns: 1fr;
+@media (max-width: 600px) {
+  .header-inner {
+    height: auto;
+    min-height: 70px;
+    flex-wrap: wrap;
+    padding: 14px 18px;
   }
 
-  .job-summary {
-    position: static;
+  .main-nav {
+    order: 3;
+    width: 100%;
+    margin: 0;
+    justify-content: space-between;
+    gap: 10px;
   }
 
-  .main-nav a {
-    display: none;
-  }
+  .layout { padding: 0 12px; }
+  .apply-card { padding: 20px; }
+  .grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  #applicantMap { height: 280px; }
+  .coordinates { grid-template-columns: 1fr; }
 }
-
-@media (max-width: 560px) {
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .field.full {
-    grid-column: auto;
-  }
-
-  .apply-card {
-    padding: 24px 20px;
-  }
-
-  .page-banner {
-    padding-bottom: 80px;
-  }
-}
-
 </style>
-
 </head>
 
 <body>
 
 <header class="main-header">
-
   <div class="header-inner">
-
-    <a href="home.html" class="brand">
+    <a href="index.html" class="brand">
       <span class="brand-mark">K</span>
       <span>Kofkro <span class="l">LMIS</span></span>
     </a>
 
     <nav class="main-nav">
-      <a href="home.html#jobs">Jobs</a>
-      <a href="home.html#applications">My applications</a>
-      <button type="button" class="logout-btn" id="logout">Sign out</button>
+      <a href="index.html">Home</a>
+      <a href="jobs.html">Jobs</a>
+      <a href="applications.html">My Applications</a>
     </nav>
 
+    <button class="logout-btn" id="logoutBtn" type="button">Logout</button>
   </div>
-
 </header>
 
-
 <section class="page-banner">
-
   <div class="banner-inner">
-
-    <div class="eyebrow">Job application</div>
-
-    <h1>Apply for this job</h1>
-
-    <p>
-      Tell the employer a little about yourself. Your details are saved
-      on this device so applying next time is quicker.
-    </p>
-
+    <div class="eyebrow">Career opportunities</div>
+    <h1>Submit Your Application</h1>
+    <p>Complete the application form below and provide your location if you want to share it with the recruitment team.</p>
   </div>
-
 </section>
 
-
-<!-- Not found / already applied / success -->
-
-<section class="card state" id="stateBox" hidden>
-
-  <div class="icon" id="stateIcon">!</div>
-
-  <h2 id="stateTitle"></h2>
-
-  <p id="stateText"></p>
-
-  <div class="btn-row" id="stateButtons"></div>
-
-</section>
-
-
-<!-- Job + form -->
-
-<main class="layout" id="layout" hidden>
-
+<main class="layout">
   <aside class="card job-summary">
-
-    <div class="label">You are applying for</div>
+    <div class="label">Position details</div>
 
     <div class="job-head">
-
-      <div class="job-logo" id="jLogo">K</div>
-
+      <div class="job-logo">K</div>
       <div>
-        <h2 id="jTitle"></h2>
-        <p id="jCo"></p>
+        <h2 id="jobTitle">Available Position</h2>
+        <p id="jobCompany">Kofkro LMIS</p>
       </div>
-
     </div>
 
-    <div class="pills" id="jPills"></div>
+    <div class="pills">
+      <span id="jobType">Full-time</span>
+      <span id="jobLocation">Ghana</span>
+    </div>
 
-    <p class="job-desc" id="jDesc"></p>
-
+    <div class="job-desc" id="jobDescription">
+      Submit your details to apply for this opportunity.
+    </div>
   </aside>
 
-
   <section class="card apply-card">
-
-    <h2>Your application</h2>
-
+    <h2>Application form</h2>
     <p class="sub">Fields marked with * are required.</p>
 
-    <form id="applyForm" novalidate>
-
-      <div class="group-title">About you</div>
+    <form id="applicationForm">
+      <h3 class="group-title">Personal information</h3>
 
       <div class="grid">
-
         <div class="field">
           <label for="a-name">Full name *</label>
-          <input id="a-name" type="text" autocomplete="name" maxlength="80" placeholder="Your full name">
+          <input id="a-name" name="name" required>
         </div>
 
         <div class="field">
-          <label for="a-email">Email</label>
-          <input id="a-email" type="email" readonly>
+          <label for="a-email">Email address *</label>
+          <input id="a-email" name="email" type="email" required>
         </div>
 
         <div class="field">
-          <label for="a-phone">Phone <span>(optional)</span></label>
-          <input id="a-phone" type="tel" autocomplete="tel" maxlength="30" placeholder="e.g. 024 000 0000">
+          <label for="a-phone">Phone number *</label>
+          <input id="a-phone" name="phone" type="tel" required>
         </div>
 
         <div class="field">
-          <label for="a-loc">Where do you live? <span>(optional)</span></label>
-          <input id="a-loc" type="text" maxlength="60" placeholder="e.g. Kofkro">
+          <label for="a-dob">Date of birth</label>
+          <input id="a-dob" name="dob" type="date">
         </div>
 
+        <div class="field">
+          <label for="a-gender">Gender</label>
+          <select id="a-gender" name="gender">
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="a-address">Residential address *</label>
+          <input id="a-address" name="address" required>
+        </div>
       </div>
 
-
-      <div class="group-title">Your resume</div>
+      <h3 class="group-title">Professional information</h3>
 
       <div class="grid">
-
         <div class="field">
-          <label for="a-edu">Highest education *</label>
-          <select id="a-edu">
-            <option value="">Select one</option>
-            <option>Junior High School</option>
-            <option>Senior High School</option>
-            <option>Vocational / TVET</option>
-            <option>Diploma / HND</option>
+          <label for="a-education">Highest education</label>
+          <select id="a-education" name="education">
+            <option value="">Select education</option>
+            <option>Basic education</option>
+            <option>Senior high school</option>
+            <option>Certificate</option>
+            <option>Diploma</option>
             <option>Bachelor's degree</option>
-            <option>Postgraduate</option>
+            <option>Master's degree</option>
+            <option>Doctorate</option>
             <option>Other</option>
           </select>
         </div>
 
         <div class="field">
-          <label for="a-link">Link to CV or portfolio <span>(optional)</span></label>
-          <input id="a-link" type="url" maxlength="200" placeholder="https://...">
+          <label for="a-experience">Years of experience</label>
+          <select id="a-experience" name="experience">
+            <option value="">Select experience</option>
+            <option value="0">No experience</option>
+            <option value="1-2">1–2 years</option>
+            <option value="3-5">3–5 years</option>
+            <option value="6-10">6–10 years</option>
+            <option value="10+">More than 10 years</option>
+          </select>
         </div>
 
         <div class="field full">
-          <label for="a-skills">Your skills *</label>
-          <input id="a-skills" type="text" maxlength="160" placeholder="e.g. sewing, customer service, basic computer skills">
+          <label for="a-skills">Skills</label>
+          <textarea id="a-skills" name="skills" rows="3" placeholder="List your relevant skills"></textarea>
         </div>
 
         <div class="field full">
-          <label for="a-exp">Experience <span>(work, training or volunteering)</span></label>
-          <textarea id="a-exp" rows="4" maxlength="600" placeholder="Briefly describe what you have done so far. If you are just starting out, tell us what you have learned."></textarea>
+          <label for="a-cover">Cover letter / additional information</label>
+          <textarea id="a-cover" name="coverLetter" rows="5" placeholder="Tell us why you're applying"></textarea>
         </div>
 
+        <div class="field full">
+          <label for="a-cv">CV or résumé link <span>(optional)</span></label>
+          <input id="a-cv" name="cv" type="url" placeholder="https://example.com/my-cv">
+        </div>
       </div>
 
+      <h3 class="group-title">Applicant location</h3>
 
-      <div class="group-title">Message to the employer</div>
+      <div class="location-panel">
+        <h3>Pin your location on the map</h3>
+        <p>You can use your device's location or click anywhere on the map to place the pin. Drag the pin to adjust it.</p>
 
-      <div class="field">
-        <label for="a-msg">Why are you a good fit? <span>(optional)</span></label>
-        <textarea id="a-msg" rows="5" maxlength="800" placeholder="Introduce yourself and say why you want this job."></textarea>
+        <div id="applicantMap" aria-label="Map to select applicant location"></div>
+
+        <div class="map-actions">
+          <button type="button" class="map-btn" id="useMyLocation">Use My Location</button>
+          <button type="button" class="map-btn" id="clearLocation">Clear Pin</button>
+        </div>
+
+        <div id="locationStatus" class="location-status" role="status">No location selected.</div>
+
+        <div class="coordinates">
+          <div class="field">
+            <label for="latitude">Latitude</label>
+            <input id="latitude" readonly placeholder="Not selected">
+          </div>
+
+          <div class="field">
+            <label for="longitude">Longitude</label>
+            <input id="longitude" readonly placeholder="Not selected">
+          </div>
+        </div>
+
+        <label class="check" for="a-share-location">
+          <input type="checkbox" id="a-share-location" name="shareLocation">
+          <span>I consent to sharing the location pin above with the recruitment team as part of my application.</span>
+        </label>
       </div>
 
-      <label class="check">
-        <input type="checkbox" id="a-save" checked>
-        <span>Save my details on this device for next time</span>
+      <label class="check" for="a-confirm">
+        <input type="checkbox" id="a-confirm" name="confirm" required>
+        <span>I confirm that the information provided is accurate.</span>
       </label>
 
-      <label class="check">
-        <input type="checkbox" id="a-agree">
-        <span>
-          I confirm the information above is true and I agree to the
-          <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>. *
-        </span>
-      </label>
-
-      <p class="error" id="formError" hidden></p>
-
-      <div class="form-actions">
-        <button type="submit" class="submit" id="submitBtn">Submit application</button>
-        <a href="home.html#jobs" class="cancel">Cancel</a>
-      </div>
-
+      <button class="primary-btn" type="submit">Submit Application</button>
     </form>
-
   </section>
-
 </main>
 
-
-<footer class="site-footer">
-
-  <div class="footer-inner">
-    <span>© 2026 Kofkro LMIS. All rights reserved.</span>
-    <span><a href="terms.html">Terms</a> · <a href="about.html">About</a></span>
-  </div>
-
+<footer>
+  &copy; <span id="year"></span> Kofkro LMIS. All rights reserved.
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("applicationForm");
+  const status = document.getElementById("locationStatus");
+  const latitudeInput = document.getElementById("latitude");
+  const longitudeInput = document.getElementById("longitude");
+  const shareLocationCheckbox = document.getElementById("a-share-location");
+  const useLocationBtn = document.getElementById("useMyLocation");
+  const clearLocationBtn = document.getElementById("clearLocation");
 
-  /* =====================================================
-     KOFKRO LMIS — JOB APPLICATION PAGE (localStorage)
-  ===================================================== */
+  let selectedLocation = null;
+  let marker = null;
 
-  const CURRENT_USER_KEY = 'kofkro-current-user';
-  const JOBS_KEY = 'kofkro-lmis-jobs';
-  const APPS_KEY = 'kofkro-applications';
-  const RESUME_KEY = 'kofkro-resumes';
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  const $ = function (id) { return document.getElementById(id); };
+  const params = new URLSearchParams(window.location.search);
+  const jobId = params.get("id") || params.get("jobId") || "";
 
-  function read(key, fallback) {
-    try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : fallback;
-    } catch (e) {
-      return fallback;
+  // Load the selected job from localStorage.
+  try {
+    const jobs = JSON.parse(localStorage.getItem("kofkro-jobs") || "[]");
+    const job = jobs.find(function (item) {
+      return String(item.id) === String(jobId);
+    });
+
+    if (job) {
+      document.getElementById("jobTitle").textContent =
+        job.title || job.name || "Available Position";
+      document.getElementById("jobCompany").textContent =
+        job.company || "Kofkro LMIS";
+      document.getElementById("jobType").textContent =
+        job.type || "Full-time";
+      document.getElementById("jobLocation").textContent =
+        job.location || "Ghana";
+      document.getElementById("jobDescription").textContent =
+        job.description || "Submit your details to apply for this opportunity.";
     }
+  } catch (error) {
+    console.warn("Could not load job details:", error);
   }
 
-  function esc(value) {
-    const div = document.createElement('div');
-    div.textContent = value == null ? '' : value;
-    return div.innerHTML;
+  // Initialize the map at Ghana.
+  const map = L.map("applicantMap").setView([5.6037, -0.1870], 7);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19
+  }).addTo(map);
+
+  function updateStatus(message, type) {
+    status.textContent = message;
+    status.className = "location-status" + (type ? " " + type : "");
   }
 
-
-  /* ---------- Signed-in user ---------- */
-
-  const user = read(CURRENT_USER_KEY, null);
-
-  if (!user || !user.email) {
-    window.location.href = 'login.html#login';
-    return;
-  }
-
-  const me = user.email.toLowerCase();
-
-  $('logout').addEventListener('click', function () {
-    localStorage.removeItem(CURRENT_USER_KEY);
-    window.location.href = 'index.html';
-  });
-
-
-  /* ---------- Find the job ---------- */
-
-  const jobId = new URLSearchParams(window.location.search).get('id');
-
-  const job = read(JOBS_KEY, []).find(function (j) {
-    return String(j.id) === String(jobId);
-  });
-
-
-  /* ---------- Message / success screen ---------- */
-
-  function showState(icon, title, text, buttons) {
-
-    $('layout').hidden = true;
-    $('stateBox').hidden = false;
-
-    $('stateIcon').textContent = icon;
-    $('stateTitle').textContent = title;
-    $('stateText').textContent = text;
-
-    $('stateButtons').innerHTML = buttons.map(function (b) {
-      return '<a class="btn ' + b.kind + '" href="' + b.href + '">' + esc(b.label) + '</a>';
-    }).join('');
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  const backButtons = [
-    { kind: 'primary', href: 'home.html#jobs', label: 'Back to jobs' }
-  ];
-
-  if (!job) {
-    showState(
-      '?',
-      'We could not find that job',
-      'It may have been removed. Go back to the jobs list and pick another one.',
-      backButtons
-    );
-    return;
-  }
-
-  if (job.postedBy && job.postedBy.toLowerCase() === me) {
-    showState(
-      '!',
-      'This is your own job',
-      'You posted this opportunity, so you cannot apply for it.',
-      backButtons
-    );
-    return;
-  }
-
-  const existing = read(APPS_KEY, []).find(function (a) {
-    return String(a.jobId) === String(job.id) && (a.email || '').toLowerCase() === me;
-  });
-
-  if (existing) {
-    showState(
-      '✓',
-      'You have already applied',
-      'Your application for "' + job.title + '" was sent on ' +
-        new Date(existing.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + '.',
-      [
-        { kind: 'primary', href: 'home.html#applications', label: 'View my applications' },
-        { kind: 'ghost', href: 'home.html#jobs', label: 'Back to jobs' }
-      ]
-    );
-    return;
-  }
-
-
-  /* ---------- Show the job ---------- */
-
-  $('layout').hidden = false;
-
-  $('jLogo').textContent = (job.co || 'K').charAt(0).toUpperCase();
-  $('jTitle').textContent = job.title || '';
-  $('jCo').textContent = (job.co || '') + (job.loc ? ' · ' + job.loc : '');
-  $('jDesc').textContent = job.desc || '';
-
-  $('jPills').innerHTML = [job.type, job.pay].filter(Boolean).map(function (p) {
-    return '<span>' + esc(p) + '</span>';
-  }).join('');
-
-  document.title = 'Apply: ' + job.title + ' | Kofkro LMIS';
-
-
-  /* ---------- Pre-fill from saved details ---------- */
-
-  const saved = (read(RESUME_KEY, {}))[me] || {};
-
-  $('a-name').value = saved.name || user.name || '';
-  $('a-email').value = user.email;
-  $('a-phone').value = saved.phone || '';
-  $('a-loc').value = saved.loc || '';
-  $('a-edu').value = saved.edu || '';
-  $('a-link').value = saved.link || '';
-  $('a-skills').value = saved.skills || '';
-  $('a-exp').value = saved.exp || '';
-
-
-  /* ---------- Submit ---------- */
-
-  function fail(text) {
-    const box = $('formError');
-    box.textContent = text;
-    box.hidden = false;
-  }
-
-  $('applyForm').addEventListener('submit', function (event) {
-
-    event.preventDefault();
-
-    $('formError').hidden = true;
-
-    const details = {
-      name: $('a-name').value.trim(),
-      phone: $('a-phone').value.trim(),
-      loc: $('a-loc').value.trim(),
-      edu: $('a-edu').value,
-      link: $('a-link').value.trim(),
-      skills: $('a-skills').value.trim(),
-      exp: $('a-exp').value.trim()
+  function setLocation(lat, lng, accuracy) {
+    selectedLocation = {
+      latitude: Number(lat),
+      longitude: Number(lng),
+      accuracy: accuracy == null ? null : Number(accuracy),
+      capturedAt: new Date().toISOString()
     };
 
-    const message = $('a-msg').value.trim();
+    if (!marker) {
+      marker = L.marker([lat, lng], {
+        draggable: true,
+        title: "Your selected location"
+      }).addTo(map);
 
-    if (details.name.length < 2) {
-      fail('Please enter your full name.');
-      return;
-    }
-
-    if (!details.edu) {
-      fail('Please choose your highest education.');
-      return;
-    }
-
-    if (!details.skills) {
-      fail('Please list at least one skill.');
-      return;
-    }
-
-    if (details.link && !/^https?:\/\//i.test(details.link)) {
-      fail('The link must start with http:// or https://');
-      return;
-    }
-
-    if (!$('a-agree').checked) {
-      fail('Please confirm your details and accept the Terms & Conditions.');
-      return;
-    }
-
-    const button = $('submitBtn');
-    button.disabled = true;
-
-    try {
-
-      const apps = read(APPS_KEY, []);
-
-      apps.unshift({
-        id: Date.now(),
-        jobId: job.id,
-        jobTitle: job.title,
-        co: job.co,
-        loc: job.loc,
-        type: job.type,
-        jobOwner: job.postedBy || '',
-        jobMail: job.mail || '',
-        name: details.name,
-        email: user.email,
-        phone: details.phone,
-        residence: details.loc,
-        edu: details.edu,
-        link: details.link,
-        skills: details.skills,
-        exp: details.exp,
-        message: message,
-        status: 'Submitted',
-        createdAt: new Date().toISOString()
+      marker.on("dragend", function () {
+        const position = marker.getLatLng();
+        setLocation(position.lat, position.lng, null);
       });
-
-      localStorage.setItem(APPS_KEY, JSON.stringify(apps));
-
-      const resumes = read(RESUME_KEY, {});
-
-      if ($('a-save').checked) {
-        resumes[me] = details;
-      } else {
-        delete resumes[me];
-      }
-
-      localStorage.setItem(RESUME_KEY, JSON.stringify(resumes));
-
-      showState(
-        '✓',
-        'Application sent!',
-        'Your application for "' + job.title + '" at ' + (job.co || 'the employer') + ' has been submitted. Good luck!',
-        [
-          { kind: 'primary', href: 'home.html#applications', label: 'View my applications' },
-          { kind: 'ghost', href: 'home.html#jobs', label: 'Find more jobs' }
-        ]
-      );
-
-    } catch (error) {
-
-      console.error(error);
-
-      fail('Sorry, we could not send your application. Please try again.');
-
-      button.disabled = false;
+    } else {
+      marker.setLatLng([lat, lng]);
     }
 
+    latitudeInput.value = Number(lat).toFixed(6);
+    longitudeInput.value = Number(lng).toFixed(6);
+
+    updateStatus("Location selected. You can drag the pin to adjust it.", "success");
+  }
+
+  // Click the map to select a location.
+  map.on("click", function (event) {
+    setLocation(event.latlng.lat, event.latlng.lng, null);
   });
 
+  // Use device GPS/location permission.
+  useLocationBtn.addEventListener("click", function () {
+    if (!navigator.geolocation) {
+      updateStatus(
+        "Your browser does not support location services. Click the map to place a pin.",
+        "error"
+      );
+      return;
+    }
+
+    updateStatus("Getting your location…");
+
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        const accuracy = position.coords.accuracy;
+
+        map.setView([lat, lng], 16);
+        setLocation(lat, lng, accuracy);
+
+        updateStatus(
+          "Your location has been selected. Accuracy: approximately " +
+          Math.round(accuracy) + " metres.",
+          "success"
+        );
+      },
+      function (error) {
+        let message = "Could not get your location. Click the map to place a pin.";
+
+        if (error.code === error.PERMISSION_DENIED) {
+          message = "Location permission was denied. Allow location access in your browser settings, or click the map to place a pin.";
+        } else if (error.code === error.TIMEOUT) {
+          message = "The location request timed out. Try again or click the map.";
+        }
+
+        updateStatus(message, "error");
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0
+      }
+    );
+  });
+
+  // Clear the selected pin.
+  clearLocationBtn.addEventListener("click", function () {
+    if (marker) {
+      map.removeLayer(marker);
+      marker = null;
+    }
+
+    selectedLocation = null;
+    latitudeInput.value = "";
+    longitudeInput.value = "";
+    updateStatus("Location pin cleared.");
+  });
+
+  // Submit the application.
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if (!form.reportValidity()) return;
+
+    if (shareLocationCheckbox.checked && !selectedLocation) {
+      updateStatus(
+        "Please select a location on the map before sharing it, or untick the location consent box.",
+        "error"
+      );
+
+      document.getElementById("applicantMap").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+      return;
+    }
+
+    const formData = new FormData(form);
+
+    const application = {
+      id: "APP-" + Date.now(),
+      jobId: jobId || null,
+      jobTitle: document.getElementById("jobTitle").textContent,
+      name: String(formData.get("name") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      phone: String(formData.get("phone") || "").trim(),
+      dob: formData.get("dob") || "",
+      gender: formData.get("gender") || "",
+      address: String(formData.get("address") || "").trim(),
+      education: formData.get("education") || "",
+      experience: formData.get("experience") || "",
+      skills: String(formData.get("skills") || "").trim(),
+      coverLetter: String(formData.get("coverLetter") || "").trim(),
+      cv: String(formData.get("cv") || "").trim(),
+      applicantLocation: shareLocationCheckbox.checked ? selectedLocation : null,
+      status: "Pending",
+      submittedAt: new Date().toISOString()
+    };
+
+    try {
+      const storageKey = "kofkro-applications";
+      const existingApplications = JSON.parse(
+        localStorage.getItem(storageKey) || "[]"
+      );
+
+      if (!Array.isArray(existingApplications)) {
+        throw new Error("Stored applications data is invalid.");
+      }
+
+      existingApplications.push(application);
+
+      localStorage.setItem(storageKey, JSON.stringify(existingApplications));
+
+      alert("Application submitted successfully!");
+
+      form.reset();
+      clearLocationBtn.click();
+
+      window.location.href = "applications.html";
+    } catch (error) {
+      console.error("Application submission failed:", error);
+
+      alert(
+        "Your application could not be saved. Browser storage may be full or unavailable. Please try again."
+      );
+    }
+  });
+
+  // Logout.
+  document.getElementById("logoutBtn").addEventListener("click", function () {
+    if (confirm("Are you sure you want to log out?")) {
+      localStorage.removeItem("kofkro-currentUser");
+      localStorage.removeItem("kofkro-current-user");
+      window.location.href = "login.html";
+    }
+  });
 });
 </script>
 
