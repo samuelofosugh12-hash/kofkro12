@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -433,7 +432,7 @@ footer {
 
 <header class="main-header">
   <div class="header-inner">
-    <a href="index.html" class="brand">
+    <a href="home.html" class="brand">
       <span class="brand-mark">K</span>
       <span>Kofkro <span class="l">LMIS</span></span>
     </a>
@@ -461,7 +460,7 @@ footer {
     <div class="label">Position details</div>
 
     <div class="job-head">
-      <div class="job-logo">K</div>
+      <div class="job-logo" id="jobLogo">K</div>
       <div>
         <h2 id="jobTitle">Available Position</h2>
         <p id="jobCompany">Kofkro LMIS</p>
@@ -629,34 +628,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let selectedLocation = null;
   let marker = null;
+  let currentJob = null;
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
   const params = new URLSearchParams(window.location.search);
   const jobId = params.get("id") || params.get("jobId") || "";
 
-  // Load the selected job from localStorage.
+  // ---------------------------------------------------
+  // Load the selected job.
+  // jobs.html saves jobs under "kofkro-lmis-jobs" using
+  // the fields: title, co, loc, type, pay, desc, postedBy
+  // ---------------------------------------------------
   try {
-    const jobs = JSON.parse(localStorage.getItem("kofkro-jobs") || "[]");
-    const job = jobs.find(function (item) {
-      return String(item.id) === String(jobId);
-    });
+    const jobs = JSON.parse(localStorage.getItem("kofkro-lmis-jobs") || "[]");
 
-    if (job) {
+    currentJob = jobs.find(function (item) {
+      return String(item.id) === String(jobId);
+    }) || null;
+
+    if (currentJob) {
       document.getElementById("jobTitle").textContent =
-        job.title || job.name || "Available Position";
+        currentJob.title || "Available Position";
       document.getElementById("jobCompany").textContent =
-        job.company || "Kofkro LMIS";
+        currentJob.co || "Kofkro LMIS";
       document.getElementById("jobType").textContent =
-        job.type || "Full-time";
+        currentJob.type || "Full-time";
       document.getElementById("jobLocation").textContent =
-        job.location || "Ghana";
+        currentJob.loc || "Ghana";
+      document.getElementById("jobLogo").textContent =
+        (currentJob.co || "K").charAt(0).toUpperCase();
+
+      const pay = currentJob.pay ? "Pay: " + currentJob.pay + "\n\n" : "";
       document.getElementById("jobDescription").textContent =
-        job.description || "Submit your details to apply for this opportunity.";
+        pay + (currentJob.desc || "Submit your details to apply for this opportunity.");
+
+      document.title = "Apply: " + (currentJob.title || "Job") + " | Kofkro LMIS";
     }
   } catch (error) {
     console.warn("Could not load job details:", error);
   }
+
+  // ---------------------------------------------------
+  // Pre-fill (and lock) the email of the signed-in account.
+  // The "Applied" tag and "My applications" match on this email.
+  // ---------------------------------------------------
+  try {
+    const user = JSON.parse(localStorage.getItem("kofkro-current-user") || "null");
+
+    if (user) {
+      if (user.email) {
+        const emailInput = document.getElementById("a-email");
+        emailInput.value = user.email;
+        emailInput.readOnly = true;
+      }
+      if (user.name) {
+        document.getElementById("a-name").value = user.name;
+      }
+    }
+  } catch (e) {}
 
   // Initialize the map at Ghana.
   const map = L.map("applicantMap").setView([5.6037, -0.1870], 7);
@@ -789,20 +819,29 @@ document.addEventListener("DOMContentLoaded", function () {
       id: "APP-" + Date.now(),
       jobId: jobId || null,
       jobTitle: document.getElementById("jobTitle").textContent,
+
+      // Job details (shown on "My applications")
+      co: currentJob ? (currentJob.co || "") : "",
+      loc: currentJob ? (currentJob.loc || "") : "",
+      type: currentJob ? (currentJob.type || "") : "",
+      jobOwner: currentJob ? (currentJob.postedBy || "") : "",
+
+      // Applicant details
       name: String(formData.get("name") || "").trim(),
       email: String(formData.get("email") || "").trim(),
       phone: String(formData.get("phone") || "").trim(),
       dob: formData.get("dob") || "",
       gender: formData.get("gender") || "",
-      address: String(formData.get("address") || "").trim(),
-      education: formData.get("education") || "",
-      experience: formData.get("experience") || "",
+      residence: String(formData.get("address") || "").trim(),
+      edu: formData.get("education") || "",
+      exp: formData.get("experience") || "",
       skills: String(formData.get("skills") || "").trim(),
-      coverLetter: String(formData.get("coverLetter") || "").trim(),
+      message: String(formData.get("coverLetter") || "").trim(),
       cv: String(formData.get("cv") || "").trim(),
       applicantLocation: shareLocationCheckbox.checked ? selectedLocation : null,
-      status: "Pending",
-      submittedAt: new Date().toISOString()
+
+      status: "Submitted",
+      createdAt: new Date().toISOString()
     };
 
     try {
@@ -815,14 +854,24 @@ document.addEventListener("DOMContentLoaded", function () {
         throw new Error("Stored applications data is invalid.");
       }
 
+      // Stop duplicate applications for the same job
+      const alreadyApplied = existingApplications.some(function (a) {
+        return jobId &&
+          String(a.jobId) === String(jobId) &&
+          String(a.email || "").toLowerCase() === application.email.toLowerCase();
+      });
+
+      if (alreadyApplied) {
+        alert("You have already applied for this job.");
+        window.location.href = "applications.html";
+        return;
+      }
+
       existingApplications.push(application);
 
       localStorage.setItem(storageKey, JSON.stringify(existingApplications));
 
       alert("Application submitted successfully!");
-
-      form.reset();
-      clearLocationBtn.click();
 
       window.location.href = "applications.html";
     } catch (error) {
@@ -839,7 +888,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (confirm("Are you sure you want to log out?")) {
       localStorage.removeItem("kofkro-currentUser");
       localStorage.removeItem("kofkro-current-user");
-      window.location.href = "login.html";
+      window.location.href = "index.html";
     }
   });
 });
