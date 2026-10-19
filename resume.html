@@ -304,6 +304,74 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 0 0 4px rgba(47,107,79,.13);
 }
 
+/* CV upload */
+
+.file-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px dashed var(--line);
+  border-radius: 14px;
+  background: #fbfdfb;
+}
+
+.file-row:focus-within {
+  border-color: var(--deep);
+  box-shadow: 0 0 0 4px rgba(47,107,79,.13);
+}
+
+.file-btn {
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--forest);
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.file-btn:hover { background: var(--mint-hover); }
+
+.file-name {
+  flex: 1;
+  min-width: 140px;
+  color: var(--muted);
+  font-size: 13.5px;
+  overflow-wrap: anywhere;
+}
+
+.file-name.has-file { color: var(--ink); font-weight: 500; }
+
+.file-clear {
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.file-clear:hover {
+  background: #fff1f0;
+  color: #b42318;
+  border-color: #f3c3c0;
+}
+
+.file-hint {
+  margin-left: 4px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.file-error {
+  margin-left: 4px;
+  color: #b42318;
+  font-size: 13px;
+}
+
 .check {
   display: flex;
   gap: 10px;
@@ -333,6 +401,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .primary-btn:hover { background: var(--deep); }
+.primary-btn:disabled { opacity: .6; cursor: wait; }
 
 .location-panel {
   margin-top: 20px;
@@ -389,6 +458,88 @@ a { text-decoration: none; color: inherit; }
   background: var(--tint);
 }
 
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.map-legend .dot {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+}
+
+.map-legend .job-dot {
+  background: var(--forest);
+  border: 3px solid var(--mint);
+}
+
+.map-legend .you-dot {
+  background: #2a81cb;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px #2a81cb;
+}
+
+.pin-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--deep);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pin-link:hover { border-color: var(--deep); }
+
+.map-search {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.map-search input {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  outline: none;
+}
+
+.map-search input:focus {
+  border-color: var(--deep);
+  box-shadow: 0 0 0 4px rgba(47,107,79,.13);
+}
+
+.search-btn {
+  padding: 10px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--forest);
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.search-btn:hover { background: var(--mint-hover); }
+.search-btn:disabled { opacity: .6; cursor: wait; }
+
 footer {
   padding: 25px 20px;
   background: var(--forest);
@@ -424,6 +575,123 @@ footer {
   .field.full { grid-column: auto; }
   #applicantMap { height: 280px; }
   .coordinates { grid-template-columns: 1fr; }
+  .map-search { flex-direction: column; }
+  .search-btn { width: 100%; }
+}
+
+/* =====================================================
+   DARK THEME (follows Settings -> Appearance)
+===================================================== */
+
+html[data-theme="dark"] {
+  --page: #0f1814;
+  --ink: #e8f0ea;
+  --muted: #9db0a4;
+  --line: #2a3b32;
+  --tint: #1f3128;
+  --deep: #7fc29a;
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] .card {
+  background: #16231c;
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .job-desc,
+html[data-theme="dark"] .check {
+  color: #c3d0c7;
+}
+
+html[data-theme="dark"] .field label {
+  color: #b5c5ba;
+}
+
+html[data-theme="dark"] .field label span {
+  color: var(--muted);
+}
+
+html[data-theme="dark"] .field input,
+html[data-theme="dark"] .field select,
+html[data-theme="dark"] .field textarea {
+  background: #101b15;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .field input::placeholder,
+html[data-theme="dark"] .field textarea::placeholder {
+  color: #6d8074;
+}
+
+html[data-theme="dark"] .field input[readonly],
+html[data-theme="dark"] .coordinates input {
+  background: var(--tint);
+  color: var(--muted);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .field input:focus,
+html[data-theme="dark"] .field select:focus,
+html[data-theme="dark"] .field textarea:focus {
+  border-color: var(--deep);
+  box-shadow: 0 0 0 4px rgba(127, 194, 154, .18);
+}
+
+html[data-theme="dark"] .file-row,
+html[data-theme="dark"] .location-panel {
+  background: #101b15;
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .file-clear,
+html[data-theme="dark"] .map-btn {
+  background: #16231c;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .map-search input {
+  background: #16231c;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .map-search input::placeholder {
+  color: #6d8074;
+}
+
+html[data-theme="dark"] .file-clear:hover {
+  background: #3a1f1c;
+  color: #ffb4a8;
+  border-color: #6b2f29;
+}
+
+html[data-theme="dark"] .map-btn:hover {
+  background: var(--tint);
+}
+
+html[data-theme="dark"] .file-error,
+html[data-theme="dark"] .location-status.error {
+  color: #ffb4a8;
+}
+
+html[data-theme="dark"] .primary-btn {
+  background: var(--mint);
+  color: var(--forest);
+}
+
+html[data-theme="dark"] .primary-btn:hover {
+  background: var(--mint-hover);
+}
+
+html[data-theme="dark"] footer {
+  background: var(--forest-dark);
+}
+
+/* keep the map tiles readable but easier on the eyes */
+html[data-theme="dark"] .leaflet-tile-pane {
+  filter: brightness(.85) contrast(1.05);
 }
 </style>
 </head>
@@ -471,6 +739,8 @@ footer {
       <span id="jobType">Full-time</span>
       <span id="jobLocation">Ghana</span>
     </div>
+
+    <button type="button" class="pin-link" id="jobMapLink" hidden>📍 See job location on the map</button>
 
     <div class="job-desc" id="jobDescription">
       Submit your details to apply for this opportunity.
@@ -562,8 +832,18 @@ footer {
         </div>
 
         <div class="field full">
-          <label for="a-cv">CV or résumé link <span>(optional)</span></label>
-          <input id="a-cv" name="cv" type="url" placeholder="https://example.com/my-cv">
+          <label for="a-cv">Upload your CV or résumé <span>(optional)</span></label>
+
+          <div class="file-row">
+            <button type="button" class="file-btn" id="cvPick">Choose file</button>
+            <span class="file-name" id="cvName">No file chosen</span>
+            <button type="button" class="file-clear" id="cvClear" hidden>Remove</button>
+          </div>
+
+          <input id="a-cv" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+
+          <p class="file-hint">PDF, DOC or DOCX, up to 1.5 MB.</p>
+          <p class="file-error" id="cvError" role="alert" hidden></p>
         </div>
       </div>
 
@@ -571,11 +851,22 @@ footer {
 
       <div class="location-panel">
         <h3>Pin your location on the map</h3>
-        <p>You can use your device's location or click anywhere on the map to place the pin. Drag the pin to adjust it.</p>
+        <p>Type the name of your town or area, use your device's location, or click the map to place the pin. Drag the pin to adjust it.</p>
+
+        <div class="map-search">
+          <input id="placeName" type="search" placeholder="Name of your location, e.g. Kofkro market" aria-label="Name of your location" autocomplete="off" maxlength="120">
+          <button type="button" class="search-btn" id="placeSearchBtn">Search</button>
+        </div>
 
         <div id="applicantMap" aria-label="Map to select applicant location"></div>
 
+        <div class="map-legend" id="mapLegend">
+          <span id="jobLegend" hidden><i class="dot job-dot"></i><b id="jobLegendText">Job location</b></span>
+          <span><i class="dot you-dot"></i>Your location pin</span>
+        </div>
+
         <div class="map-actions">
+          <button type="button" class="map-btn" id="showJobBtn" hidden>Show job location</button>
           <button type="button" class="map-btn" id="useMyLocation">Use My Location</button>
           <button type="button" class="map-btn" id="clearLocation">Clear Pin</button>
         </div>
@@ -605,7 +896,7 @@ footer {
         <span>I confirm that the information provided is accurate.</span>
       </label>
 
-      <button class="primary-btn" type="submit">Submit Application</button>
+      <button class="primary-btn" id="submitBtn" type="submit">Submit Application</button>
     </form>
   </section>
 </main>
@@ -625,6 +916,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const shareLocationCheckbox = document.getElementById("a-share-location");
   const useLocationBtn = document.getElementById("useMyLocation");
   const clearLocationBtn = document.getElementById("clearLocation");
+  const submitBtn = document.getElementById("submitBtn");
+  const placeInput = document.getElementById("placeName");
+  const placeSearchBtn = document.getElementById("placeSearchBtn");
+
+  let placeEditedByUser = false;
+  let lookupCounter = 0;
 
   let selectedLocation = null;
   let marker = null;
@@ -688,6 +985,97 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   } catch (e) {}
 
+  // ---------------------------------------------------
+  // CV upload
+  // The file is stored inside the browser (localStorage),
+  // so it is kept small: PDF / DOC / DOCX up to 1.5 MB.
+  // ---------------------------------------------------
+  const MAX_CV_BYTES = 1.5 * 1024 * 1024;
+  const ALLOWED_CV = ["pdf", "doc", "docx"];
+
+  const cvInput = document.getElementById("a-cv");
+  const cvPick = document.getElementById("cvPick");
+  const cvName = document.getElementById("cvName");
+  const cvClear = document.getElementById("cvClear");
+  const cvError = document.getElementById("cvError");
+
+  function formatSize(bytes) {
+    if (bytes < 1024 * 1024) return Math.max(1, Math.round(bytes / 1024)) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function showCvError(message) {
+    cvError.textContent = message;
+    cvError.hidden = !message;
+  }
+
+  function resetCv() {
+    cvInput.value = "";
+    cvName.textContent = "No file chosen";
+    cvName.classList.remove("has-file");
+    cvClear.hidden = true;
+    showCvError("");
+  }
+
+  cvPick.addEventListener("click", function () {
+    cvInput.click();
+  });
+
+  cvClear.addEventListener("click", resetCv);
+
+  cvInput.addEventListener("change", function () {
+    const file = cvInput.files && cvInput.files[0];
+
+    if (!file) {
+      resetCv();
+      return;
+    }
+
+    const extension = (file.name.split(".").pop() || "").toLowerCase();
+
+    if (ALLOWED_CV.indexOf(extension) === -1) {
+      resetCv();
+      showCvError("Please choose a PDF, DOC or DOCX file.");
+      return;
+    }
+
+    if (file.size > MAX_CV_BYTES) {
+      resetCv();
+      showCvError("That file is " + formatSize(file.size) + ". Please choose one under 1.5 MB.");
+      return;
+    }
+
+    showCvError("");
+    cvName.textContent = file.name + " (" + formatSize(file.size) + ")";
+    cvName.classList.add("has-file");
+    cvClear.hidden = false;
+  });
+
+  function readCvFile(file) {
+    return new Promise(function (resolve, reject) {
+      const reader = new FileReader();
+
+      reader.onload = function () {
+        resolve({
+          name: file.name,
+          type: file.type || "application/octet-stream",
+          size: file.size,
+          data: reader.result
+        });
+      };
+
+      reader.onerror = function () {
+        reject(new Error("Could not read the CV file."));
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ---------------------------------------------------
+  // Map
+  // ---------------------------------------------------
+
   // Initialize the map at Ghana.
   const map = L.map("applicantMap").setView([5.6037, -0.1870], 7);
 
@@ -696,12 +1084,128 @@ document.addEventListener("DOMContentLoaded", function () {
     maxZoom: 19
   }).addTo(map);
 
+  // ---------------------------------------------------
+  // The company's job location (pinned by the employer) is
+  // shown on this same map with its own marker.
+  // ---------------------------------------------------
+  let jobPin = null;
+  let jobMarker = null;
+
+  if (currentJob &&
+      currentJob.lat !== null && currentJob.lat !== undefined && currentJob.lat !== "" &&
+      currentJob.lng !== null && currentJob.lng !== undefined && currentJob.lng !== "" &&
+      isFinite(Number(currentJob.lat)) && isFinite(Number(currentJob.lng))) {
+
+    jobPin = { latitude: Number(currentJob.lat), longitude: Number(currentJob.lng) };
+
+    const popup = document.createElement("div");
+    const popupTitle = document.createElement("strong");
+    const popupLine = document.createElement("div");
+
+    popupTitle.textContent = "Job location";
+    popupLine.textContent = (currentJob.co || "Company") +
+      (currentJob.loc ? " · " + currentJob.loc : "");
+
+    popup.appendChild(popupTitle);
+    popup.appendChild(popupLine);
+
+    jobMarker = L.circleMarker([jobPin.latitude, jobPin.longitude], {
+      radius: 11,
+      color: "#a3d1b5",
+      weight: 4,
+      fillColor: "#1c2b24",
+      fillOpacity: 1
+    }).addTo(map).bindPopup(popup);
+
+    jobMarker.bindTooltip("Job location", { direction: "top", offset: [0, -8] });
+
+    map.setView([jobPin.latitude, jobPin.longitude], 14);
+
+    document.getElementById("jobLegend").hidden = false;
+    document.getElementById("jobLegendText").textContent =
+      "Job location: " + (currentJob.co || "Company") + (currentJob.loc ? " · " + currentJob.loc : "");
+    document.getElementById("showJobBtn").hidden = false;
+    document.getElementById("jobMapLink").hidden = false;
+  } else {
+    const legend = document.getElementById("jobLegend");
+    legend.hidden = false;
+    document.getElementById("jobLegendText").textContent =
+      "The employer has not pinned this job's location.";
+    legend.querySelector(".dot").hidden = true;
+  }
+
+  function focusJob() {
+    if (!jobPin) return;
+
+    document.getElementById("applicantMap").scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    map.flyTo([jobPin.latitude, jobPin.longitude], 15);
+    jobMarker.openPopup();
+  }
+
+  document.getElementById("showJobBtn").addEventListener("click", focusJob);
+  document.getElementById("jobMapLink").addEventListener("click", focusJob);
+
+  // Straight-line distance between the applicant's pin and the job
+  function jobDistanceText(lat, lng) {
+    if (!jobPin) return "";
+
+    const R = 6371;
+    const rad = Math.PI / 180;
+    const dLat = (jobPin.latitude - lat) * rad;
+    const dLng = (jobPin.longitude - lng) * rad;
+
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat * rad) * Math.cos(jobPin.latitude * rad) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+
+    const km = 2 * R * Math.asin(Math.sqrt(a));
+
+    return km < 1
+      ? " It is about " + Math.round(km * 1000) + " m from the job."
+      : " It is about " + km.toFixed(1) + " km from the job.";
+  }
+
   function updateStatus(message, type) {
     status.textContent = message;
     status.className = "location-status" + (type ? " " + type : "");
   }
 
-  function setLocation(lat, lng, accuracy) {
+  // Turn a pin position into a readable place name (best effort).
+  function reverseLookup(lat, lng) {
+    const ticket = ++lookupCounter;
+
+    fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=16&lat=" +
+      encodeURIComponent(lat) + "&lon=" + encodeURIComponent(lng), {
+      headers: { "Accept": "application/json" }
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error("lookup failed");
+        return response.json();
+      })
+      .then(function (result) {
+        // ignore old answers and never overwrite what the person typed
+        if (ticket !== lookupCounter || placeEditedByUser) return;
+
+        const parts = String((result && result.display_name) || "")
+          .split(",")
+          .map(function (part) { return part.trim(); })
+          .filter(Boolean)
+          .slice(0, 3);
+
+        if (parts.length) {
+          placeInput.value = parts.join(", ");
+        }
+      })
+      .catch(function () {
+        /* the name is optional; the pin still works */
+      });
+  }
+
+  function setLocation(lat, lng, accuracy, skipLookup) {
     selectedLocation = {
       latitude: Number(lat),
       longitude: Number(lng),
@@ -726,8 +1230,67 @@ document.addEventListener("DOMContentLoaded", function () {
     latitudeInput.value = Number(lat).toFixed(6);
     longitudeInput.value = Number(lng).toFixed(6);
 
-    updateStatus("Location selected. You can drag the pin to adjust it.", "success");
+    updateStatus("Location selected. You can drag the pin to adjust it." + jobDistanceText(lat, lng), "success");
+
+    if (!skipLookup) {
+      reverseLookup(lat, lng);
+    }
   }
+
+  // Search for a place by name and pin it on the map.
+  function searchPlace() {
+    const text = placeInput.value.trim();
+
+    if (!text) {
+      updateStatus('Type a place name first, for example "Kofkro market".', "error");
+      placeInput.focus();
+      return;
+    }
+
+    updateStatus("Searching…");
+    placeSearchBtn.disabled = true;
+
+    fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=gh&q=" +
+      encodeURIComponent(text), {
+      headers: { "Accept": "application/json" }
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error("search failed");
+        return response.json();
+      })
+      .then(function (results) {
+        if (!results.length) {
+          updateStatus("We could not find that place. Try a nearby town, or click the map.", "error");
+          return;
+        }
+
+        const lat = Number(results[0].lat);
+        const lng = Number(results[0].lon);
+
+        placeEditedByUser = true; // keep the name the person typed
+        map.setView([lat, lng], 16);
+        setLocation(lat, lng, null, true);
+      })
+      .catch(function () {
+        updateStatus("Place search is not available right now. Click the map to drop a pin instead.", "error");
+      })
+      .then(function () {
+        placeSearchBtn.disabled = false;
+      });
+  }
+
+  placeSearchBtn.addEventListener("click", searchPlace);
+
+  placeInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      searchPlace();
+    }
+  });
+
+  placeInput.addEventListener("input", function () {
+    placeEditedByUser = placeInput.value.trim() !== "";
+  });
 
   // Click the map to select a location.
   map.on("click", function (event) {
@@ -757,7 +1320,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         updateStatus(
           "Your location has been selected. Accuracy: approximately " +
-          Math.round(accuracy) + " metres.",
+          Math.round(accuracy) + " metres." + jobDistanceText(lat, lng),
           "success"
         );
       },
@@ -790,11 +1353,16 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedLocation = null;
     latitudeInput.value = "";
     longitudeInput.value = "";
+    placeInput.value = "";
+    placeEditedByUser = false;
+    lookupCounter++;
     updateStatus("Location pin cleared.");
   });
 
-  // Submit the application.
-  form.addEventListener("submit", function (event) {
+  // ---------------------------------------------------
+  // Submit the application
+  // ---------------------------------------------------
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     if (!form.reportValidity()) return;
@@ -811,6 +1379,29 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting…";
+
+    function reenable() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Application";
+    }
+
+    // Read the CV file (if one was chosen)
+    let cvFile = null;
+    const chosen = cvInput.files && cvInput.files[0];
+
+    if (chosen) {
+      try {
+        cvFile = await readCvFile(chosen);
+      } catch (error) {
+        console.error(error);
+        showCvError("We could not read that file. Please choose it again.");
+        reenable();
+        return;
+      }
     }
 
     const formData = new FormData(form);
@@ -837,8 +1428,13 @@ document.addEventListener("DOMContentLoaded", function () {
       exp: formData.get("experience") || "",
       skills: String(formData.get("skills") || "").trim(),
       message: String(formData.get("coverLetter") || "").trim(),
-      cv: String(formData.get("cv") || "").trim(),
-      applicantLocation: shareLocationCheckbox.checked ? selectedLocation : null,
+
+      // Uploaded CV: { name, type, size, data } or null
+      cv: cvFile,
+
+      applicantLocation: shareLocationCheckbox.checked
+        ? Object.assign({}, selectedLocation, { name: placeInput.value.trim() })
+        : null,
 
       status: "Submitted",
       createdAt: new Date().toISOString()
@@ -878,8 +1474,12 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Application submission failed:", error);
 
       alert(
-        "Your application could not be saved. Browser storage may be full or unavailable. Please try again."
+        cvFile
+          ? "Your application could not be saved. The browser storage may be full. Try a smaller CV, or submit without one."
+          : "Your application could not be saved. Browser storage may be full or unavailable. Please try again."
       );
+
+      reenable();
     }
   });
 
