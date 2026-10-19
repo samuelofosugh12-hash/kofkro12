@@ -651,7 +651,7 @@ footer {
 
 .copyright {
     text-align: right;
-    color: #8ba093;
+    color: #cfdad2;
     font-size: 12px;
 }
 
@@ -724,6 +724,7 @@ footer {
     footer {
         grid-template-columns: 1fr;
         text-align: center;
+        padding: 32px 6% 48px;
     }
 
     .footer-brand .brand {
@@ -801,7 +802,116 @@ footer {
         scroll-behavior: auto;
     }
 }
+/* =====================================================
+   MOBILE FIXES
+===================================================== */
 
+html { -webkit-text-size-adjust: 100%; }
+body { overflow-x: hidden; }
+img, video, canvas, svg { max-width: 100%; }
+
+/* ----- Hamburger menu button ----- */
+
+.menu-btn {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.menu-btn span,
+.menu-btn span::before,
+.menu-btn span::after {
+  content: "";
+  position: absolute;
+  left: 11px;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: #ffffff;
+  transition: transform .25s, opacity .2s;
+}
+
+.menu-btn span { top: 20px; }
+.menu-btn span::before { left: 0; top: -6px; }
+.menu-btn span::after  { left: 0; top: 6px; }
+
+.marketing-header.menu-open .menu-btn span { background: transparent; }
+.marketing-header.menu-open .menu-btn span::before { transform: translateY(6px) rotate(45deg); }
+.marketing-header.menu-open .menu-btn span::after  { transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 900px) {
+
+  .menu-btn { display: block; }
+
+  .marketing-header.menu-open { background: var(--forest); }
+
+  .top-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 14px 6% 22px;
+    background: var(--forest);
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    box-shadow: 0 18px 30px rgba(0, 0, 0, .25);
+    max-height: calc(100vh - 78px);
+    overflow-y: auto;
+  }
+
+  .marketing-header.menu-open .top-nav { display: flex; }
+
+  .top-nav a:not(.login-btn):not(.signup-btn) {
+    display: block;
+    padding: 12px 4px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+  }
+
+  .top-nav .login-btn,
+  .top-nav .signup-btn {
+    margin-top: 6px;
+    padding: 13px 20px;
+    text-align: center;
+  }
+
+  /* Banner grows with its text so the headline can't slide under the header */
+  .page-banner {
+    height: auto;
+    min-height: 520px;
+    display: flex;
+    align-items: flex-end;
+    padding: 120px 6% 50px;
+  }
+
+  .banner-content {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    max-width: none;
+  }
+
+  .banner-content h1 { font-size: clamp(32px, 9vw, 46px); }
+  .banner-content h1 br { display: none; }
+
+  .who-image { height: 300px; }
+}
+
+@media (max-width: 360px) {
+
+  .brand,
+  .brand-text { font-size: 16px; }
+}
     </style>
 </head>
 
@@ -825,7 +935,9 @@ footer {
         <a href="login.html#register" class="signup-btn">Sign up</a>
 
     </nav>
-
+<button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span>
+    </button>
 </header>
 
 
@@ -1114,6 +1226,31 @@ footer {
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
+    /*
+     * Mobile menu (hamburger).
+     */
+
+    (function () {
+
+        const header = document.querySelector(".marketing-header");
+        const button = header.querySelector(".menu-btn");
+
+        function setOpen(open) {
+            header.classList.toggle("menu-open", open);
+            button.setAttribute("aria-expanded", open);
+        }
+
+        button.addEventListener("click", function () {
+            setOpen(!header.classList.contains("menu-open"));
+        });
+
+        header.querySelectorAll(".top-nav a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                setOpen(false);
+            });
+        });
+
+    })();
 
     /* Header turns dark green once you scroll */
 

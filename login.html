@@ -725,7 +725,58 @@ select:focus {
         animation: none !important;
     }
 }
+/* =====================================================
+   MOBILE FIXES
+===================================================== */
 
+html { -webkit-text-size-adjust: 100%; }
+body { overflow-x: hidden; }
+
+@media (max-width: 860px) {
+
+  /* Both forms shared one grid cell, so Sign in was as tall as the longer
+     Create account form and left a big empty gap. Show only the active one. */
+  .view:not(.active) {
+    display: none;
+  }
+
+  .view {
+    transition: none;
+    transform: none;
+  }
+
+  .page {
+    min-height: 100svh;
+    padding: 12px;
+  }
+
+  .photo-panel {
+    height: 180px;
+  }
+
+  .form-panel {
+    padding: 18px 18px 16px;
+  }
+
+  .view h1 {
+    font-size: 26px;
+  }
+
+  .view-foot {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 8px;
+    text-align: center;
+  }
+
+  /* 16px stops iPhones zooming in when you tap a field */
+  input[type=text],
+  input[type=email],
+  input[type=password],
+  select {
+    font-size: 16px;
+  }
+}
   </style>
 </head>
 

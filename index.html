@@ -1312,7 +1312,7 @@ footer .brand-text span {
         padding-bottom: 8px;
     }
 
-    /* Tablet navigation wraps instead of using the phone-only scroller. */
+    /* Keep navigation links visible by wrapping them on small screens. */
     .top-nav {
         display: flex;
         align-items: center;
@@ -1332,30 +1332,9 @@ footer .brand-text span {
 @media (max-width: 520px) {
 
     .top-nav {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        scrollbar-width: thin;
-        scrollbar-color: #2f6b4f rgba(47, 107, 79, .12);
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .top-nav::-webkit-scrollbar {
-        height: 6px;
-    }
-
-    .top-nav::-webkit-scrollbar-track {
-        background: rgba(47, 107, 79, .12);
-        border-radius: 10px;
-    }
-
-    .top-nav::-webkit-scrollbar-thumb {
-        background: #2f6b4f;
-        border-radius: 10px;
-    }
-
-    .top-nav {
+        flex-wrap: wrap;
+        overflow: visible;
+        white-space: normal;
         gap: 12px;
     }
 
