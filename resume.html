@@ -236,9 +236,53 @@ a { text-decoration: none; color: inherit; }
   font-size: 12.5px;
 }
 
-.job-desc {
+.job-facts {
+  margin: 0 0 16px;
+  display: grid;
+}
+
+.job-facts .fact {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.job-facts .fact:first-child { border-top: 1px solid var(--line); }
+.job-facts .fact:last-child { border-bottom: 0; }
+
+.job-facts dt {
+  flex: none;
+  color: var(--muted);
+}
+
+.job-facts dd {
+  text-align: right;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.job-facts a {
+  color: var(--deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.job-desc-title {
   padding-top: 16px;
+  margin-bottom: 6px;
   border-top: 1px solid var(--line);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--deep);
+}
+
+.job-desc {
   color: #3d4d43;
   font-size: 14.5px;
   white-space: pre-line;
@@ -491,6 +535,20 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 0 0 1px #2a81cb;
 }
 
+.pin-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.pin-links .pin-link {
+  margin-bottom: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
 .pin-link {
   display: inline-block;
   margin-bottom: 16px;
@@ -740,7 +798,19 @@ html[data-theme="dark"] .leaflet-tile-pane {
       <span id="jobLocation">Ghana</span>
     </div>
 
-    <button type="button" class="pin-link" id="jobMapLink" hidden> See job location on the map</button>
+    <div class="pin-links" id="jobLinks" hidden>
+      <button type="button" class="pin-link" id="jobMapLink" hidden> See job location on the map</button>
+      <a class="pin-link" id="linkMaps" target="_blank" rel="noopener" hidden> Open in Google Maps</a>
+      <a class="pin-link" id="linkPhone" hidden></a>
+      <a class="pin-link" id="linkMail" hidden></a>
+    </div>
+
+    <dl class="job-facts" id="jobFacts" hidden>
+      <div class="fact" id="fact-pay" hidden><dt>Pay / stipend</dt><dd id="factv-pay"></dd></div>
+      <div class="fact" id="fact-posted" hidden><dt>Posted on</dt><dd id="factv-posted"></dd></div>
+    </dl>
+
+    <div class="job-desc-title">About this job</div>
 
     <div class="job-desc" id="jobDescription">
       Submit your details to apply for this opportunity.
@@ -937,6 +1007,68 @@ document.addEventListener("DOMContentLoaded", function () {
   // jobs.html saves jobs under "kofkro-lmis-jobs" using
   // the fields: title, co, loc, type, pay, desc, postedBy
   // ---------------------------------------------------
+  // One row in the "job details" list. Empty values hide the row.
+  function setFact(key, text, href, newTab) {
+    const row = document.getElementById("fact-" + key);
+    const value = document.getElementById("factv-" + key);
+
+    value.textContent = "";
+
+    if (!text) {
+      row.hidden = true;
+    } else {
+      row.hidden = false;
+
+      if (href) {
+        const link = document.createElement("a");
+        link.href = href;
+        link.textContent = text;
+
+        if (newTab) {
+          link.target = "_blank";
+          link.rel = "noopener";
+        }
+
+        value.appendChild(link);
+      } else {
+        value.textContent = text;
+      }
+    }
+
+    document.getElementById("jobFacts").hidden =
+      !document.querySelector("#jobFacts .fact:not([hidden])");
+  }
+
+  // Pill-shaped link buttons (phone, email, Google Maps)
+  function refreshLinks() {
+    document.getElementById("jobLinks").hidden =
+      !document.querySelector("#jobLinks .pin-link:not([hidden])");
+  }
+
+  function setLink(id, text, href) {
+    const link = document.getElementById(id);
+
+    if (!text || !href) {
+      link.hidden = true;
+    } else {
+      link.textContent = text;
+      link.href = href;
+      link.hidden = false;
+    }
+
+    refreshLinks();
+  }
+
+  function prettyDate(iso) {
+    try {
+      const date = new Date(iso);
+      if (isNaN(date.getTime())) return "";
+      return date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    } catch (e) {
+      return "";
+    }
+  }
+
   try {
     const jobs = JSON.parse(localStorage.getItem("kofkro-lmis-jobs") || "[]");
 
@@ -956,11 +1088,32 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("jobLogo").textContent =
         (currentJob.co || "K").charAt(0).toUpperCase();
 
-      const pay = currentJob.pay ? "Pay: " + currentJob.pay + "\n\n" : "";
       document.getElementById("jobDescription").textContent =
-        pay + (currentJob.desc || "Submit your details to apply for this opportunity.");
+        currentJob.desc || "Submit your details to apply for this opportunity.";
+
+      // Everything the employer entered when posting the job
+      setFact("pay", currentJob.pay);
+
+      const phone = String(currentJob.phone || "").trim();
+      setLink(
+        "linkPhone",
+        phone ? " " + phone : "",
+        phone ? "tel:" + phone.replace(/[^\d+]/g, "") : ""
+      );
+
+      const mail = String(currentJob.mail || "").trim();
+      setLink(
+        "linkMail",
+        mail ? " " + mail : "",
+        /^[^\s@?&#]+@[^\s@?&#]+$/.test(mail) ? "mailto:" + mail : ""
+      );
+
+      setFact("posted", currentJob.createdAt ? prettyDate(currentJob.createdAt) : "");
 
       document.title = "Apply: " + (currentJob.title || "Job") + " | Kofkro LMIS";
+    } else if (jobId) {
+      document.getElementById("jobDescription").textContent =
+        "We could not find this job. It may have been removed. Go back to Jobs and choose another one.";
     }
   } catch (error) {
     console.warn("Could not load job details:", error);
@@ -1121,11 +1274,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     map.setView([jobPin.latitude, jobPin.longitude], 14);
 
+    setLink(
+      "linkMaps",
+      " Open in Google Maps",
+      "https://www.google.com/maps/search/?api=1&query=" + jobPin.latitude + "," + jobPin.longitude
+    );
+
     document.getElementById("jobLegend").hidden = false;
     document.getElementById("jobLegendText").textContent =
       "Job location: " + (currentJob.co || "Company") + (currentJob.loc ? " · " + currentJob.loc : "");
     document.getElementById("showJobBtn").hidden = false;
     document.getElementById("jobMapLink").hidden = false;
+    refreshLinks();
   } else {
     const legend = document.getElementById("jobLegend");
     legend.hidden = false;
