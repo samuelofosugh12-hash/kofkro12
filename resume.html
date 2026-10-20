@@ -1589,8 +1589,14 @@ document.addEventListener("DOMContentLoaded", function () {
       skills: String(formData.get("skills") || "").trim(),
       message: String(formData.get("coverLetter") || "").trim(),
 
-      // Uploaded CV: { name, type, size, data } or null
+      // Uploaded CV: the full data URL is kept for the employer's
+      // View application / Download CV controls. The extra flat fields
+      // make the record compatible with pages that read CV metadata directly.
       cv: cvFile,
+      cvName: cvFile ? cvFile.name : "",
+      cvType: cvFile ? cvFile.type : "",
+      cvSize: cvFile ? cvFile.size : 0,
+      cvData: cvFile ? cvFile.data : "",
 
       applicantLocation: shareLocationCheckbox.checked
         ? Object.assign({}, selectedLocation, { name: placeInput.value.trim() })
