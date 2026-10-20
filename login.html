@@ -165,12 +165,13 @@ select {
     transition-delay: .3s, .3s, 0s;
 }
 
-/* Sign in leaves upward, Sign up arrives from below (and back again) */
+/* Sign in leaves upward, Sign up and Reset arrive from below (and back again) */
 #view-login:not(.active) {
     transform: translateY(-26px);
 }
 
-#view-register:not(.active) {
+#view-register:not(.active),
+#view-reset:not(.active) {
     transform: translateY(26px);
 }
 
@@ -387,6 +388,164 @@ select:focus {
     color: var(--deep);
 }
 
+
+/* =========================
+   RESET PASSWORD + SECURITY QUESTION
+========================= */
+
+.step-note {
+    margin: -12px 0 18px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--deep);
+}
+
+.q-box {
+    margin: 0 0 11px;
+    padding: 12px 18px;
+    border: 1px dashed var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .65);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.hint {
+    margin: -4px 0 12px 16px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.field .hint {
+    margin: 5px 0 0 16px;
+}
+
+.reset-step[hidden] {
+    display: none;
+}
+
+
+
+/* =========================
+   RECOVERY CODE
+========================= */
+
+.code-input {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.code-input::placeholder {
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.code-dialog {
+    width: calc(100% - 32px);
+    max-width: 440px;
+    margin: auto;
+    padding: 28px;
+    border: 0;
+    border-radius: 26px;
+    background: #ffffff;
+    color: var(--ink);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .4);
+}
+
+.code-dialog::backdrop {
+    background: rgba(14, 26, 20, .68);
+}
+
+.code-dialog h2 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -.3px;
+}
+
+.code-dialog p {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.code-box {
+    margin-bottom: 12px;
+    padding: 18px 14px;
+    border: 1px dashed var(--deep);
+    border-radius: 16px;
+    background: #eaf2ec;
+}
+
+.code-value {
+    text-align: center;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    word-break: break-all;
+    user-select: all;
+}
+
+.code-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.code-actions button {
+    flex: 1;
+    height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.code-actions button:hover {
+    background: #eaf2ec;
+}
+
+.code-dialog .code-warn {
+    margin-bottom: 14px;
+    padding: 10px 14px;
+    border: 1px solid #f3d9a4;
+    border-radius: 14px;
+    background: #fff8e6;
+    color: #7a5a12;
+    font-size: 13px;
+}
+
+.code-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.code-check input {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    accent-color: var(--deep);
+}
+
+.code-dialog .submit {
+    margin-top: 0;
+}
+
+.code-dialog .submit:disabled {
+    cursor: not-allowed;
+}
 
 /* =========================
    PHOTO SIDE - slideshow that moves upward
@@ -764,7 +923,7 @@ select:focus {
               <div class="field">
                 <div class="label-row">
                   <label for="password">Password</label>
-                  <a href="#" id="forgot">Forgot password?</a>
+                  <a href="#reset" id="forgot">Forgot password?</a>
                 </div>
                 <div class="password-wrap">
                   <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required minlength="8">
@@ -831,6 +990,24 @@ select:focus {
                 </div>
               </div>
 
+              <div class="field">
+                <label for="r-question">Security question</label>
+                <select id="r-question" required>
+                  <option value="">Choose a security question</option>
+                  <option>What was the name of your first school?</option>
+                  <option>What is the name of the town where you were born?</option>
+                  <option>What was the name of your first pet?</option>
+                  <option>What is your favourite teacher's surname?</option>
+                  <option>What is your mother's first name?</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="r-answer">Your answer</label>
+                <input id="r-answer" type="text" autocomplete="off" placeholder="Used to reset your password" required>
+                <p class="hint">Used together with your recovery code to reset your password.</p>
+              </div>
+
               <button class="submit" type="submit">Create account</button>
 
               <p id="r-message" class="message" role="alert" hidden></p>
@@ -841,6 +1018,77 @@ select:focus {
 
           <div class="view-foot">
             <span>Have an account? <button type="button" class="switch" data-mode="login">Sign in</button></span>
+            <a href="terms.html">Terms &amp; Conditions</a>
+          </div>
+
+        </div>
+
+
+        <!-- RESET PASSWORD -->
+
+        <div class="view" id="view-reset" inert>
+
+          <div class="view-main">
+
+            <h1>Reset password</h1>
+            <p class="sub" id="reset-sub">Enter the email address of your account.</p>
+            <p class="step-note" id="reset-step-note">Step 1 of 3</p>
+
+            <form id="resetForm" novalidate>
+
+              <!-- Step 1: which account -->
+              <div class="reset-step" id="reset-step-1">
+                <div class="field">
+                  <label for="reset-email">Email address</label>
+                  <input id="reset-email" type="email" autocomplete="email" placeholder="you@example.com">
+                </div>
+              </div>
+
+              <!-- Step 2: prove it is you -->
+              <div class="reset-step" id="reset-step-2" hidden>
+
+                <div class="field">
+                  <label for="reset-code">Recovery code</label>
+                  <input id="reset-code" class="code-input" type="text" autocomplete="off" spellcheck="false" maxlength="40" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX">
+                  <p class="hint">Shown when you created your account or last signed in. Without it, the password cannot be reset.</p>
+                </div>
+
+                <div id="reset-answer-wrap">
+                  <div class="q-box" id="reset-question">Security question</div>
+                  <div class="field">
+                    <label for="reset-answer">Your answer</label>
+                    <input id="reset-answer" type="text" autocomplete="off" placeholder="Type your answer">
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Step 3: choose a new password -->
+              <div class="reset-step" id="reset-step-3" hidden>
+                <div class="field">
+                  <label for="reset-new">New password</label>
+                  <div class="password-wrap">
+                    <input id="reset-new" type="password" autocomplete="new-password" placeholder="At least 8 characters">
+                    <button type="button" id="reset-toggle">Show</button>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="reset-again">Confirm new password</label>
+                  <input id="reset-again" type="password" autocomplete="new-password" placeholder="Type it again">
+                </div>
+              </div>
+
+              <button class="submit" id="resetBtn" type="submit">Continue</button>
+
+              <p id="reset-message" class="message" role="alert" hidden></p>
+
+            </form>
+
+          </div>
+
+          <div class="view-foot">
+            <span>Remembered it? <button type="button" class="switch" data-mode="login">Back to sign in</button></span>
             <a href="terms.html">Terms &amp; Conditions</a>
           </div>
 
@@ -951,6 +1199,32 @@ select:focus {
 
 </main>
 
+<dialog id="codeDialog" class="code-dialog" aria-labelledby="codeTitle">
+
+  <h2 id="codeTitle">Save your recovery code</h2>
+  <p id="codeIntro"></p>
+
+  <div class="code-box">
+    <div class="code-value" id="codeValue"></div>
+  </div>
+
+  <div class="code-actions">
+    <button type="button" id="codeCopy">Copy</button>
+    <button type="button" id="codeDownload">Download .txt</button>
+  </div>
+
+  <p class="code-warn">Keep it private. Anyone with this code and your security answer can reset your password.</p>
+
+  <label class="code-check">
+    <input type="checkbox" id="codeSaved">
+    <span>I have saved my recovery code somewhere safe.</span>
+  </label>
+
+  <button type="button" class="submit" id="codeContinue" disabled>Continue</button>
+
+</dialog>
+
+
 
 <script>
 
@@ -958,16 +1232,24 @@ const card = document.getElementById('card');
 
 const views = {
   login: document.getElementById('view-login'),
-  register: document.getElementById('view-register')
+  register: document.getElementById('view-register'),
+  reset: document.getElementById('view-reset')
 };
 
 const titles = {
   login: 'Kofkro LMIS — Sign in',
-  register: 'Kofkro LMIS — Create an account'
+  register: 'Kofkro LMIS — Create an account',
+  reset: 'Kofkro LMIS — Reset password'
 };
 
+function modeFromHash() {
+  if (location.hash === '#register') return 'register';
+  if (location.hash === '#reset') return 'reset';
+  return 'login';
+}
 
-/* ---------- Switch between Sign in and Sign up ---------- */
+
+/* ---------- Switch between Sign in, Sign up and Reset ---------- */
 
 function setMode(mode) {
 
@@ -989,7 +1271,7 @@ function setMode(mode) {
 
   document.title = titles[mode];
 
-  history.replaceState(null, '', mode === 'register' ? '#register' : '#login');
+  history.replaceState(null, '', '#' + mode);
 
 }
 
@@ -999,6 +1281,12 @@ document.querySelectorAll('[data-mode]').forEach(function (btn) {
 
     hideMessage(loginMessage);
     hideMessage(registerMessage);
+    hideMessage(resetMessage);
+
+    if (btn.dataset.mode !== 'reset') {
+      resetFlow.restart();
+    }
+
     setMode(btn.dataset.mode);
 
   });
@@ -1006,7 +1294,15 @@ document.querySelectorAll('[data-mode]').forEach(function (btn) {
 });
 
 window.addEventListener('hashchange', function () {
-  setMode(location.hash === '#register' ? 'register' : 'login');
+
+  const mode = modeFromHash();
+
+  if (mode !== 'reset') {
+    resetFlow.restart();
+  }
+
+  setMode(mode);
+
 });
 
 
@@ -1014,6 +1310,7 @@ window.addEventListener('hashchange', function () {
 
 const loginMessage = document.getElementById('message');
 const registerMessage = document.getElementById('r-message');
+const resetMessage = document.getElementById('reset-message');
 
 function showMessage(el, text, ok) {
   el.hidden = false;
@@ -1031,6 +1328,10 @@ function getUsers() {
   } catch (e) {
     return [];
   }
+}
+
+function saveUsers(users) {
+  localStorage.setItem('kofkro-users', JSON.stringify(users));
 }
 
 function wireToggle(buttonId, inputId) {
@@ -1051,6 +1352,388 @@ function wireToggle(buttonId, inputId) {
 
 wireToggle('togglePassword', 'password');
 wireToggle('r-toggle', 'r-password');
+wireToggle('reset-toggle', 'reset-new');
+
+function normalise(text) {
+  return String(text || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+function sleep(ms) {
+  return new Promise(function (resolve) { setTimeout(resolve, ms); });
+}
+
+function fmtWait(ms) {
+
+  const minutes = Math.ceil(ms / 60000);
+
+  if (minutes >= 120) {
+    return Math.ceil(minutes / 60) + ' hours';
+  }
+
+  if (minutes >= 60) {
+    return 'an hour';
+  }
+
+  return minutes <= 1 ? 'a minute' : minutes + ' minutes';
+}
+
+
+/* =========================================================
+   SECRETS: recovery codes and security answers
+
+   Nothing secret is stored as plain text. Each one is run through
+   PBKDF2 (150,000 rounds of SHA-256) with its own random salt, which
+   makes guessing very slow. This needs a secure page (https or
+   localhost). On a plain http page the browser does not allow it,
+   so recovery is switched off rather than made weaker.
+========================================================= */
+
+const CAN_CRYPTO = !!(window.crypto && crypto.subtle && crypto.getRandomValues && window.TextEncoder);
+
+const KDF_ITERATIONS = 150000;
+
+// 32 letters and digits, with look-alikes (0 O 1 I) left out
+const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const CODE_LENGTH = 20;   // 20 x 5 bits = 100 bits, impossible to guess
+
+function bytesToHex(bytes) {
+  return Array.from(bytes).map(function (b) {
+    return b.toString(16).padStart(2, '0');
+  }).join('');
+}
+
+function hexToBytes(hex) {
+
+  const out = new Uint8Array(hex.length / 2);
+
+  for (let i = 0; i < out.length; i++) {
+    out[i] = parseInt(hex.substr(i * 2, 2), 16);
+  }
+
+  return out;
+}
+
+function randomHex(count) {
+  const bytes = new Uint8Array(count);
+  crypto.getRandomValues(bytes);
+  return bytesToHex(bytes);
+}
+
+async function deriveHex(secret, saltHex, iterations) {
+
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(secret),
+    'PBKDF2',
+    false,
+    ['deriveBits']
+  );
+
+  const bits = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', hash: 'SHA-256', salt: hexToBytes(saltHex), iterations: iterations },
+    key,
+    256
+  );
+
+  return bytesToHex(new Uint8Array(bits));
+}
+
+async function hashSecret(secret) {
+
+  const salt = randomHex(16);
+
+  return 'pbkdf2$' + KDF_ITERATIONS + '$' + salt + '$' +
+         await deriveHex(secret, salt, KDF_ITERATIONS);
+}
+
+// compares two strings without stopping at the first difference
+function sameText(a, b) {
+
+  if (a.length !== b.length) return false;
+
+  let diff = 0;
+
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+
+  return diff === 0;
+}
+
+async function checkSecret(secret, stored, email) {
+
+  if (!stored) return false;
+
+  try {
+
+    if (stored.indexOf('pbkdf2$') === 0) {
+
+      const parts = stored.split('$');
+
+      if (parts.length !== 4 || !CAN_CRYPTO) return false;
+
+      return sameText(
+        await deriveHex(secret, parts[2], parseInt(parts[1], 10) || KDF_ITERATIONS),
+        parts[3]
+      );
+    }
+
+    /* answers saved by the first version of this page */
+
+    const text = normalise(email) + '|' + secret;
+
+    if (stored.indexOf('plain:') === 0) {
+      return sameText(stored, 'plain:' + text);
+    }
+
+    if (stored.indexOf('sha256:') === 0 && CAN_CRYPTO) {
+
+      const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+
+      return sameText(stored, 'sha256:' + bytesToHex(new Uint8Array(buffer)));
+    }
+
+  } catch (e) {
+    /* treat any error as "does not match" */
+  }
+
+  return false;
+}
+
+function makeRecoveryCode() {
+
+  const bytes = new Uint8Array(CODE_LENGTH);
+  crypto.getRandomValues(bytes);
+
+  let code = '';
+
+  for (let i = 0; i < CODE_LENGTH; i++) {
+    code += CODE_ALPHABET[bytes[i] % CODE_ALPHABET.length];
+  }
+
+  return code.match(/.{4}/g).join('-');
+}
+
+function cleanCode(text) {
+  return String(text || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+}
+
+async function newRecovery() {
+
+  const code = makeRecoveryCode();
+
+  return { code: code, hash: await hashSecret(cleanCode(code)) };
+}
+
+// give an existing account a fresh recovery code (the old one stops working)
+async function issueRecoveryCode(email) {
+
+  const recovery = await newRecovery();
+  const users = getUsers();
+
+  const index = users.findIndex(function (u) {
+    return u.email && u.email.toLowerCase() === email.toLowerCase();
+  });
+
+  if (index === -1) return null;
+
+  users[index].recoveryHash = recovery.hash;
+  users[index].recoveryCreatedAt = new Date().toISOString();
+
+  saveUsers(users);
+
+  return recovery.code;
+}
+
+
+/* =========================================================
+   LOCK AFTER TOO MANY WRONG TRIES
+   Every lock lasts longer than the one before it.
+========================================================= */
+
+function createLimiter(storageKey, maxTries, levels) {
+
+  function read() {
+    try {
+      return JSON.parse(localStorage.getItem(storageKey) || '{}');
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function write(all) {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(all));
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  return {
+
+    // milliseconds left on a lock (0 = not locked)
+    waitMs: function (id) {
+      const record = read()[id];
+      return record && record.until > Date.now() ? record.until - Date.now() : 0;
+    },
+
+    // call after a wrong try
+    fail: function (id) {
+
+      const all = read();
+      const record = all[id] || { count: 0, until: 0, level: 0 };
+
+      if (record.until && record.until <= Date.now()) {
+        record.until = 0;
+        record.count = 0;
+      }
+
+      record.count += 1;
+
+      if (record.count >= maxTries) {
+        record.until = Date.now() + levels[Math.min(record.level, levels.length - 1)];
+        record.level += 1;
+        record.count = 0;
+      }
+
+      all[id] = record;
+      write(all);
+
+      const locked = record.until > Date.now();
+
+      return {
+        left: locked ? 0 : maxTries - record.count,
+        waitMs: locked ? record.until - Date.now() : 0
+      };
+    },
+
+    clear: function (id) {
+      const all = read();
+      delete all[id];
+      write(all);
+    }
+  };
+}
+
+const MIN = 60 * 1000;
+
+// reset: 5 wrong tries, then locked 5 min, 15 min, 1 hour, then 24 hours each time
+const resetLimiter = createLimiter('kofkro-reset-attempts', 5, [5 * MIN, 15 * MIN, 60 * MIN, 24 * 60 * MIN]);
+
+// sign in: 5 wrong tries, then locked 1 min, 5 min, 15 min, then 1 hour each time
+const loginLimiter = createLimiter('kofkro-login-attempts', 5, [1 * MIN, 5 * MIN, 15 * MIN, 60 * MIN]);
+
+
+/* =========================================================
+   RECOVERY CODE WINDOW
+   Shown once. The person must tick that they saved it.
+========================================================= */
+
+const codeDialog = document.getElementById('codeDialog');
+const codeTitle = document.getElementById('codeTitle');
+const codeIntro = document.getElementById('codeIntro');
+const codeValue = document.getElementById('codeValue');
+const codeCopy = document.getElementById('codeCopy');
+const codeDownload = document.getElementById('codeDownload');
+const codeSaved = document.getElementById('codeSaved');
+const codeContinue = document.getElementById('codeContinue');
+
+let codeAfter = null;
+let codeShown = '';
+let codeEmail = '';
+
+function showRecoveryCode(code, email, title, intro, after) {
+
+  codeShown = code;
+  codeEmail = email;
+  codeAfter = after || null;
+
+  codeTitle.textContent = title;
+  codeIntro.textContent = intro;
+  codeValue.textContent = code;
+
+  codeCopy.textContent = 'Copy';
+  codeSaved.checked = false;
+  codeContinue.disabled = true;
+
+  codeDialog.showModal();
+}
+
+codeSaved.addEventListener('change', function () {
+  codeContinue.disabled = !codeSaved.checked;
+});
+
+codeCopy.addEventListener('click', function () {
+
+  function done() {
+    codeCopy.textContent = 'Copied';
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+
+    navigator.clipboard.writeText(codeShown).then(done, function () {
+      selectCode();
+    });
+
+  } else {
+    selectCode();
+  }
+
+  function selectCode() {
+
+    const range = document.createRange();
+    range.selectNodeContents(codeValue);
+
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    codeCopy.textContent = 'Press Ctrl+C';
+  }
+});
+
+codeDownload.addEventListener('click', function () {
+
+  const text =
+    'Kofkro LMIS recovery code\n' +
+    '=========================\n\n' +
+    'Account: ' + codeEmail + '\n' +
+    'Recovery code: ' + codeShown + '\n\n' +
+    'Keep this file somewhere safe and private.\n' +
+    'Anyone with this code (and your security answer) can reset your password.\n' +
+    'The code works once. After a reset you will get a new one.\n';
+
+  const url = URL.createObjectURL(new Blob([text], { type: 'text/plain' }));
+  const link = document.createElement('a');
+
+  link.href = url;
+  link.download = 'kofkro-recovery-code.txt';
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+});
+
+codeContinue.addEventListener('click', function () {
+
+  codeDialog.close();
+
+  // the code is not kept on the page once it has been saved
+  codeValue.textContent = '';
+  codeShown = '';
+
+  const next = codeAfter;
+  codeAfter = null;
+
+  if (next) next();
+});
+
+// the window cannot be dismissed with Esc before the code is saved
+codeDialog.addEventListener('cancel', function (e) {
+  e.preventDefault();
+});
 
 
 /* ---------- Forgot password ---------- */
@@ -1059,31 +1742,17 @@ document.getElementById('forgot').addEventListener('click', function (e) {
 
   e.preventDefault();
 
-  const emailInput = document.getElementById('email');
-  const email = emailInput.value.trim().toLowerCase();
+  hideMessage(loginMessage);
+  resetFlow.restart();
 
-  if (!email) {
-    showMessage(loginMessage, 'Enter your email address first.');
-    emailInput.focus();
-    return;
+  // carry over the email the person already typed
+  const typed = document.getElementById('email').value.trim();
+
+  if (typed) {
+    document.getElementById('reset-email').value = typed;
   }
 
-  const user = getUsers().find(function (u) {
-    return u.email && u.email.toLowerCase() === email;
-  });
-
-  if (!user) {
-    showMessage(loginMessage, 'No account was found with that email.');
-    return;
-  }
-
-  // Since this is a localStorage-only system,
-  // we cannot actually send an email.
-  showMessage(
-    loginMessage,
-    'Your account was found. Please contact the administrator to reset your password.',
-    true
-  );
+  setMode('reset');
 
 });
 
@@ -1092,7 +1761,11 @@ document.getElementById('forgot').addEventListener('click', function (e) {
 
 const loginForm = document.getElementById('loginForm');
 
-loginForm.addEventListener('submit', function (e) {
+function goHome() {
+  window.location.href = 'home.html';
+}
+
+loginForm.addEventListener('submit', async function (e) {
 
   e.preventDefault();
 
@@ -1104,6 +1777,13 @@ loginForm.addEventListener('submit', function (e) {
 
   if (!email || !pass) {
     showMessage(loginMessage, 'Please enter your email and password.');
+    return;
+  }
+
+  const wait = loginLimiter.waitMs(email);
+
+  if (wait) {
+    showMessage(loginMessage, 'Too many wrong attempts. Please try again in ' + fmtWait(wait) + '.');
     return;
   }
 
@@ -1121,8 +1801,20 @@ loginForm.addEventListener('submit', function (e) {
     });
 
     if (!user) {
-      throw new Error('Incorrect email or password.');
+
+      const result = loginLimiter.fail(email);
+
+      if (result.left === 0) {
+        throw new Error('Too many wrong attempts. Locked for ' + fmtWait(result.waitMs) + '.');
+      }
+
+      throw new Error(
+        'Incorrect email or password.' +
+        (result.left <= 2 ? ' ' + result.left + ' attempt' + (result.left === 1 ? '' : 's') + ' left before a temporary lock.' : '')
+      );
     }
+
+    loginLimiter.clear(email);
 
     localStorage.setItem('kofkro-current-user', JSON.stringify({
       id: user.id || Date.now(),
@@ -1137,11 +1829,26 @@ loginForm.addEventListener('submit', function (e) {
       localStorage.removeItem('kofkro-remember');
     }
 
+    // accounts made before recovery codes existed get one now
+    if (CAN_CRYPTO && !user.recoveryHash) {
+
+      const code = await issueRecoveryCode(user.email);
+
+      if (code) {
+        showRecoveryCode(
+          code,
+          user.email,
+          'Save your recovery code',
+          'This code is the only way to reset your password if you forget it. We cannot show it again.',
+          goHome
+        );
+        return;
+      }
+    }
+
     showMessage(loginMessage, 'Signed in successfully. Redirecting…', true);
 
-    setTimeout(function () {
-      window.location.href = 'home.html';
-    }, 400);
+    setTimeout(goHome, 400);
 
   } catch (error) {
 
@@ -1161,7 +1868,7 @@ loginForm.addEventListener('submit', function (e) {
 
 const registerForm = document.getElementById('registerForm');
 
-registerForm.addEventListener('submit', function (e) {
+registerForm.addEventListener('submit', async function (e) {
 
   e.preventDefault();
 
@@ -1171,6 +1878,8 @@ registerForm.addEventListener('submit', function (e) {
   const email = document.getElementById('r-email').value.trim().toLowerCase();
   const role = document.getElementById('r-role').value;
   const pass = document.getElementById('r-password').value;
+  const question = document.getElementById('r-question').value;
+  const answer = document.getElementById('r-answer').value;
 
   if (name.length < 2) {
     showMessage(registerMessage, 'Please enter your full name.');
@@ -1187,6 +1896,16 @@ registerForm.addEventListener('submit', function (e) {
     return;
   }
 
+  if (!question) {
+    showMessage(registerMessage, 'Please choose a security question.');
+    return;
+  }
+
+  if (normalise(answer).length < 3) {
+    showMessage(registerMessage, 'Your security answer must be at least 3 characters.');
+    return;
+  }
+
   const users = getUsers();
 
   const exists = users.some(function (u) {
@@ -1198,6 +1917,11 @@ registerForm.addEventListener('submit', function (e) {
     return;
   }
 
+  const button = registerForm.querySelector('.submit');
+
+  button.disabled = true;
+  button.textContent = 'Creating account…';
+
   const newUser = {
     id: Date.now(),
     name: name,
@@ -1207,9 +1931,23 @@ registerForm.addEventListener('submit', function (e) {
     createdAt: new Date().toISOString()
   };
 
+  let code = null;
+
+  if (CAN_CRYPTO) {
+
+    const recovery = await newRecovery();
+
+    newUser.securityQuestion = question;
+    newUser.securityAnswerHash = await hashSecret(normalise(answer));
+    newUser.recoveryHash = recovery.hash;
+    newUser.recoveryCreatedAt = new Date().toISOString();
+
+    code = recovery.code;
+  }
+
   users.push(newUser);
 
-  localStorage.setItem('kofkro-users', JSON.stringify(users));
+  saveUsers(users);
 
   // Sign the new user in straight away
   localStorage.setItem('kofkro-current-user', JSON.stringify({
@@ -1219,18 +1957,351 @@ registerForm.addEventListener('submit', function (e) {
     role: newUser.role
   }));
 
-  const button = registerForm.querySelector('.submit');
+  if (code) {
 
-  button.disabled = true;
-  button.textContent = 'Creating account…';
+    showRecoveryCode(
+      code,
+      email,
+      'Account created',
+      'Save this recovery code. You will need it, together with your security answer, if you ever forget your password. We cannot show it again.',
+      goHome
+    );
+
+    return;
+  }
 
   showMessage(registerMessage, 'Account created. Redirecting…', true);
 
-  setTimeout(function () {
-    window.location.href = 'home.html';
-  }, 500);
+  setTimeout(goHome, 500);
 
 });
+
+
+/* =========================================================
+   RESET PASSWORD
+
+   Step 1  find the account by email
+   Step 2  prove it is you: the recovery code (100 bits, cannot be
+           guessed) AND the security answer
+   Step 3  choose a new password. The recovery code is then used up
+           and a new one is issued.
+
+   Every wrong try is slowed down, counted and eventually locks the
+   reset for longer and longer.
+========================================================= */
+
+const resetFlow = (function () {
+
+  const form = document.getElementById('resetForm');
+  const button = document.getElementById('resetBtn');
+  const sub = document.getElementById('reset-sub');
+  const note = document.getElementById('reset-step-note');
+
+  const steps = {
+    1: document.getElementById('reset-step-1'),
+    2: document.getElementById('reset-step-2'),
+    3: document.getElementById('reset-step-3')
+  };
+
+  const emailInput = document.getElementById('reset-email');
+  const codeInput = document.getElementById('reset-code');
+  const answerWrap = document.getElementById('reset-answer-wrap');
+  const answerInput = document.getElementById('reset-answer');
+  const questionBox = document.getElementById('reset-question');
+  const newInput = document.getElementById('reset-new');
+  const againInput = document.getElementById('reset-again');
+
+  const text = {
+    1: { sub: 'Enter the email address of your account.', button: 'Continue' },
+    2: { sub: 'Enter your recovery code to confirm it is you.', button: 'Verify' },
+    3: { sub: 'Choose a new password for your account.', button: 'Save new password' }
+  };
+
+  const state = { step: 1, email: '', needsAnswer: false, verified: false };
+
+
+  function showStep(n) {
+
+    state.step = n;
+
+    [1, 2, 3].forEach(function (i) {
+      steps[i].hidden = i !== n;
+    });
+
+    sub.textContent = text[n].sub;
+    note.textContent = 'Step ' + n + ' of 3';
+    button.textContent = text[n].button;
+    button.disabled = false;
+
+    hideMessage(resetMessage);
+
+    const focusTarget = n === 1 ? emailInput : n === 2 ? codeInput : newInput;
+
+    setTimeout(function () { focusTarget.focus(); }, 380);
+  }
+
+  function restart() {
+
+    state.step = 1;
+    state.email = '';
+    state.needsAnswer = false;
+    state.verified = false;
+
+    emailInput.value = '';
+    codeInput.value = '';
+    answerInput.value = '';
+    newInput.value = '';
+    againInput.value = '';
+
+    newInput.type = 'password';
+    document.getElementById('reset-toggle').textContent = 'Show';
+
+    [1, 2, 3].forEach(function (i) {
+      steps[i].hidden = i !== 1;
+    });
+
+    sub.textContent = text[1].sub;
+    note.textContent = 'Step 1 of 3';
+    button.textContent = text[1].button;
+    button.disabled = false;
+  }
+
+  function findUser(email) {
+    return getUsers().find(function (u) {
+      return u.email && u.email.toLowerCase() === email;
+    });
+  }
+
+  function lockedMessage(ms) {
+    return 'Too many wrong attempts. Reset is locked. Please try again in ' + fmtWait(ms) + '.';
+  }
+
+
+  /* ----- step 1 ----- */
+
+  function stepOne() {
+
+    const email = emailInput.value.trim().toLowerCase();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showMessage(resetMessage, 'Please enter a valid email address.');
+      emailInput.focus();
+      return;
+    }
+
+    const wait = resetLimiter.waitMs(email);
+
+    if (wait) {
+      showMessage(resetMessage, lockedMessage(wait));
+      return;
+    }
+
+    if (!CAN_CRYPTO) {
+      showMessage(resetMessage, 'Password reset needs a secure page (https). Please open the site over https, or contact the administrator.');
+      return;
+    }
+
+    const user = findUser(email);
+
+    if (!user) {
+      showMessage(resetMessage, 'No account was found with that email.');
+      return;
+    }
+
+    if (!user.recoveryHash) {
+      showMessage(
+        resetMessage,
+        'This account has no recovery code, so its password cannot be reset here. Please contact the administrator.'
+      );
+      return;
+    }
+
+    state.email = email;
+    state.needsAnswer = !!(user.securityQuestion && user.securityAnswerHash);
+
+    codeInput.value = '';
+    answerInput.value = '';
+
+    answerWrap.hidden = !state.needsAnswer;
+
+    if (state.needsAnswer) {
+      questionBox.textContent = user.securityQuestion;
+    }
+
+    showStep(2);
+  }
+
+
+  /* ----- step 2 ----- */
+
+  async function stepTwo() {
+
+    const user = findUser(state.email);
+
+    if (!user) {
+      restart();
+      showMessage(resetMessage, 'That account could not be found. Please start again.');
+      return;
+    }
+
+    const wait = resetLimiter.waitMs(state.email);
+
+    if (wait) {
+      showMessage(resetMessage, lockedMessage(wait));
+      return;
+    }
+
+    const code = cleanCode(codeInput.value);
+
+    if (code.length !== CODE_LENGTH) {
+      showMessage(resetMessage, 'Please enter your full recovery code (20 letters and numbers).');
+      codeInput.focus();
+      return;
+    }
+
+    if (state.needsAnswer && normalise(answerInput.value).length < 1) {
+      showMessage(resetMessage, 'Please type the answer to your security question.');
+      answerInput.focus();
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Checking…';
+
+    // a short pause on every try makes fast guessing pointless
+    await sleep(900);
+
+    // both are always checked, so the answer does not reveal which one was wrong
+    const codeOk = await checkSecret(code, user.recoveryHash, state.email);
+    const answerOk = state.needsAnswer
+      ? await checkSecret(normalise(answerInput.value), user.securityAnswerHash, state.email)
+      : true;
+
+    button.disabled = false;
+    button.textContent = text[2].button;
+
+    if (!(codeOk && answerOk)) {
+
+      const result = resetLimiter.fail(state.email);
+
+      showMessage(
+        resetMessage,
+        result.left === 0
+          ? lockedMessage(result.waitMs)
+          : 'Those details do not match. ' + result.left + ' attempt' + (result.left === 1 ? '' : 's') + ' left before a lock.'
+      );
+
+      return;
+    }
+
+    resetLimiter.clear(state.email);
+
+    state.verified = true;
+
+    showStep(3);
+  }
+
+
+  /* ----- step 3 ----- */
+
+  async function stepThree() {
+
+    if (!state.verified) {
+      restart();
+      showMessage(resetMessage, 'Please start again.');
+      return;
+    }
+
+    const pass = newInput.value;
+    const again = againInput.value;
+
+    if (pass.length < 8) {
+      showMessage(resetMessage, 'Your new password must be at least 8 characters.');
+      newInput.focus();
+      return;
+    }
+
+    if (pass !== again) {
+      showMessage(resetMessage, 'The two passwords do not match.');
+      againInput.focus();
+      return;
+    }
+
+    const users = getUsers();
+
+    const index = users.findIndex(function (u) {
+      return u.email && u.email.toLowerCase() === state.email;
+    });
+
+    if (index === -1) {
+      restart();
+      showMessage(resetMessage, 'That account could not be found. Please start again.');
+      return;
+    }
+
+    if (users[index].password === pass) {
+      showMessage(resetMessage, 'Please choose a password different from your old one.');
+      newInput.focus();
+      return;
+    }
+
+    button.disabled = true;
+
+    // the used code stops working and a new one is issued
+    const recovery = await newRecovery();
+
+    users[index].password = pass;
+    users[index].recoveryHash = recovery.hash;
+    users[index].recoveryCreatedAt = new Date().toISOString();
+    users[index].passwordChangedAt = new Date().toISOString();
+
+    try {
+      saveUsers(users);
+    } catch (error) {
+      button.disabled = false;
+      showMessage(resetMessage, 'We could not save the new password. Browser storage may be full.');
+      return;
+    }
+
+    const email = state.email;
+
+    restart();
+
+    // back to sign in, with the email filled in
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = '';
+
+    loginLimiter.clear(email);
+
+    showMessage(loginMessage, 'Password updated. Sign in with your new password.', true);
+
+    setMode('login');
+
+    showRecoveryCode(
+      recovery.code,
+      email,
+      'Your new recovery code',
+      'Your password was changed and the old recovery code no longer works. Save this new one for next time. We cannot show it again.',
+      function () {
+        document.getElementById('password').focus();
+      }
+    );
+  }
+
+  form.addEventListener('submit', function (e) {
+
+    e.preventDefault();
+
+    hideMessage(resetMessage);
+
+    if (state.step === 1) stepOne();
+    else if (state.step === 2) stepTwo();
+    else stepThree();
+  });
+
+  return { restart: restart };
+
+})();
 
 
 /* ---------- Photo slideshow (moves upward) ---------- */
@@ -1332,7 +2403,7 @@ registerForm.addEventListener('submit', function (e) {
 
 /* ---------- Start on the right side (no animation on first load) ---------- */
 
-setMode(location.hash === '#register' ? 'register' : 'login');
+setMode(modeFromHash());
 
 requestAnimationFrame(function () {
   requestAnimationFrame(function () {
