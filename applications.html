@@ -1864,6 +1864,20 @@ html[data-theme="dark"] .toast {
   color: var(--forest);
 }
 
+
+
+    /* Applicant details dialog */
+    .applicant-dialog { width:min(680px,calc(100% - 28px)); max-height:85vh; overflow:auto; margin:auto; padding:26px; border:1px solid var(--line); border-radius:20px; background:var(--page); color:var(--ink); box-shadow:0 24px 70px rgba(0,0,0,.35); }
+    .applicant-dialog::backdrop { background:rgba(0,0,0,.62); }
+    .applicant-dialog h2 { margin-bottom:5px; }
+    .applicant-dialog .detail-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:18px 0; }
+    .applicant-dialog .detail-item { padding:12px; border:1px solid var(--line); border-radius:12px; overflow-wrap:anywhere; }
+    .applicant-dialog .detail-item small { display:block; color:var(--muted); margin-bottom:3px; }
+    .applicant-dialog .detail-message { white-space:pre-wrap; overflow-wrap:anywhere; padding:14px; border-radius:12px; background:var(--tint); }
+    .applicant-dialog .dialog-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; margin-top:20px; }
+    .applicant-dialog button,.applicant-dialog a { padding:10px 16px; border:1px solid var(--line); border-radius:999px; background:var(--mint); color:var(--forest); font-weight:600; text-decoration:none; }
+    @media(max-width:520px) { .applicant-dialog { padding:18px; } .applicant-dialog .detail-grid { grid-template-columns:1fr; } }
+
 </style>
 
 </head>
@@ -2639,6 +2653,7 @@ document.addEventListener('DOMContentLoaded', function () {
           </div>
 
           <div class="job-actions">
+            <button type="button" class="apply-btn" data-view-app="${esc(String(a.id))}">View details</button>
             <a class="apply-btn" href="mailto:${esc(a.email)}?subject=${subject}">Email</a>
           </div>
 
@@ -2796,6 +2811,98 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- APPLICATIONS ---------- */
 
+
+  function formatBytes(bytes) {
+    const value = Number(bytes) || 0;
+    if (value < 1024) return value + ' B';
+    if (value < 1024 * 1024) return (value / 1024).toFixed(1) + ' KB';
+    return (value / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  function applicantCvInfo(a) {
+    /* resume.html saves the CV as an object: { name, type, size, data }.
+       Also accept older flat field names and URL-based CV records. */
+    const candidate = a.cv || a.resume || null;
+    const objectData = candidate && typeof candidate === 'object'
+      ? (candidate.data || candidate.dataUrl || candidate.url || '')
+      : '';
+    const value = a.cvDataUrl || a.resumeDataUrl || a.cvUrl || a.resumeUrl ||
+      a.cvData || a.resumeData || a.cvFileData || objectData ||
+      (typeof candidate === 'string' ? candidate : '') || '';
+    const name = (candidate && typeof candidate === 'object' && candidate.name) ||
+      a.cvName || a.resumeName || a.fileName || 'candidate-cv.pdf';
+    const type = (candidate && typeof candidate === 'object' && candidate.type) || a.cvType || '';
+    const size = (candidate && typeof candidate === 'object' && candidate.size) || a.cvSize || 0;
+    return { value: typeof value === 'string' ? value : '', name: String(name), type: type, size: size };
+  }
+
+  function ensureApplicantDialog() {
+    if (byId('applicantDetailsDialog')) return;
+    const dialog = document.createElement('dialog');
+    dialog.id = 'applicantDetailsDialog';
+    dialog.className = 'applicant-dialog';
+    dialog.innerHTML = `
+      <button type="button" id="closeApplicantDetails" aria-label="Close" style="float:right">Close ✕</button>
+      <div id="applicantDetailsContent"></div>
+      <div class="dialog-actions" id="applicantDetailsActions"></div>`;
+    document.body.appendChild(dialog);
+    byId('closeApplicantDetails').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', event => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+
+  function showApplicantDetails(appId) {
+    const app = getApps().find(a => String(a.id) === String(appId));
+    if (!app || !isPoster() || (app.jobOwner || '').toLowerCase() !== me()) {
+      alert('You do not have permission to view this application.');
+      return;
+    }
+    ensureApplicantDialog();
+    const cv = applicantCvInfo(app);
+    const fields = [
+      ['Full name', app.name], ['Email', app.email], ['Phone', app.phone],
+      ['Job applied for', app.jobTitle], ['Education', app.edu],
+      ['Residence', app.residence], ['Skills', app.skills],
+      ['Experience', app.exp], ['Applied on', formatDate(app.createdAt)]
+    ];
+    byId('applicantDetailsContent').innerHTML = `
+      <h2>${esc(app.name || 'Applicant details')}</h2>
+      <p class="muted">Full application information</p>
+      <div class="detail-grid">${fields.map(([label, value]) =>
+        `<div class="detail-item"><small>${esc(label)}</small><strong>${esc(value || 'Not provided')}</strong></div>`
+      ).join('')}</div>
+      <h3>Cover message</h3>
+      <p class="detail-message">${esc(app.message || 'No message was provided.')}</p>
+      <h3 style="margin-top:18px">CV / Resume</h3>
+      <p class="muted">${cv.value ? 'CV attached: ' + esc(cv.name) + (cv.size ? ' (' + esc(formatBytes(cv.size)) + ')' : '') : 'No CV file was saved with this application. If this application was submitted before CV upload was fixed, ask the candidate to apply again and attach their CV.'}</p>`;
+    const actions = byId('applicantDetailsActions');
+    actions.innerHTML = '';
+    if (cv.value) {
+      const link = document.createElement('a');
+      link.textContent = 'Download CV';
+      link.download = cv.name;
+      link.href = cv.value;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      actions.appendChild(link);
+      if (/^data:application\/pdf/i.test(cv.value) || /\.pdf$/i.test(cv.name)) {
+        const preview = document.createElement('a');
+        preview.textContent = 'Open CV';
+        preview.href = cv.value;
+        preview.target = '_blank';
+        preview.rel = 'noopener';
+        actions.appendChild(preview);
+      }
+    }
+    const mail = document.createElement('a');
+    mail.textContent = 'Email candidate';
+    mail.href = 'mailto:' + encodeURIComponent(app.email || '') +
+      '?subject=' + encodeURIComponent('Your application for ' + (app.jobTitle || 'a job'));
+    actions.appendChild(mail);
+    byId('applicantDetailsDialog').showModal();
+  }
+
   function renderAppsPage() {
 
     const q = searchText();
@@ -2892,6 +2999,12 @@ document.addEventListener('DOMContentLoaded', function () {
     /* Save / remove / withdraw buttons on any job or application card */
 
     document.addEventListener('click', function (event) {
+
+      const viewAppBtn = event.target.closest('[data-view-app]');
+      if (viewAppBtn) {
+        showApplicantDetails(viewAppBtn.dataset.viewApp);
+        return;
+      }
 
       const saveBtn = event.target.closest('[data-save]');
 
